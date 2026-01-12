@@ -129,7 +129,7 @@
 
   /* Glassmorphism Card with Gradient */
   .glass-card-gradient {
-    @apply relative overflow-hidden rounded-lg;
+    @apply relative overflow-hidden rounded-2xl;
     background: linear-gradient(135deg, hsl(0 70% 25% / 0.3) 0%, hsl(0 0% 4% / 0.6) 100%);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -342,15 +342,18 @@
     background: linear-gradient(
       180deg,
       hsl(var(--cyber-black)) 0%,
-      hsl(var(--cyber-dark)) 50%,
-      hsl(0 30% 8%) 100%
+      hsl(0 0% 6%) 50%,
+      hsl(var(--cyber-black)) 100%
     );
   }
 
   .bg-gradient-hero {
-    background: 
-      radial-gradient(ellipse at 50% 0%, hsl(0 70% 20% / 0.2) 0%, transparent 60%),
-      linear-gradient(180deg, hsl(var(--cyber-black)) 0%, hsl(var(--cyber-dark)) 100%);
+    background: linear-gradient(
+      180deg,
+      hsl(var(--cyber-black)) 0%,
+      hsl(0 0% 6%) 50%,
+      hsl(var(--cyber-black)) 100%
+    );
   }
 }
 
