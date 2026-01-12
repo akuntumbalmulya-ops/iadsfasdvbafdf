@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-type AnimationPhase = 'identity' | 'warning' | 'hacker';
+type AnimationPhase = 'identity' | 'warning';
 
 const IDENTITY_TEXTS = [
   "strangers",
@@ -10,31 +10,10 @@ const IDENTITY_TEXTS = [
   "gameholic",
 ];
 
-const HACKER_LINES = [
-  "C:\\gloistch> dir /s",
-  "  Volume in drive C has no label.",
-  "  Volume Serial Number is GL01-STCH",
-  "",
-  "  Directory of C:\\gloistch\\system",
-  "",
-  "01/12/2026  03:33 AM    <DIR>          .",
-  "01/12/2026  03:33 AM    <DIR>          ..",
-  "01/12/2026  03:33 AM             4,096 identity.dll",
-  "01/12/2026  03:33 AM           128,512 mainframe.exe",
-  "01/12/2026  03:33 AM            32,768 bypass.sys",
-  "               3 File(s)        165,376 bytes",
-  "",
-  "C:\\gloistch> scanning network...",
-  "C:\\gloistch> accessing mainframe...",
-  "C:\\gloistch> ERROR: firewall detected",
-  "C:\\gloistch> bypassing security protocols...",
-];
-
 const HeroSection = () => {
   const [phase, setPhase] = useState<AnimationPhase>('identity');
   const [identityIndex, setIdentityIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
-  const [hackerLines, setHackerLines] = useState<string[]>([]);
   const [isVisible, setIsVisible] = useState(false);
 
   const scrambleChars = "!@#$%^&*()_+-=[]{}|;':\"<>?";
@@ -82,41 +61,17 @@ const HeroSection = () => {
     return () => clearInterval(interval);
   }, [phase, identityIndex, scrambleText]);
 
-  // Warning phase - show for a moment then transition
+  // Warning phase - show then loop back to identity
   useEffect(() => {
     if (phase !== 'warning') return;
 
     const timer = setTimeout(() => {
-      setPhase('hacker');
-      setHackerLines([]);
+      setPhase('identity');
+      setIdentityIndex(0);
+      setDisplayText("");
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [phase]);
-
-  // Hacker phase animation
-  useEffect(() => {
-    if (phase !== 'hacker') return;
-
-    let lineIndex = 0;
-    const interval = setInterval(() => {
-      if (lineIndex < HACKER_LINES.length) {
-        setHackerLines(prev => [...prev, HACKER_LINES[lineIndex]]);
-        lineIndex++;
-      } else {
-        clearInterval(interval);
-        
-        // Reset to identity phase after hacker sequence
-        setTimeout(() => {
-          setPhase('identity');
-          setIdentityIndex(0);
-          setHackerLines([]);
-          setDisplayText("");
-        }, 2000);
-      }
-    }, 200);
-
-    return () => clearInterval(interval);
   }, [phase]);
 
   return (
@@ -137,7 +92,7 @@ const HeroSection = () => {
         </h1>
 
         {/* Animated subtitle area - fixed height to prevent layout shift */}
-        <div className="h-[280px] sm:h-[260px] md:h-[300px] flex items-start justify-center pt-4">
+        <div className="h-[200px] sm:h-[180px] md:h-[200px] flex items-start justify-center pt-4">
           {phase === 'identity' && (
             <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-mono text-foreground">
               {displayText}
@@ -169,35 +124,6 @@ const HeroSection = () => {
                 <p className="text-xs mt-4 text-accent text-glow-yellow animate-pulse">
                   [ATTEMPTING RECOVERY...]
                 </p>
-              </div>
-            </div>
-          )}
-
-          {phase === 'hacker' && (
-            <div className="cmd-embed w-full max-w-lg mx-auto text-left fade-in-up">
-              {/* CMD Header */}
-              <div className="bg-[#000080] px-2 sm:px-3 py-1 flex items-center justify-between">
-                <span className="text-white text-xs sm:text-sm font-bold">Command Prompt</span>
-                <div className="flex gap-1 sm:gap-2">
-                  <button className="w-3 h-3 sm:w-4 sm:h-4 bg-gray-400 text-black text-[8px] sm:text-xs flex items-center justify-center">_</button>
-                  <button className="w-3 h-3 sm:w-4 sm:h-4 bg-gray-400 text-black text-[8px] sm:text-xs flex items-center justify-center">□</button>
-                  <button className="w-3 h-3 sm:w-4 sm:h-4 bg-gray-400 text-black text-[8px] sm:text-xs flex items-center justify-center">×</button>
-                </div>
-              </div>
-              {/* CMD Content */}
-              <div className="bg-black p-2 sm:p-3 font-mono text-[10px] sm:text-xs space-y-0.5 max-h-[180px] sm:max-h-[200px] overflow-hidden">
-                {hackerLines.map((line, index) => (
-                  <p 
-                    key={index} 
-                    className="text-terminal-green whitespace-pre"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    {line}
-                  </p>
-                ))}
-                {hackerLines.length < HACKER_LINES.length && (
-                  <span className="terminal-cursor" />
-                )}
               </div>
             </div>
           )}
