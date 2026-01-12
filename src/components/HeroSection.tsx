@@ -1,5 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 
+/**
+ * ============================================
+ * IMAGE EDITING GUIDE FOR HERO SECTION
+ * ============================================
+ * 
+ * This section uses NO direct images.
+ * Background comes from parent (Index.tsx - cyberpunk-bg.jpeg)
+ * Only decorative blur effects are applied here.
+ */
+
 type AnimationPhase = 'identity' | 'warning';
 
 const IDENTITY_TEXTS = [
