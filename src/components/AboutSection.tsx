@@ -33,11 +33,11 @@ const AboutSection = () => {
       </div>
 
       <div 
-        className={`relative z-10 max-w-2xl mx-auto w-full transition-all duration-1000 ${
+        className={`relative z-10 max-w-2xl mx-auto w-full transition-all duration-700 ease-out ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
         }`}
       >
-        <div className="glass-card-gradient p-6 sm:p-8 md:p-12 float rounded-3xl">
+        <div className="glass-card-gradient neon-border-yellow p-6 sm:p-8 md:p-12 float rounded-3xl">
           {/* Header with photo */}
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-glow-red order-2 sm:order-1">

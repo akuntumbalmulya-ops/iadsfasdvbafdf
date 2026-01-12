@@ -153,7 +153,26 @@
     @apply right-0;
   }
 
-  /* Noise Overlay */
+  /* Neon yellow border utility */
+  .neon-border-yellow {
+    position: relative;
+  }
+
+  .neon-border-yellow::before,
+  .neon-border-yellow::after {
+    content: '';
+    @apply absolute top-0 bottom-0 w-[2px];
+    background: hsl(var(--cyber-yellow));
+    box-shadow: var(--neon-yellow-glow);
+  }
+
+  .neon-border-yellow::before {
+    @apply left-0;
+  }
+
+  .neon-border-yellow::after {
+    @apply right-0;
+  }
   .noise-overlay {
     @apply fixed inset-0 pointer-events-none z-50;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");

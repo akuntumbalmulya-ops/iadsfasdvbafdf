@@ -120,17 +120,6 @@ const SocialSection = () => {
           Connect With Me
         </h2>
 
-        {/* Username display - Minecraft style font */}
-        <div 
-          className={`text-center mb-6 sm:mb-8 h-8 sm:h-10 transition-all duration-200 ease-out ${
-            hoveredIndex !== null ? 'opacity-100' : 'opacity-0'
-          }`}
-        >
-          <span className="minecraft-text text-lg sm:text-xl md:text-2xl text-muted-foreground">
-            @gloistch
-          </span>
-        </div>
-
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {SOCIAL_LINKS.map((social, index) => (
             <a
@@ -142,12 +131,12 @@ const SocialSection = () => {
               className={`social-card-smooth group relative ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
-              style={{ transitionDelay: isVisible ? `${index * 50}ms` : '0ms' }}
+              style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {/* Display name tooltip on hover */}
-              <div className={`absolute -top-12 left-1/2 -translate-x-1/2 glass-card-gradient px-4 py-2 rounded-2xl transition-all duration-200 ease-out whitespace-nowrap z-20 ${
+              <div className={`absolute -top-14 left-1/2 -translate-x-1/2 glass-card-gradient neon-border-yellow px-4 py-2 rounded-2xl transition-all duration-150 ease-out whitespace-nowrap z-20 ${
                 hoveredIndex === index ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-2 scale-95 pointer-events-none'
               }`}>
                 <span className="minecraft-text text-xs sm:text-sm text-muted-foreground">
@@ -155,7 +144,7 @@ const SocialSection = () => {
                 </span>
               </div>
               
-              <div className="transition-transform duration-200 ease-out">
+              <div className="transition-transform duration-150 ease-out">
                 {social.icon}
               </div>
               <span className="text-xs sm:text-sm font-medium mt-2">{social.name}</span>
