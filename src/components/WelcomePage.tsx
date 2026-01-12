@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import welcomeBg from '@/assets/welcome-bg.jpeg';
 
 interface WelcomePageProps {
   onEnter: () => void;
@@ -81,10 +82,21 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-dark cursor-pointer"
+      className="fixed inset-0 z-50 flex items-center justify-center cursor-pointer overflow-hidden"
       onClick={handleClick}
       style={{ opacity: flickerOpacity }}
     >
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ 
+          backgroundImage: `url(${welcomeBg})`,
+        }}
+      />
+      
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/40" />
+      
       {/* Noise overlay */}
       <div className="noise-overlay" />
       
@@ -92,7 +104,7 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       <div className="scanline" />
 
       {/* Main content */}
-      <div className="text-center px-4">
+      <div className="relative z-10 text-center px-4">
         <div className="relative">
           <h1 
             className={`text-2xl sm:text-4xl md:text-5xl font-mono font-bold tracking-wider text-foreground ${isScrambling ? 'glitch-text' : ''}`}
@@ -113,16 +125,7 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
         </p>
       </div>
 
-      {/* Corner decorations */}
-      <div className="absolute top-4 left-4 text-xs text-muted-foreground font-mono opacity-50">
-        SYS://INIT
-      </div>
-      <div className="absolute top-4 right-4 text-xs text-muted-foreground font-mono opacity-50">
-        v0.0.1
-      </div>
-      <div className="absolute bottom-4 left-4 text-xs text-muted-foreground font-mono opacity-50">
-        STATUS: WAITING
-      </div>
+      {/* Only bottom right terminal decoration */}
       <div className="absolute bottom-4 right-4 text-xs text-muted-foreground font-mono opacity-50">
         &gt;_
       </div>

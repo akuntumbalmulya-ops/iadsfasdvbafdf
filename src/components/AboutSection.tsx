@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import profilePhoto from '@/assets/profile-photo.png';
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -24,53 +25,61 @@ const AboutSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center py-20 px-4 bg-gradient-dark"
+      className="relative min-h-screen flex items-center justify-center py-12 sm:py-20 px-4 bg-gradient-dark"
     >
       {/* Background glow */}
       <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-primary/30 rounded-full blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[600px] h-[300px] sm:h-[400px] bg-primary/30 rounded-full blur-[120px]" />
       </div>
 
       <div 
-        className={`relative z-10 max-w-2xl mx-auto transition-all duration-1000 ${
+        className={`relative z-10 max-w-2xl mx-auto w-full transition-all duration-1000 ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
         }`}
       >
-        <div className="glass-card p-8 sm:p-12 float">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-glow-red">
-            About Me
-          </h2>
+        <div className="glass-card-gradient p-6 sm:p-8 md:p-12 float">
+          {/* Header with photo */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-glow-red order-2 sm:order-1">
+              About Me
+            </h2>
+            <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-primary/50 shadow-lg shadow-primary/30 flex-shrink-0 order-1 sm:order-2">
+              <img 
+                src={profilePhoto} 
+                alt="Profile" 
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
           
           <div className="h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent mb-6" />
           
-          <p className="text-lg sm:text-xl text-foreground/90 leading-relaxed mb-6">
+          <p className="text-base sm:text-lg md:text-xl text-foreground/90 leading-relaxed mb-4 sm:mb-6">
             A digital stranger navigating code, games, and chaos.
           </p>
           
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-8">
-            Lost in the endless void of pixels and algorithms. I exist somewhere between 
-            reality and the digital realm, crafting experiences that blur the line between 
-            the two. Welcome to my corner of the internet.
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6 sm:mb-8">
+            Just someone trying to become a better version of myself than yesterday. I spend most of my time enjoying games, movies, and music things that help me relax, escape, and stay inspired. I like exploring stories, worlds, and ideas, and I'm always learning at my own pace. Oh, and yeah, I'm into girls with a goth look.
           </p>
 
-          <div className="grid grid-cols-3 gap-4 text-center">
-            <div className="p-3">
-              <div className="text-2xl sm:text-3xl font-bold text-accent text-glow-yellow">∞</div>
-              <div className="text-xs sm:text-sm text-muted-foreground mt-1">Hours Coded</div>
+          <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
+            <div className="p-2 sm:p-3">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent text-glow-yellow">∞</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-1">Hours Coded</div>
             </div>
-            <div className="p-3">
-              <div className="text-2xl sm:text-3xl font-bold text-accent text-glow-yellow">404</div>
-              <div className="text-xs sm:text-sm text-muted-foreground mt-1">Sleep Not Found</div>
+            <div className="p-2 sm:p-3">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent text-glow-yellow">404</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-1">Sleep Not Found</div>
             </div>
-            <div className="p-3">
-              <div className="text-2xl sm:text-3xl font-bold text-accent text-glow-yellow">1</div>
-              <div className="text-xs sm:text-sm text-muted-foreground mt-1">Territory</div>
+            <div className="p-2 sm:p-3">
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent text-glow-yellow">1</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-1">Territory</div>
             </div>
           </div>
 
           {/* Terminal-style footer */}
-          <div className="mt-8 p-3 bg-background/50 rounded border border-border/50">
-            <p className="font-mono text-xs text-muted-foreground">
+          <div className="mt-6 sm:mt-8 p-2 sm:p-3 bg-background/50 rounded border border-border/50">
+            <p className="font-mono text-[10px] sm:text-xs text-muted-foreground">
               <span className="text-terminal-green">gloistch@territory</span>
               <span className="text-foreground">:</span>
               <span className="text-primary">~</span>
