@@ -1,4 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
+/**
+ * ============================================
+ * IMAGE EDITING GUIDE FOR SOCIAL SECTION
+ * ============================================
+ * 
+ * This section uses SVG icons for social media logos.
+ * Background comes from parent (Index.tsx - cyberpunk-bg.jpeg)
+ * 
+ * SOCIAL MEDIA ICONS:
+ * - All icons are inline SVGs below
+ * - To change an icon: Replace the SVG path in SOCIAL_LINKS array
+ * 
+ * SOCIAL LINKS CONFIGURATION:
+ * - Discord: Group Discord Glois - https://discord.gg/6uaxrKF4dq
+ * - Instagram: My Insta - https://www.instagram.com/gloistch/
+ * - TikTok: My Tiktok - https://www.tiktok.com/@zakha.cotters
+ * - LinkedIn: Skipped (no redirect)
+ * - YouTube: My Channel - https://www.youtube.com/@gloistch
+ * - X: My Account X - https://x.com/ikbal_gti
+ */
 
 interface SocialLink {
   name: string;
@@ -131,7 +151,7 @@ const SocialSection = () => {
               className={`social-card-smooth group relative ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
-              style={{ transitionDelay: isVisible ? `${index * 100}ms` : '0ms' }}
+              style={{ transitionDelay: isVisible ? `${index * 50}ms` : '0ms' }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >

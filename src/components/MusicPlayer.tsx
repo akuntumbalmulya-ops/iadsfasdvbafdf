@@ -1,5 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 import { Volume2, VolumeX, Play, Pause, SkipBack, SkipForward, Music, Minimize2 } from 'lucide-react';
+/**
+ * ============================================
+ * MUSIC/AUDIO EDITING GUIDE
+ * ============================================
+ * 
+ * BACKGROUND MUSIC:
+ * - File: public/assets/music/background.mp3
+ * - Currently: teeth_you_-_re6ce
+ * - Plays automatically after welcome page interaction
+ * 
+ * To change music: Replace background.mp3 file in public/assets/music/
+ * or update the src path in the audio element below.
+ */
 
 interface MusicPlayerProps {
   shouldPlay?: boolean;

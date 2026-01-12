@@ -1,4 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
+/**
+ * ============================================
+ * IMAGE EDITING GUIDE FOR ABOUT SECTION
+ * ============================================
+ * 
+ * PROFILE PHOTO:
+ * - File: src/assets/profile-photo.png
+ * - Location: Top-right corner of the About Me embed
+ * - Size: 80px-112px (responsive)
+ * 
+ * To change profile photo: Replace profile-photo.png file
+ * or update the import below.
+ */
 import profilePhoto from '@/assets/profile-photo.png';
 
 const AboutSection = () => {
