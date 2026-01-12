@@ -208,14 +208,57 @@
     @apply overflow-hidden h-screen;
   }
 
-  /* Social Card with Gradient */
-  .social-card-enhanced {
-    @apply relative overflow-hidden rounded-lg p-4 sm:p-6 flex flex-col items-center gap-3 sm:gap-4 cursor-pointer;
+  /* Social Card Smooth - Updated styling matching About Me */
+  .social-card-smooth {
+    @apply relative overflow-hidden rounded-2xl p-5 sm:p-6 md:p-8 flex flex-col items-center justify-center gap-3 cursor-pointer;
     background: linear-gradient(135deg, hsl(0 70% 25% / 0.3) 0%, hsl(0 0% 4% / 0.6) 100%);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid hsl(var(--glass-border));
     box-shadow: var(--shadow-dark);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 120px;
+  }
+
+  .social-card-smooth::before,
+  .social-card-smooth::after {
+    content: '';
+    @apply absolute top-0 bottom-0 w-[2px];
+    background: hsl(var(--cyber-yellow));
+    box-shadow: var(--neon-yellow-glow);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .social-card-smooth::before {
+    @apply left-0;
+  }
+
+  .social-card-smooth::after {
+    @apply right-0;
+  }
+
+  .social-card-smooth:hover {
+    transform: scale(1.08);
+    background: linear-gradient(135deg, hsl(0 70% 30% / 0.4) 0%, hsl(0 0% 8% / 0.7) 100%);
+    box-shadow: 
+      0 0 40px hsl(0 70% 40% / 0.5),
+      var(--shadow-dark);
+  }
+
+  .social-card-smooth:hover::before,
+  .social-card-smooth:hover::after {
+    box-shadow: 0 0 30px hsl(50 100% 50% / 0.9), 0 0 60px hsl(50 100% 50% / 0.6);
+  }
+
+  /* Social Card Enhanced (legacy) */
+  .social-card-enhanced {
+    @apply relative overflow-hidden rounded-2xl p-4 sm:p-6 flex flex-col items-center gap-3 sm:gap-4 cursor-pointer;
+    background: linear-gradient(135deg, hsl(0 70% 25% / 0.3) 0%, hsl(0 0% 4% / 0.6) 100%);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    border: 1px solid hsl(var(--glass-border));
+    box-shadow: var(--shadow-dark);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .social-card-enhanced::before,
@@ -224,7 +267,7 @@
     @apply absolute top-0 bottom-0 w-[2px];
     background: hsl(var(--cyber-yellow));
     box-shadow: var(--neon-yellow-glow);
-    transition: all 0.15s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .social-card-enhanced::before {
@@ -236,6 +279,7 @@
   }
 
   .social-card-enhanced:hover {
+    transform: scale(1.08);
     background: linear-gradient(135deg, hsl(0 70% 30% / 0.4) 0%, hsl(0 0% 8% / 0.7) 100%);
     box-shadow: var(--neon-red-glow), var(--shadow-dark);
   }
@@ -247,11 +291,12 @@
 
   /* Social Card (legacy) */
   .social-card {
-    @apply glass-card-gradient p-4 sm:p-6 flex flex-col items-center gap-3 sm:gap-4 cursor-pointer transition-all duration-150;
+    @apply glass-card-gradient p-4 sm:p-6 flex flex-col items-center gap-3 sm:gap-4 cursor-pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .social-card:hover {
-    @apply scale-105;
+    transform: scale(1.08);
     background: linear-gradient(135deg, hsl(0 70% 30% / 0.4) 0%, hsl(0 0% 8% / 0.7) 100%);
     box-shadow: var(--neon-red-glow), var(--shadow-dark);
   }

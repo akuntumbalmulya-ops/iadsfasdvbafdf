@@ -122,7 +122,7 @@ const SocialSection = () => {
 
         {/* Username display - Minecraft style font */}
         <div 
-          className={`text-center mb-6 sm:mb-8 h-8 sm:h-10 transition-all duration-100 ${
+          className={`text-center mb-6 sm:mb-8 h-8 sm:h-10 transition-all duration-200 ease-out ${
             hoveredIndex !== null ? 'opacity-100' : 'opacity-0'
           }`}
         >
@@ -131,7 +131,7 @@ const SocialSection = () => {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 md:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {SOCIAL_LINKS.map((social, index) => (
             <a
               key={social.name}
@@ -139,26 +139,26 @@ const SocialSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => handleClick(social, e)}
-              className={`social-card-enhanced transition-all duration-100 group ${
+              className={`social-card-smooth group relative ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              } ${hoveredIndex === index ? 'scale-110 z-10' : 'scale-100'}`}
+              }`}
               style={{ transitionDelay: isVisible ? `${index * 50}ms` : '0ms' }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {/* Display name tooltip on hover */}
-              <div className={`absolute -top-10 left-1/2 -translate-x-1/2 glass-card-gradient px-3 py-1.5 rounded-lg transition-all duration-100 whitespace-nowrap ${
-                hoveredIndex === index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 pointer-events-none'
+              <div className={`absolute -top-12 left-1/2 -translate-x-1/2 glass-card-gradient px-4 py-2 rounded-2xl transition-all duration-200 ease-out whitespace-nowrap z-20 ${
+                hoveredIndex === index ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-2 scale-95 pointer-events-none'
               }`}>
                 <span className="minecraft-text text-xs sm:text-sm text-muted-foreground">
                   {social.displayName}
                 </span>
               </div>
               
-              <div className="transition-transform duration-100">
+              <div className="transition-transform duration-200 ease-out">
                 {social.icon}
               </div>
-              <span className="text-xs sm:text-sm font-medium">{social.name}</span>
+              <span className="text-xs sm:text-sm font-medium mt-2">{social.name}</span>
             </a>
           ))}
         </div>
@@ -169,7 +169,7 @@ const SocialSection = () => {
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="inline-block glass-card-gradient px-4 sm:px-6 py-2 sm:py-3">
+          <div className="inline-block glass-card-gradient px-4 sm:px-6 py-2 sm:py-3 rounded-2xl">
             <p className="font-mono text-[10px] sm:text-xs md:text-sm text-muted-foreground">
               <span className="text-primary">&gt;</span> connection.status: 
               <span className="text-terminal-green text-glow-green"> ONLINE</span>

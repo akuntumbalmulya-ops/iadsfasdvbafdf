@@ -49,7 +49,7 @@ const Index = () => {
           <HeroSection />
           <AboutSection />
           <SocialSection />
-          <MusicPlayer />
+          <MusicPlayer shouldPlay={showContent} />
 
           {/* Footer */}
           <footer className="relative py-8 text-center bg-gradient-dark border-t border-border/20">
