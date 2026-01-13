@@ -124,11 +124,11 @@ const AboutSection = () => {
           
           <div className="h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent mb-6" />
           
-          <p className="text-base sm:text-lg md:text-xl text-primary/90 leading-relaxed mb-4 sm:mb-6">
+          <p className="text-base sm:text-lg md:text-xl text-white font-bold leading-relaxed mb-4 sm:mb-6">
             A digital stranger navigating code, games, and chaos.
           </p>
           
-          <p className="text-sm sm:text-base text-primary/70 leading-relaxed mb-6 sm:mb-8">
+          <p className="text-sm sm:text-base text-gray-400 leading-relaxed mb-6 sm:mb-8">
             Just someone trying to become a better version of myself than yesterday. I spend most of my time enjoying games, movies, and music things that help me relax, escape, and stay inspired. I like exploring stories, worlds, and ideas, and I'm always learning at my own pace. Oh, and yeah, I'm into girls with a goth look.
           </p>
 
@@ -146,7 +146,7 @@ const AboutSection = () => {
                   />
                 </svg>
               </div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-primary/70 mt-1">Playin' Valo</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-white font-bold mt-1">Playin' Valo</div>
             </div>
             <div className="p-2 sm:p-3">
               <div 
@@ -161,21 +161,21 @@ const AboutSection = () => {
               >
                 404
               </div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-primary/70 mt-1">Sleep Not Found</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-white font-bold mt-1">Sleep Not Found</div>
             </div>
             <div className="p-2 sm:p-3">
               <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary text-glow-red">1</div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-primary/70 mt-1">Territory</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-white font-bold mt-1">Territory</div>
             </div>
           </div>
 
           {/* Terminal-style footer */}
           <div className="mt-6 sm:mt-8 p-2 sm:p-3 bg-background/50 rounded border border-primary/30">
-            <p className="font-mono text-[10px] sm:text-xs text-primary/70">
+            <p className="font-mono text-[10px] sm:text-xs">
               <span className="text-terminal-green">gloistch@territory</span>
-              <span className="text-primary">:</span>
-              <span className="text-primary">~</span>
-              <span className="text-primary">$ whoami</span>
+              <span className="text-white">:</span>
+              <span className="text-red-500">~</span>
+              <span className="text-white">$ whoami</span>
               <span className="terminal-cursor" />
             </p>
           </div>
