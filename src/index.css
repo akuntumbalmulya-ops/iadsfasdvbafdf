@@ -305,133 +305,215 @@
     @apply overflow-hidden h-screen;
   }
 
-  /* Social Card Horizontal - Desktop style matching reference */
-  .social-card-horizontal {
+  /* ========================================
+     Social Card Neon - Desktop with Power Outage Effect
+     Each card has different animation timing
+     ======================================== */
+  .social-card-neon {
     @apply relative overflow-hidden cursor-pointer;
     width: 100%;
-    height: 48px;
-    border-radius: 12px;
+    height: 72px;
+    border-radius: 16px;
     background: linear-gradient(135deg, 
-      hsl(270 40% 12% / 0.85) 0%, 
-      hsl(270 30% 8% / 0.9) 50%,
-      hsl(260 35% 10% / 0.85) 100%
+      hsl(270 40% 12% / 0.9) 0%, 
+      hsl(270 30% 8% / 0.95) 50%,
+      hsl(260 35% 10% / 0.9) 100%
     );
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid hsl(270 40% 25% / 0.2);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(270 50% 35% / 0.3);
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /* Subtle edge glow - left (golden/yellow) */
-  .social-card-horizontal::before {
+  /* Purple neon edge - left */
+  .social-card-neon::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 10%;
-    bottom: 10%;
-    width: 3px;
-    border-radius: 0 2px 2px 0;
+    top: 8%;
+    bottom: 8%;
+    width: 4px;
+    border-radius: 0 4px 4px 0;
     background: linear-gradient(180deg, 
-      hsl(45 80% 55% / 0.6) 0%, 
-      hsl(30 70% 50% / 0.4) 50%,
-      hsl(45 80% 55% / 0.6) 100%
+      hsl(270 80% 70%) 0%, 
+      hsl(270 80% 60%) 50%,
+      hsl(270 80% 70%) 100%
     );
     box-shadow: 
-      0 0 8px hsl(45 80% 55% / 0.3),
-      0 0 15px hsl(30 70% 50% / 0.2);
-    opacity: 0.7;
+      0 0 8px hsl(270 80% 60%),
+      0 0 15px hsl(270 80% 60%),
+      0 0 30px hsl(270 80% 60% / 0.8),
+      0 0 50px hsl(270 80% 60% / 0.5);
   }
 
-  /* Subtle edge glow - right (red) */
-  .social-card-horizontal::after {
+  /* Purple neon edge - right */
+  .social-card-neon::after {
     content: '';
     position: absolute;
     right: 0;
-    top: 10%;
-    bottom: 10%;
-    width: 3px;
-    border-radius: 2px 0 0 2px;
+    top: 8%;
+    bottom: 8%;
+    width: 4px;
+    border-radius: 4px 0 0 4px;
     background: linear-gradient(180deg, 
-      hsl(0 70% 50% / 0.5) 0%, 
-      hsl(350 60% 45% / 0.35) 50%,
-      hsl(0 70% 50% / 0.5) 100%
+      hsl(270 80% 70%) 0%, 
+      hsl(270 80% 60%) 50%,
+      hsl(270 80% 70%) 100%
     );
     box-shadow: 
-      0 0 8px hsl(0 70% 50% / 0.25),
-      0 0 15px hsl(350 60% 45% / 0.15);
-    opacity: 0.6;
+      0 0 8px hsl(270 80% 60%),
+      0 0 15px hsl(270 80% 60%),
+      0 0 30px hsl(270 80% 60% / 0.8),
+      0 0 50px hsl(270 80% 60% / 0.5);
   }
 
-  .social-card-horizontal:hover {
+  /* Different power outage timing for each card */
+  .social-card-neon[data-neon-card="0"]::before,
+  .social-card-neon[data-neon-card="0"]::after {
+    animation: neonFlicker1 3.5s ease-in-out infinite;
+  }
+  .social-card-neon[data-neon-card="0"]::after {
+    animation-delay: 0.2s;
+  }
+
+  .social-card-neon[data-neon-card="1"]::before,
+  .social-card-neon[data-neon-card="1"]::after {
+    animation: neonFlicker2 4.2s ease-in-out infinite;
+  }
+  .social-card-neon[data-neon-card="1"]::after {
+    animation-delay: 0.5s;
+  }
+
+  .social-card-neon[data-neon-card="2"]::before,
+  .social-card-neon[data-neon-card="2"]::after {
+    animation: neonFlicker3 2.8s ease-in-out infinite;
+  }
+  .social-card-neon[data-neon-card="2"]::after {
+    animation-delay: 0.3s;
+  }
+
+  .social-card-neon[data-neon-card="3"]::before,
+  .social-card-neon[data-neon-card="3"]::after {
+    animation: neonStable 5s ease-in-out infinite;
+  }
+
+  .social-card-neon[data-neon-card="4"]::before,
+  .social-card-neon[data-neon-card="4"]::after {
+    animation: neonFlicker4 3.2s ease-in-out infinite;
+  }
+  .social-card-neon[data-neon-card="4"]::after {
+    animation-delay: 0.4s;
+  }
+
+  .social-card-neon[data-neon-card="5"]::before,
+  .social-card-neon[data-neon-card="5"]::after {
+    animation: neonFlicker5 4.8s ease-in-out infinite;
+  }
+  .social-card-neon[data-neon-card="5"]::after {
+    animation-delay: 0.6s;
+  }
+
+  .social-card-neon:hover {
     transform: scale(1.02);
     background: linear-gradient(135deg, 
-      hsl(270 45% 15% / 0.9) 0%, 
-      hsl(270 35% 10% / 0.95) 50%,
-      hsl(260 40% 12% / 0.9) 100%
+      hsl(270 45% 15% / 0.95) 0%, 
+      hsl(270 35% 12% / 1) 50%,
+      hsl(260 40% 14% / 0.95) 100%
     );
   }
 
-  .social-card-horizontal:hover::before {
-    opacity: 1;
+  .social-card-neon:hover::before,
+  .social-card-neon:hover::after {
     box-shadow: 
-      0 0 12px hsl(45 80% 55% / 0.5),
-      0 0 20px hsl(30 70% 50% / 0.3);
+      0 0 12px hsl(270 80% 65%),
+      0 0 25px hsl(270 80% 65%),
+      0 0 50px hsl(270 80% 65% / 0.9),
+      0 0 80px hsl(270 80% 65% / 0.6);
   }
 
-  .social-card-horizontal:hover::after {
-    opacity: 0.9;
-    box-shadow: 
-      0 0 12px hsl(0 70% 50% / 0.4),
-      0 0 20px hsl(350 60% 45% / 0.25);
-  }
-
-  /* Social Card Mobile - Compact square style */
-  .social-card-mobile {
+  /* ========================================
+     Social Card Neon Mobile - Compact with Power Outage
+     ======================================== */
+  .social-card-neon-mobile {
     @apply relative overflow-hidden cursor-pointer;
-    width: 52px;
-    height: 52px;
-    border-radius: 10px;
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
     background: linear-gradient(135deg, 
-      hsl(270 40% 12% / 0.85) 0%, 
-      hsl(270 30% 8% / 0.9) 100%
+      hsl(270 40% 12% / 0.9) 0%, 
+      hsl(270 30% 8% / 0.95) 100%
     );
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid hsl(270 40% 25% / 0.2);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(270 50% 35% / 0.3);
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .social-card-mobile::before {
+  .social-card-neon-mobile::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 15%;
-    bottom: 15%;
-    width: 2px;
-    border-radius: 0 2px 2px 0;
+    top: 12%;
+    bottom: 12%;
+    width: 3px;
+    border-radius: 0 3px 3px 0;
     background: linear-gradient(180deg, 
-      hsl(45 80% 55% / 0.5) 0%, 
-      hsl(30 70% 50% / 0.3) 100%
+      hsl(270 80% 70%) 0%, 
+      hsl(270 80% 60%) 50%,
+      hsl(270 80% 70%) 100%
     );
-    opacity: 0.6;
+    box-shadow: 
+      0 0 6px hsl(270 80% 60%),
+      0 0 12px hsl(270 80% 60%),
+      0 0 24px hsl(270 80% 60% / 0.7);
   }
 
-  .social-card-mobile::after {
+  .social-card-neon-mobile::after {
     content: '';
     position: absolute;
     right: 0;
-    top: 15%;
-    bottom: 15%;
-    width: 2px;
-    border-radius: 2px 0 0 2px;
+    top: 12%;
+    bottom: 12%;
+    width: 3px;
+    border-radius: 3px 0 0 3px;
     background: linear-gradient(180deg, 
-      hsl(0 70% 50% / 0.4) 0%, 
-      hsl(350 60% 45% / 0.25) 100%
+      hsl(270 80% 70%) 0%, 
+      hsl(270 80% 60%) 50%,
+      hsl(270 80% 70%) 100%
     );
-    opacity: 0.5;
+    box-shadow: 
+      0 0 6px hsl(270 80% 60%),
+      0 0 12px hsl(270 80% 60%),
+      0 0 24px hsl(270 80% 60% / 0.7);
   }
 
-  .social-card-mobile:hover {
+  /* Different animations for mobile cards */
+  .social-card-neon-mobile[data-neon-card="0"]::before,
+  .social-card-neon-mobile[data-neon-card="0"]::after {
+    animation: neonFlicker1 3s ease-in-out infinite;
+  }
+  .social-card-neon-mobile[data-neon-card="1"]::before,
+  .social-card-neon-mobile[data-neon-card="1"]::after {
+    animation: neonFlicker2 4s ease-in-out infinite;
+  }
+  .social-card-neon-mobile[data-neon-card="2"]::before,
+  .social-card-neon-mobile[data-neon-card="2"]::after {
+    animation: neonStable 5s ease-in-out infinite;
+  }
+  .social-card-neon-mobile[data-neon-card="3"]::before,
+  .social-card-neon-mobile[data-neon-card="3"]::after {
+    animation: neonFlicker3 2.5s ease-in-out infinite;
+  }
+  .social-card-neon-mobile[data-neon-card="4"]::before,
+  .social-card-neon-mobile[data-neon-card="4"]::after {
+    animation: neonFlicker4 3.8s ease-in-out infinite;
+  }
+  .social-card-neon-mobile[data-neon-card="5"]::before,
+  .social-card-neon-mobile[data-neon-card="5"]::after {
+    animation: neonFlicker5 4.5s ease-in-out infinite;
+  }
+
+  .social-card-neon-mobile:hover {
     transform: scale(1.08);
   }
 
@@ -944,6 +1026,79 @@
   88% {
     opacity: 1;
   }
+}
+
+/* ========================================
+   Individual Neon Flicker Animations
+   Each card gets a unique pattern
+   ======================================== */
+
+/* Flicker 1 - Quick double blink */
+@keyframes neonFlicker1 {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px hsl(270 80% 60%), 0 0 15px hsl(270 80% 60%), 0 0 30px hsl(270 80% 60% / 0.8); }
+  15% { opacity: 0.3; box-shadow: 0 0 2px hsl(270 80% 40%); }
+  18% { opacity: 1; }
+  20% { opacity: 0.4; box-shadow: 0 0 3px hsl(270 80% 45%); }
+  23% { opacity: 1; box-shadow: 0 0 8px hsl(270 80% 60%), 0 0 15px hsl(270 80% 60%), 0 0 30px hsl(270 80% 60% / 0.8); }
+  70% { opacity: 1; }
+  72% { opacity: 0.5; }
+  75% { opacity: 1; }
+}
+
+/* Flicker 2 - Power surge */
+@keyframes neonFlicker2 {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px hsl(270 80% 60%), 0 0 15px hsl(270 80% 60%), 0 0 30px hsl(270 80% 60% / 0.8); }
+  40% { opacity: 1; }
+  42% { opacity: 0.1; box-shadow: none; }
+  44% { opacity: 0.6; box-shadow: 0 0 4px hsl(270 80% 50%); }
+  46% { opacity: 0.2; }
+  50% { opacity: 1; box-shadow: 0 0 12px hsl(270 80% 65%), 0 0 25px hsl(270 80% 65%), 0 0 50px hsl(270 80% 65% / 0.9); }
+  52% { opacity: 1; box-shadow: 0 0 8px hsl(270 80% 60%), 0 0 15px hsl(270 80% 60%), 0 0 30px hsl(270 80% 60% / 0.8); }
+}
+
+/* Flicker 3 - Rapid cenat cenut */
+@keyframes neonFlicker3 {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px hsl(270 80% 60%), 0 0 15px hsl(270 80% 60%), 0 0 30px hsl(270 80% 60% / 0.8); }
+  10% { opacity: 0.7; }
+  12% { opacity: 1; }
+  14% { opacity: 0.5; }
+  16% { opacity: 1; }
+  18% { opacity: 0.3; box-shadow: 0 0 2px hsl(270 80% 40%); }
+  22% { opacity: 1; box-shadow: 0 0 8px hsl(270 80% 60%), 0 0 15px hsl(270 80% 60%), 0 0 30px hsl(270 80% 60% / 0.8); }
+  60% { opacity: 1; }
+  62% { opacity: 0.4; }
+  64% { opacity: 0.8; }
+  66% { opacity: 0.3; }
+  70% { opacity: 1; }
+}
+
+/* Flicker 4 - Long power drop */
+@keyframes neonFlicker4 {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px hsl(270 80% 60%), 0 0 15px hsl(270 80% 60%), 0 0 30px hsl(270 80% 60% / 0.8); }
+  25% { opacity: 1; }
+  28% { opacity: 0.2; box-shadow: 0 0 2px hsl(270 80% 35%); }
+  35% { opacity: 0.1; box-shadow: none; }
+  40% { opacity: 0.5; box-shadow: 0 0 5px hsl(270 80% 50%); }
+  45% { opacity: 1; box-shadow: 0 0 8px hsl(270 80% 60%), 0 0 15px hsl(270 80% 60%), 0 0 30px hsl(270 80% 60% / 0.8); }
+  80% { opacity: 1; }
+  82% { opacity: 0.6; }
+  85% { opacity: 1; }
+}
+
+/* Flicker 5 - Subtle pulse */
+@keyframes neonFlicker5 {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px hsl(270 80% 60%), 0 0 15px hsl(270 80% 60%), 0 0 30px hsl(270 80% 60% / 0.8); }
+  50% { opacity: 0.8; box-shadow: 0 0 6px hsl(270 80% 55%), 0 0 12px hsl(270 80% 55%), 0 0 24px hsl(270 80% 55% / 0.7); }
+  55% { opacity: 1; }
+  57% { opacity: 0.5; }
+  60% { opacity: 1; box-shadow: 0 0 10px hsl(270 80% 65%), 0 0 20px hsl(270 80% 65%), 0 0 40px hsl(270 80% 65% / 0.85); }
+  62% { opacity: 1; box-shadow: 0 0 8px hsl(270 80% 60%), 0 0 15px hsl(270 80% 60%), 0 0 30px hsl(270 80% 60% / 0.8); }
+}
+
+/* Stable - Always on with gentle pulse */
+@keyframes neonStable {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px hsl(270 80% 60%), 0 0 15px hsl(270 80% 60%), 0 0 30px hsl(270 80% 60% / 0.8); }
+  50% { opacity: 0.95; box-shadow: 0 0 10px hsl(270 80% 65%), 0 0 20px hsl(270 80% 65%), 0 0 40px hsl(270 80% 65% / 0.9); }
 }
 
 /* Scanline Effect */

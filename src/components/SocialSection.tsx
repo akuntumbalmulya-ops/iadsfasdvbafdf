@@ -235,8 +235,8 @@ const SocialSection = () => {
           </div>
         </div>
 
-        {/* Desktop: Horizontal Cards */}
-        <div className="hidden sm:flex flex-col gap-3 max-w-xl mx-auto">
+        {/* Desktop: Horizontal Cards with Purple Neon + Power Outage Effect */}
+        <div className="hidden sm:flex flex-col gap-4 max-w-xl mx-auto">
           {SOCIAL_LINKS.map((social, index) => (
             <a
               key={social.name}
@@ -244,20 +244,24 @@ const SocialSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => handleClick(social, e)}
-              className={`social-card-horizontal group flex items-center justify-center transition-all duration-300 ${
+              className={`social-card-neon group flex items-center justify-center transition-all duration-300 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
-              style={{ transitionDelay: isVisible ? `${index * 50}ms` : '0ms' }}
+              style={{ 
+                transitionDelay: isVisible ? `${index * 50}ms` : '0ms',
+                animationDelay: `${index * 0.7}s`
+              }}
+              data-neon-card={index}
             >
-              <div className="flex items-center justify-center w-7 h-7">
+              <div className="flex items-center justify-center w-8 h-8">
                 {social.icon}
               </div>
             </a>
           ))}
         </div>
 
-        {/* Mobile: Compact Grid */}
-        <div className="sm:hidden grid grid-cols-3 gap-3 justify-items-center max-w-xs mx-auto">
+        {/* Mobile: Compact Grid with Purple Neon */}
+        <div className="sm:hidden grid grid-cols-3 gap-4 justify-items-center max-w-xs mx-auto">
           {SOCIAL_LINKS.map((social, index) => (
             <a
               key={social.name}
@@ -265,12 +269,16 @@ const SocialSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => handleClick(social, e)}
-              className={`social-card-mobile group flex items-center justify-center transition-all duration-300 ${
+              className={`social-card-neon-mobile group flex items-center justify-center transition-all duration-300 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
-              style={{ transitionDelay: isVisible ? `${index * 50}ms` : '0ms' }}
+              style={{ 
+                transitionDelay: isVisible ? `${index * 50}ms` : '0ms',
+                animationDelay: `${index * 0.5}s`
+              }}
+              data-neon-card={index}
             >
-              <div className="flex items-center justify-center w-6 h-6">
+              <div className="flex items-center justify-center w-7 h-7">
                 {social.icon}
               </div>
             </a>

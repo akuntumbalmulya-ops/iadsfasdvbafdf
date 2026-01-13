@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import welcomeBg from '@/assets/welcome-bg.jpeg';
+import davidLucyBg from '@/assets/david-lucy-bg.jpeg';
 
 interface WelcomePageProps {
   onEnter: () => void;
@@ -86,16 +86,18 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       onClick={handleClick}
       style={{ opacity: flickerOpacity }}
     >
-      {/* Background Image */}
+      {/* Background Image - David & Lucy */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: `url(${welcomeBg})`,
+          backgroundImage: `url(${davidLucyBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center 30%',
         }}
       />
       
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      {/* Dark overlay - slightly darker for better text visibility */}
+      <div className="absolute inset-0 bg-black/50" />
       
       {/* Noise overlay */}
       <div className="noise-overlay" />
