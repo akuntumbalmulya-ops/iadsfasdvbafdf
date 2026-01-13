@@ -107,6 +107,7 @@ const HACKER_TEXTS = [
 const SocialSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [clickedCard, setClickedCard] = useState<number | null>(null);
   
   // Hacker text animation states
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
@@ -195,10 +196,13 @@ const SocialSection = () => {
     return () => clearTimeout(startDelay);
   }, [currentTextIndex, isVisible]);
 
-  const handleClick = (social: SocialLink, e: React.MouseEvent) => {
+  const handleClick = (social: SocialLink, index: number, e: React.MouseEvent) => {
     if (social.skipLink) {
       e.preventDefault();
     }
+    // Trigger zoom animation
+    setClickedCard(index);
+    setTimeout(() => setClickedCard(null), 300);
   };
 
   return (
@@ -235,7 +239,7 @@ const SocialSection = () => {
           </div>
         </div>
 
-        {/* Desktop: Horizontal Cards with Purple Neon + Power Outage Effect */}
+        {/* Desktop: Horizontal Cards with Red Glassmorphism + Purple Neon + Power Outage Effect */}
         <div className="hidden sm:flex flex-col gap-4 max-w-xl mx-auto">
           {SOCIAL_LINKS.map((social, index) => (
             <a
@@ -243,24 +247,24 @@ const SocialSection = () => {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => handleClick(social, e)}
-              className={`social-card-neon group flex items-center justify-center transition-all duration-300 ${
+              onClick={(e) => handleClick(social, index, e)}
+              className={`social-card-red group flex items-center justify-center transition-all duration-300 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
+              } ${clickedCard === index ? 'social-card-clicked' : ''}`}
               style={{ 
                 transitionDelay: isVisible ? `${index * 50}ms` : '0ms',
                 animationDelay: `${index * 0.7}s`
               }}
               data-neon-card={index}
             >
-              <div className="flex items-center justify-center w-8 h-8">
+              <div className={`social-icon-wrapper flex items-center justify-center w-10 h-10 ${clickedCard === index ? 'icon-glow' : ''}`}>
                 {social.icon}
               </div>
             </a>
           ))}
         </div>
 
-        {/* Mobile: Compact Grid with Purple Neon */}
+        {/* Mobile: Compact Grid with Red Glassmorphism + Purple Neon */}
         <div className="sm:hidden grid grid-cols-3 gap-4 justify-items-center max-w-xs mx-auto">
           {SOCIAL_LINKS.map((social, index) => (
             <a
@@ -268,17 +272,17 @@ const SocialSection = () => {
               href={social.url}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={(e) => handleClick(social, e)}
-              className={`social-card-neon-mobile group flex items-center justify-center transition-all duration-300 ${
+              onClick={(e) => handleClick(social, index, e)}
+              className={`social-card-red-mobile group flex items-center justify-center transition-all duration-300 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
+              } ${clickedCard === index ? 'social-card-clicked' : ''}`}
               style={{ 
                 transitionDelay: isVisible ? `${index * 50}ms` : '0ms',
                 animationDelay: `${index * 0.5}s`
               }}
               data-neon-card={index}
             >
-              <div className="flex items-center justify-center w-7 h-7">
+              <div className={`social-icon-wrapper flex items-center justify-center w-8 h-8 ${clickedCard === index ? 'icon-glow' : ''}`}>
                 {social.icon}
               </div>
             </a>
