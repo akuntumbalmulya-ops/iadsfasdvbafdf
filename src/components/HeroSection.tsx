@@ -11,28 +11,24 @@ import { Loader2 } from 'lucide-react';
  * Only decorative blur effects are applied here.
  */
 
-type AnimationPhase = 'identity' | 'loading' | 'warning';
-
-const IDENTITY_TEXTS = [
-  "strangers",
-  "duelist", 
-  "homeless",
-  "loser",
-  "gameholic",
+const SEARCH_TEXTS = [
+  { text: "I miss you...", isRed: true, hasLoader: false },
+  { text: "Searching fho david n lucy...", isRed: false, hasLoader: true },
 ];
 
 const TITLE_TEXTS = [
-  "gloistch",
-  "ikbal",
+  "Gloistch",
+  "Ikbal",
 ];
 
 const HeroSection = () => {
-  const [phase, setPhase] = useState<AnimationPhase>('identity');
-  const [identityIndex, setIdentityIndex] = useState(0);
+  const [searchIndex, setSearchIndex] = useState(0);
   const [titleIndex, setTitleIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [titleText, setTitleText] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
+  const [searchDisplayText, setSearchDisplayText] = useState("");
 
   const scrambleChars = "!@#$%^&*()_+-=[]{}|;':\"<>?";
 
@@ -52,7 +48,7 @@ const HeroSection = () => {
     return () => clearTimeout(timer);
   }, []);
 
-// Title animation (gloistch -> ikbal loop) - SLOWER with hacker glitch
+  // Title animation (Gloistch -> Ikbal loop) - SLOW with hacker glitch
   useEffect(() => {
     const targetTitle = TITLE_TEXTS[titleIndex];
     let progress = 0;
@@ -72,56 +68,54 @@ const HeroSection = () => {
     return () => clearInterval(interval);
   }, [titleIndex, scrambleText]);
 
-// Identity phase animation - SLOWER with hacker effect
+  // Search text animation - alternates between "I miss you..." and "Searching..."
   useEffect(() => {
-    if (phase !== 'identity') return;
-
-    const targetText = IDENTITY_TEXTS[identityIndex];
-    let progress = 0;
-
-    const interval = setInterval(() => {
-      if (progress <= targetText.length) {
-        setDisplayText(scrambleText(targetText, progress));
-        progress++;
-      } else {
-        clearInterval(interval);
-        
-        setTimeout(() => {
-          if (identityIndex < IDENTITY_TEXTS.length - 1) {
-            setIdentityIndex(prev => prev + 1);
+    const currentSearch = SEARCH_TEXTS[searchIndex];
+    
+    if (currentSearch.hasLoader) {
+      // Show loader first, then text
+      setShowLoader(true);
+      setSearchDisplayText("");
+      
+      const loaderTimer = setTimeout(() => {
+        setShowLoader(false);
+        let progress = 0;
+        const interval = setInterval(() => {
+          if (progress <= currentSearch.text.length) {
+            setSearchDisplayText(currentSearch.text.slice(0, progress));
+            progress++;
           } else {
-            setPhase('loading');
+            clearInterval(interval);
+            setTimeout(() => {
+              setSearchIndex(prev => (prev + 1) % SEARCH_TEXTS.length);
+            }, 3000);
           }
-        }, 600);
-      }
-    }, 80);
+        }, 50);
+      }, 1500);
+      
+      return () => clearTimeout(loaderTimer);
+    } else {
+      // "I miss you..." - hacker effect with red text
+      setShowLoader(false);
+      let progress = 0;
+      
+      const interval = setInterval(() => {
+        if (progress <= currentSearch.text.length) {
+          setSearchDisplayText(scrambleText(currentSearch.text, progress));
+          progress++;
+        } else {
+          clearInterval(interval);
+          setTimeout(() => {
+            setSearchIndex(prev => (prev + 1) % SEARCH_TEXTS.length);
+          }, 2500);
+        }
+      }, 60);
+      
+      return () => clearInterval(interval);
+    }
+  }, [searchIndex, scrambleText]);
 
-    return () => clearInterval(interval);
-  }, [phase, identityIndex, scrambleText]);
-
-  // Loading phase - spinner before warning
-  useEffect(() => {
-    if (phase !== 'loading') return;
-
-    const timer = setTimeout(() => {
-      setPhase('warning');
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, [phase]);
-
-  // Warning phase - show then loop back to identity
-  useEffect(() => {
-    if (phase !== 'warning') return;
-
-    const timer = setTimeout(() => {
-      setPhase('identity');
-      setIdentityIndex(0);
-      setDisplayText("");
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, [phase]);
+  const currentSearch = SEARCH_TEXTS[searchIndex];
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4">
@@ -133,17 +127,17 @@ const HeroSection = () => {
         }}
       />
 
-      {/* STANDBY indicator - top right */}
-      <div className="absolute top-6 right-6 flex items-center gap-2 font-mono text-xs text-muted-foreground/60">
+      {/* STANDBY indicator - top LEFT, bold white */}
+      <div className="absolute top-6 left-6 flex items-center gap-2 font-mono text-xs">
         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-        <span>STANDBY</span>
+        <span className="font-bold text-white">STANDBY</span>
       </div>
 
       <div className={`relative z-10 text-center w-full max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        {/* Main title with subtle glitch - Audiowide cyber font */}
+        {/* Main title with subtle glitch - Helvetica font */}
         <h1 
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold mb-4 glitch-subtle tracking-wider uppercase"
-          style={{ fontFamily: "'Audiowide', cursive" }}
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold mb-4 glitch-subtle tracking-wider"
+          style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
           data-text={titleText}
         >
           {titleText}
@@ -162,59 +156,20 @@ const HeroSection = () => {
           />
         </div>
 
-        {/* Terminal input - with embed */}
-        <div className="glass-card-gradient neon-border-purple px-6 py-4 rounded-2xl inline-block mb-8">
+        {/* Terminal input - with WHITE neon embed */}
+        <div className="glass-card-gradient neon-border-white px-6 py-4 rounded-2xl inline-block mb-8">
           <div className="font-mono text-sm">
-            <span className="text-white">Searching fho david n lucy...</span>
-            <span className="terminal-cursor" />
+            {showLoader ? (
+              <Loader2 className="w-5 h-5 text-white animate-spin inline-block" />
+            ) : (
+              <>
+                <span className={`${currentSearch.isRed ? 'text-red-500 font-bold' : 'text-white'}`}>
+                  {searchDisplayText}
+                </span>
+                <span className="terminal-cursor" />
+              </>
+            )}
           </div>
-        </div>
-
-        {/* Animated subtitle area - fixed height to prevent layout shift */}
-        <div className="h-[200px] sm:h-[180px] md:h-[200px] flex items-start justify-center pt-4">
-          {phase === 'identity' && (
-            <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-mono text-foreground">
-              {displayText}
-              <span className="terminal-cursor" />
-            </div>
-          )}
-
-          {phase === 'loading' && (
-            <div className="flex flex-col items-center gap-4">
-              <Loader2 className="w-16 h-16 text-white animate-spin" />
-              <p className="font-mono text-sm text-muted-foreground animate-pulse">
-                SCANNING IDENTITY...
-              </p>
-            </div>
-          )}
-
-          {phase === 'warning' && (
-            <div className="warning-embed-enhanced w-full max-w-md mx-auto fade-in-up rounded-3xl">
-              {/* Warning Icon */}
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <svg className="w-8 h-8 sm:w-10 sm:h-10 text-primary animate-pulse" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L1 21h22L12 2zm0 3.17L20.53 19H3.47L12 5.17zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/>
-                </svg>
-                <span className="text-lg sm:text-xl font-bold text-primary text-glow-red animate-pulse">SYSTEM ERROR</span>
-                <svg className="w-8 h-8 sm:w-10 sm:h-10 text-primary animate-pulse" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2L1 21h22L12 2zm0 3.17L20.53 19H3.47L12 5.17zM11 10v4h2v-4h-2zm0 6v2h2v-2h-2z"/>
-                </svg>
-              </div>
-              
-              <div className="font-mono text-xs sm:text-sm space-y-2">
-                <p className="font-bold text-primary text-glow-red animate-pulse text-base sm:text-lg">
-                  ⚠ WARNING: SYSTEM IDENTITY NOT FOUND
-                </p>
-                <div className="h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent my-3" />
-                <p className="text-muted-foreground">ERROR CODE: <span className="text-primary">0xGLO1STCH</span></p>
-                <p className="text-muted-foreground">STATUS: <span className="text-destructive">ACCESS LIMITED</span></p>
-                <div className="h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent my-3" />
-                <p className="text-xs mt-4 text-primary animate-pulse">
-                  [ATTEMPTING RECOVERY...]
-                </p>
-              </div>
-            </div>
-          )}
         </div>
       </div>
 

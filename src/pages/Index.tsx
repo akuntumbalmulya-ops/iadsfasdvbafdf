@@ -68,8 +68,7 @@ const Index = () => {
            * Edit cyberpunk-bg.jpeg to change the background
            * Blur amount: backdrop-blur-[3px] (adjust for more/less blur)
            * 
-           * NOTE: Background is applied DIRECTLY without dark overlays
-           * to ensure the custom image is fully visible
+           * NOTE: Background is darkened slightly for better embed visibility
            */}
           <div 
             className="fixed inset-0 z-0"
@@ -80,8 +79,8 @@ const Index = () => {
               backgroundRepeat: 'no-repeat',
             }}
           >
-            {/* Very subtle blur overlay only - NO dark background */}
-            <div className="absolute inset-0 backdrop-blur-[3px]" />
+            {/* Dark overlay for better embed visibility + subtle blur */}
+            <div className="absolute inset-0 bg-black/40 backdrop-blur-[3px]" />
           </div>
 
           {/* Content sections */}

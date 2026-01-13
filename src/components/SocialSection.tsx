@@ -215,25 +215,26 @@ const SocialSection = () => {
       className="relative min-h-screen flex items-center justify-center py-12 sm:py-20 px-4"
     >
       <div className="relative z-10 max-w-4xl mx-auto w-full">
-        {/* Hacker Animated Title with Embed */}
+        {/* Hacker Animated Title with WHITE neon Embed */}
         <div 
           className={`mb-8 sm:mb-12 text-center transition-all duration-1000 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
-          <div className="glass-card-gradient neon-border-purple px-6 py-4 rounded-2xl inline-block">
+          <div className="glass-card-gradient neon-border-white px-6 py-4 rounded-2xl inline-block">
             <h2 
-              className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-glow-red font-mono text-primary ${
+              className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-mono text-white ${
                 glitchActive ? 'glitch-text' : ''
               }`}
               data-text={displayedText}
               style={{
-                animation: glitchActive ? 'flicker 0.1s infinite' : 'none'
+                animation: glitchActive ? 'flicker 0.1s infinite' : 'none',
+                textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)'
               }}
             >
               {displayedText}
               <span 
-                className={`inline-block w-[0.5em] h-[1em] ml-1 align-middle bg-primary ${
+                className={`inline-block w-[0.5em] h-[1em] ml-1 align-middle bg-white ${
                   showCursor ? 'opacity-100' : 'opacity-0'
                 }`}
                 style={{ transition: 'opacity 0.1s' }}
@@ -280,9 +281,9 @@ const SocialSection = () => {
             isVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <div className="inline-block glass-card-gradient neon-border-purple px-4 sm:px-6 py-2 sm:py-3 rounded-2xl">
+          <div className="inline-block glass-card-gradient neon-border-white px-4 sm:px-6 py-2 sm:py-3 rounded-2xl">
             <p className="font-mono text-[10px] sm:text-xs md:text-sm">
-              <span className="text-white font-bold text-glow-red">&gt; connection.status:</span>
+              <span className="text-white font-bold" style={{ textShadow: '0 0 10px rgba(255,255,255,0.5)' }}>&gt; connection.status:</span>
               <span className="text-terminal-green text-glow-green font-bold"> ONLINE</span>
               <span className="terminal-cursor" />
             </p>

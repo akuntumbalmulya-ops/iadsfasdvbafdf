@@ -214,6 +214,33 @@
     animation: neonPulse 2s ease-in-out infinite;
   }
 
+  /* WHITE neon border utility */
+  .neon-border-white {
+    position: relative;
+  }
+
+  .neon-border-white::before,
+  .neon-border-white::after {
+    content: '';
+    @apply absolute top-0 bottom-0 w-[5px];
+    background: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(0 0% 85%) 50%, hsl(0 0% 100%) 100%);
+    box-shadow: 
+      0 0 8px hsl(0 0% 100%),
+      0 0 15px hsl(0 0% 100%),
+      0 0 30px hsl(0 0% 100% / 0.9),
+      0 0 60px hsl(0 0% 100% / 0.7),
+      0 0 100px hsl(0 0% 100% / 0.5);
+    animation: neonPulseWhite 2s ease-in-out infinite;
+  }
+
+  .neon-border-white::before {
+    @apply left-0;
+  }
+
+  .neon-border-white::after {
+    @apply right-0;
+  }
+
   .noise-overlay {
     @apply fixed inset-0 pointer-events-none z-50;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
@@ -647,6 +674,19 @@
     filter: brightness(1.1);
   }
 }
+
+/* Neon pulse animation for WHITE glow */
+@keyframes neonPulseWhite {
+  0%, 100% { 
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% { 
+    opacity: 0.9;
+    filter: brightness(1.2);
+  }
+}
+
 
 /* Scanline Effect */
 .scanline::before {
