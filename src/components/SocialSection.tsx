@@ -92,10 +92,26 @@ const SOCIAL_LINKS: SocialLink[] = [
   },
 ];
 
+/**
+ * Hacker animated text sequences
+ */
+const HACKER_TEXTS = [
+  "r u the choosen one?",
+  "if yea...",
+  "hit me up then with press the button"
+];
+
 const SocialSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  
+  // Hacker text animation states
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [displayedText, setDisplayedText] = useState('');
+  const [isTyping, setIsTyping] = useState(true);
+  const [showCursor, setShowCursor] = useState(true);
+  const [glitchActive, setGlitchActive] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -114,6 +130,69 @@ const SocialSection = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Cursor blink effect
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 500);
+    return () => clearInterval(cursorInterval);
+  }, []);
+
+  // Hacker typing effect
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const targetText = HACKER_TEXTS[currentTextIndex];
+    let charIndex = 0;
+    
+    // Scramble characters for hacker effect
+    const scrambleChars = '!@#$%^&*()_+-=[]{}|;:,.<>?0123456789';
+    
+    const typeChar = () => {
+      if (charIndex <= targetText.length) {
+        // Add slight scramble effect before showing actual character
+        const scrambleCount = Math.random() > 0.7 ? 2 : 0;
+        
+        if (scrambleCount > 0 && charIndex < targetText.length) {
+          let scrambled = targetText.slice(0, charIndex);
+          for (let i = 0; i < scrambleCount; i++) {
+            scrambled += scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+          }
+          setDisplayedText(scrambled);
+          
+          setTimeout(() => {
+            setDisplayedText(targetText.slice(0, charIndex + 1));
+            charIndex++;
+            setTimeout(typeChar, 30 + Math.random() * 50);
+          }, 30);
+        } else {
+          setDisplayedText(targetText.slice(0, charIndex + 1));
+          charIndex++;
+          setTimeout(typeChar, 30 + Math.random() * 50);
+        }
+      } else {
+        setIsTyping(false);
+        
+        // Trigger glitch effect before transitioning
+        setTimeout(() => {
+          setGlitchActive(true);
+          setTimeout(() => {
+            setGlitchActive(false);
+            setDisplayedText('');
+            setIsTyping(true);
+            setCurrentTextIndex((prev) => (prev + 1) % HACKER_TEXTS.length);
+          }, 200);
+        }, 2000);
+      }
+    };
+
+    const startDelay = setTimeout(() => {
+      typeChar();
+    }, 300);
+
+    return () => clearTimeout(startDelay);
+  }, [currentTextIndex, isVisible]);
+
   const handleClick = (social: SocialLink, e: React.MouseEvent) => {
     if (social.skipLink) {
       e.preventDefault();
@@ -123,22 +202,33 @@ const SocialSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center py-12 sm:py-20 px-4 bg-gradient-dark"
+      className="relative min-h-screen flex items-center justify-center py-12 sm:py-20 px-4"
     >
-      {/* Background glow */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-1/3 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-primary/40 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/3 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-accent/20 rounded-full blur-[120px]" />
-      </div>
-
       <div className="relative z-10 max-w-4xl mx-auto w-full">
-        <h2 
-          className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-8 sm:mb-12 text-center text-glow-red transition-all duration-1000 ${
+        {/* Hacker Animated Title */}
+        <div 
+          className={`mb-8 sm:mb-12 text-center transition-all duration-1000 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
-          Connect With Me
-        </h2>
+          <h2 
+            className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-glow-red font-mono ${
+              glitchActive ? 'glitch-text' : ''
+            }`}
+            data-text={displayedText}
+            style={{
+              animation: glitchActive ? 'flicker 0.1s infinite' : 'none'
+            }}
+          >
+            {displayedText}
+            <span 
+              className={`inline-block w-[0.5em] h-[1em] ml-1 align-middle bg-primary ${
+                showCursor ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{ transition: 'opacity 0.1s' }}
+            />
+          </h2>
+        </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {SOCIAL_LINKS.map((social, index) => (
