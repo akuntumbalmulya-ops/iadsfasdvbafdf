@@ -4,6 +4,7 @@ import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
 import SocialSection from '@/components/SocialSection';
 import MusicPlayer from '@/components/MusicPlayer';
+import AmbientOverlay from '@/components/AmbientOverlay';
 
 /**
  * ============================================
@@ -82,6 +83,9 @@ const Index = () => {
             {/* Dark overlay for better embed visibility + subtle blur */}
             <div className="absolute inset-0 bg-black/40 backdrop-blur-[3px]" />
           </div>
+
+          {/* Ambient Overlay */}
+          <AmbientOverlay />
 
           {/* Content sections */}
           <div className="relative z-10">

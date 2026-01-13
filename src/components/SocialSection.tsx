@@ -235,7 +235,8 @@ const SocialSection = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4 justify-items-center">
+        {/* Desktop: Horizontal Cards */}
+        <div className="hidden sm:flex flex-col gap-3 max-w-xl mx-auto">
           {SOCIAL_LINKS.map((social, index) => (
             <a
               key={social.name}
@@ -243,13 +244,33 @@ const SocialSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => handleClick(social, e)}
-              data-neon="purple"
-              className={`social-card-compact group flex items-center justify-center transition-all duration-300 ${
+              className={`social-card-horizontal group flex items-center justify-center transition-all duration-300 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
               style={{ transitionDelay: isVisible ? `${index * 50}ms` : '0ms' }}
             >
-              <div className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7">
+              <div className="flex items-center justify-center w-7 h-7">
+                {social.icon}
+              </div>
+            </a>
+          ))}
+        </div>
+
+        {/* Mobile: Compact Grid */}
+        <div className="sm:hidden grid grid-cols-3 gap-3 justify-items-center max-w-xs mx-auto">
+          {SOCIAL_LINKS.map((social, index) => (
+            <a
+              key={social.name}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => handleClick(social, e)}
+              className={`social-card-mobile group flex items-center justify-center transition-all duration-300 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+              }`}
+              style={{ transitionDelay: isVisible ? `${index * 50}ms` : '0ms' }}
+            >
+              <div className="flex items-center justify-center w-6 h-6">
                 {social.icon}
               </div>
             </a>
