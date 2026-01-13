@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 /**
  * ============================================
  * IMAGE EDITING GUIDE FOR ABOUT SECTION
@@ -14,9 +14,30 @@ import { useEffect, useRef, useState } from 'react';
  */
 import profilePhoto from '@/assets/profile-photo.png';
 
+const TITLE_TEXTS = [
+  "About Me",
+  "Yes... I am",
+];
+
 const AboutSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [titleIndex, setTitleIndex] = useState(0);
+  const [displayedTitle, setDisplayedTitle] = useState('');
+  const [glitch404, setGlitch404] = useState(false);
+
+  const scrambleChars = "!@#$%^&*()_+-=[]{}|;':\"<>?";
+
+  const scrambleText = useCallback((text: string, progress: number) => {
+    return text
+      .split("")
+      .map((char, i) => {
+        if (i < progress) return char;
+        if (char === " ") return " ";
+        return scrambleChars[Math.floor(Math.random() * scrambleChars.length)];
+      })
+      .join("");
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -33,6 +54,38 @@ const AboutSection = () => {
     }
 
     return () => observer.disconnect();
+  }, []);
+
+  // Title hacker animation
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const targetTitle = TITLE_TEXTS[titleIndex];
+    let progress = 0;
+
+    const interval = setInterval(() => {
+      if (progress <= targetTitle.length) {
+        setDisplayedTitle(scrambleText(targetTitle, progress));
+        progress++;
+      } else {
+        clearInterval(interval);
+        setTimeout(() => {
+          setTitleIndex(prev => (prev + 1) % TITLE_TEXTS.length);
+        }, 2000);
+      }
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [titleIndex, isVisible, scrambleText]);
+
+  // 404 glitch effect - random triggering
+  useEffect(() => {
+    const glitchInterval = setInterval(() => {
+      setGlitch404(true);
+      setTimeout(() => setGlitch404(false), 200);
+    }, 3000);
+
+    return () => clearInterval(glitchInterval);
   }, []);
 
   return (
@@ -53,8 +106,12 @@ const AboutSection = () => {
         <div className="glass-card-gradient neon-border-purple p-6 sm:p-8 md:p-12 float rounded-3xl">
           {/* Header with photo */}
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-glow-red order-2 sm:order-1">
-              About Me
+            <h2 
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-glow-red order-2 sm:order-1 font-mono"
+              data-text={displayedTitle}
+            >
+              {displayedTitle}
+              <span className="terminal-cursor" />
             </h2>
             <div className="w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-3 border-primary/50 shadow-lg shadow-primary/30 flex-shrink-0 order-1 sm:order-2 mb-4 sm:mb-0">
               <img 
@@ -67,41 +124,82 @@ const AboutSection = () => {
           
           <div className="h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent mb-6" />
           
-          <p className="text-base sm:text-lg md:text-xl text-foreground/90 leading-relaxed mb-4 sm:mb-6">
+          <p className="text-base sm:text-lg md:text-xl text-primary/90 leading-relaxed mb-4 sm:mb-6">
             A digital stranger navigating code, games, and chaos.
           </p>
           
-          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6 sm:mb-8">
+          <p className="text-sm sm:text-base text-primary/70 leading-relaxed mb-6 sm:mb-8">
             Just someone trying to become a better version of myself than yesterday. I spend most of my time enjoying games, movies, and music things that help me relax, escape, and stay inspired. I like exploring stories, worlds, and ideas, and I'm always learning at my own pace. Oh, and yeah, I'm into girls with a goth look.
           </p>
 
           <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
             <div className="p-2 sm:p-3">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent text-glow-yellow">∞</div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-1">Hours Coded</div>
+              {/* Snake-like infinite symbol */}
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary text-glow-red">
+                <svg viewBox="0 0 100 50" className="w-12 h-6 sm:w-16 sm:h-8 mx-auto fill-current">
+                  <path d="M25 25c0-8 6-15 15-15s15 7 15 15-6 15-15 15c-3 0-6-1-8-2 M75 25c0 8-6 15-15 15s-15-7-15-15 6-15 15-15c3 0 6 1 8 2" 
+                    stroke="currentColor" 
+                    strokeWidth="4" 
+                    fill="none"
+                    strokeLinecap="round"
+                    style={{ animation: 'snakeMove 2s ease-in-out infinite' }}
+                  />
+                </svg>
+              </div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-primary/70 mt-1">Playin' Valo</div>
             </div>
             <div className="p-2 sm:p-3">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent text-glow-yellow">404</div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-1">Sleep Not Found</div>
+              <div 
+                className={`text-xl sm:text-2xl md:text-3xl font-bold font-mono ${
+                  glitch404 ? 'text-red-500 glitch-404' : 'text-primary text-glow-red'
+                }`}
+                style={{
+                  textShadow: glitch404 
+                    ? '2px 0 red, -2px 0 cyan, 0 0 10px red' 
+                    : undefined
+                }}
+              >
+                404
+              </div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-primary/70 mt-1">Sleep Not Found</div>
             </div>
             <div className="p-2 sm:p-3">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-accent text-glow-yellow">1</div>
-              <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground mt-1">Territory</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary text-glow-red">1</div>
+              <div className="text-[10px] sm:text-xs md:text-sm text-primary/70 mt-1">Territory</div>
             </div>
           </div>
 
           {/* Terminal-style footer */}
-          <div className="mt-6 sm:mt-8 p-2 sm:p-3 bg-background/50 rounded border border-border/50">
-            <p className="font-mono text-[10px] sm:text-xs text-muted-foreground">
+          <div className="mt-6 sm:mt-8 p-2 sm:p-3 bg-background/50 rounded border border-primary/30">
+            <p className="font-mono text-[10px] sm:text-xs text-primary/70">
               <span className="text-terminal-green">gloistch@territory</span>
-              <span className="text-foreground">:</span>
+              <span className="text-primary">:</span>
               <span className="text-primary">~</span>
-              <span className="text-foreground">$ whoami</span>
+              <span className="text-primary">$ whoami</span>
               <span className="terminal-cursor" />
             </p>
           </div>
         </div>
       </div>
+
+      {/* Snake animation keyframe */}
+      <style>{`
+        @keyframes snakeMove {
+          0%, 100% { stroke-dashoffset: 0; }
+          50% { stroke-dashoffset: 20; }
+        }
+        @keyframes glitch404 {
+          0% { transform: translate(0); }
+          20% { transform: translate(-3px, 3px); }
+          40% { transform: translate(-3px, -3px); }
+          60% { transform: translate(3px, 3px); }
+          80% { transform: translate(3px, -3px); }
+          100% { transform: translate(0); }
+        }
+        .glitch-404 {
+          animation: glitch404 0.2s infinite;
+        }
+      `}</style>
     </section>
   );
 };

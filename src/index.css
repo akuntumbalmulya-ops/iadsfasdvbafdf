@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +7,7 @@
 
 @layer base {
   :root {
-    /* Y2K Dark Theme */
+    /* Y2K Dark Theme - ALL RED */
     --background: 0 0% 4%;
     --foreground: 0 0% 85%;
 
@@ -16,7 +17,7 @@
     --popover: 0 0% 6%;
     --popover-foreground: 0 0% 85%;
 
-    --primary: 0 70% 35%;
+    --primary: 0 70% 50%;
     --primary-foreground: 0 0% 98%;
 
     --secondary: 0 0% 12%;
@@ -37,12 +38,12 @@
 
     --radius: 0.5rem;
 
-    /* Custom Y2K Colors */
+    /* Custom Y2K Colors - RED THEME */
     --cyber-black: 0 0% 4%;
     --cyber-dark: 0 0% 8%;
     --cyber-gray: 0 0% 15%;
-    --cyber-red: 0 70% 35%;
-    --cyber-red-glow: 0 70% 45%;
+    --cyber-red: 0 70% 50%;
+    --cyber-red-glow: 0 70% 60%;
     --cyber-purple: 270 80% 60%;
     --cyber-purple-glow: 270 80% 70%;
     --cyber-white: 0 0% 85%;
@@ -79,11 +80,19 @@
 
   html {
     scroll-behavior: smooth;
+    /* Mobile scroll fix */
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-background text-foreground font-mono antialiased;
     font-family: 'JetBrains Mono', monospace;
+    /* Mobile scroll fix */
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
   }
 
   ::selection {
@@ -160,8 +169,8 @@
     @apply right-0;
   }
 
-  /* Neon yellow border utility - ULTRA STRONG GLOW */
-  .neon-border-yellow {
+  /* Neon purple border utility - ULTRA STRONG GLOW */
+  .neon-border-purple {
     position: relative;
   }
 
@@ -201,6 +210,7 @@
     border: 3px solid hsl(270 80% 60%);
     animation: neonPulse 2s ease-in-out infinite;
   }
+
   .noise-overlay {
     @apply fixed inset-0 pointer-events-none z-50;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
@@ -208,12 +218,22 @@
     mix-blend-mode: overlay;
   }
 
+  /* Subtle Glitch Text Effect for title */
+  .glitch-subtle {
+    @apply relative inline-block;
+    text-shadow: 
+      0.02em 0 0 hsl(0 70% 50% / 0.3),
+      -0.01em -0.02em 0 hsl(180 100% 50% / 0.2),
+      0.01em 0.02em 0 hsl(120 100% 40% / 0.15);
+    animation: glitchSubtle 3s infinite;
+  }
+
   /* Glitch Text Effect */
   .glitch-text {
     @apply relative inline-block;
     text-shadow: 
       0.05em 0 0 hsl(var(--cyber-red)),
-      -0.025em -0.05em 0 hsl(var(--cyber-yellow)),
+      -0.025em -0.05em 0 hsl(180 100% 50%),
       0.025em 0.05em 0 hsl(120 100% 40%);
     animation: glitch 500ms infinite;
   }
@@ -235,7 +255,7 @@
     animation: glitch-clip-2 2s infinite linear alternate-reverse;
     clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
     transform: translateX(0.025em);
-    text-shadow: 0.025em 0 hsl(var(--cyber-yellow));
+    text-shadow: 0.025em 0 hsl(180 100% 50%);
   }
 
   /* Terminal Cursor */
@@ -381,9 +401,9 @@
     text-shadow: 0 0 10px hsl(var(--terminal-green));
   }
 
-  /* Warning Embed Enhanced */
+  /* Warning Embed Enhanced - MORE ROUNDED + WARNING NEON PULSE */
   .warning-embed-enhanced {
-    @apply relative overflow-hidden rounded-lg p-4 sm:p-6 text-sm;
+    @apply relative overflow-hidden rounded-2xl p-4 sm:p-6 text-sm;
     background: linear-gradient(135deg, hsl(0 70% 20% / 0.5) 0%, hsl(0 0% 4% / 0.7) 100%);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
@@ -393,16 +413,19 @@
       0 0 60px hsl(0 70% 30% / 0.2),
       inset 0 0 30px hsl(0 70% 30% / 0.1),
       var(--shadow-dark);
-    animation: warningPulse 2s ease-in-out infinite;
+    animation: warningNeonPulse 0.5s ease-in-out infinite;
   }
 
   .warning-embed-enhanced::before,
   .warning-embed-enhanced::after {
     content: '';
-    @apply absolute top-0 bottom-0 w-[3px];
-    background: hsl(var(--cyber-purple));
-    box-shadow: 0 0 20px hsl(270 80% 60% / 0.8), 0 0 40px hsl(270 80% 60% / 0.5);
-    animation: neonFlicker 1.5s ease-in-out infinite;
+    @apply absolute top-0 bottom-0 w-[4px];
+    background: hsl(0 70% 50%);
+    box-shadow: 
+      0 0 10px hsl(0 70% 50%),
+      0 0 20px hsl(0 70% 50%),
+      0 0 40px hsl(0 70% 50% / 0.8);
+    animation: warningNeonFlicker 0.3s ease-in-out infinite;
   }
 
   .warning-embed-enhanced::before {
@@ -432,10 +455,6 @@
 @layer utilities {
   .text-glow-red {
     text-shadow: 0 0 20px hsl(var(--cyber-red-glow)), 0 0 40px hsl(var(--cyber-red) / 0.5);
-  }
-
-  .text-glow-yellow {
-    text-shadow: 0 0 20px hsl(var(--cyber-yellow-glow)), 0 0 40px hsl(var(--cyber-yellow) / 0.5);
   }
 
   .text-glow-green {
@@ -468,6 +487,32 @@
   40% { transform: translate(-2px, -2px); }
   60% { transform: translate(2px, 2px); }
   80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitchSubtle {
+  0%, 95% { 
+    transform: translate(0);
+    text-shadow: 
+      0.02em 0 0 hsl(0 70% 50% / 0.3),
+      -0.01em -0.02em 0 hsl(180 100% 50% / 0.2),
+      0.01em 0.02em 0 hsl(120 100% 40% / 0.15);
+  }
+  96% { 
+    transform: translate(-1px, 1px);
+    text-shadow: 
+      0.04em 0 0 hsl(0 70% 50% / 0.5),
+      -0.02em -0.03em 0 hsl(180 100% 50% / 0.4),
+      0.02em 0.03em 0 hsl(120 100% 40% / 0.3);
+  }
+  97% { 
+    transform: translate(1px, -1px);
+  }
+  98% { 
+    transform: translate(-1px, 0);
+  }
+  99% { 
+    transform: translate(0);
+  }
 }
 
 @keyframes glitch-clip-1 {
@@ -530,6 +575,51 @@
   }
 }
 
+/* Warning neon pulse - fast cenat cenut effect */
+@keyframes warningNeonPulse {
+  0%, 100% { 
+    box-shadow: 
+      0 0 20px hsl(0 70% 40% / 0.4),
+      0 0 40px hsl(0 70% 30% / 0.2),
+      inset 0 0 20px hsl(0 70% 30% / 0.1);
+    border-color: hsl(0 70% 40% / 0.6);
+  }
+  50% { 
+    box-shadow: 
+      0 0 40px hsl(0 70% 60% / 0.7),
+      0 0 80px hsl(0 70% 50% / 0.4),
+      0 0 120px hsl(0 70% 40% / 0.2),
+      inset 0 0 40px hsl(0 70% 40% / 0.2);
+    border-color: hsl(0 70% 60% / 0.9);
+  }
+}
+
+@keyframes warningNeonFlicker {
+  0%, 100% { 
+    opacity: 1;
+    box-shadow: 
+      0 0 10px hsl(0 70% 50%),
+      0 0 20px hsl(0 70% 50%),
+      0 0 40px hsl(0 70% 50% / 0.8);
+  }
+  25% { 
+    opacity: 0.6;
+    box-shadow: 
+      0 0 5px hsl(0 70% 50%),
+      0 0 10px hsl(0 70% 50%);
+  }
+  50% { 
+    opacity: 1;
+    box-shadow: 
+      0 0 15px hsl(0 70% 60%),
+      0 0 30px hsl(0 70% 60%),
+      0 0 60px hsl(0 70% 50% / 0.9);
+  }
+  75% { 
+    opacity: 0.8;
+  }
+}
+
 @keyframes neonFlicker {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.7; }
@@ -560,4 +650,11 @@
     hsl(0 0% 0% / 0.03) 50%
   );
   background-size: 100% 4px;
+}
+
+/* Mobile touch scroll fix */
+@supports (-webkit-touch-callout: none) {
+  html, body {
+    height: -webkit-fill-available;
+  }
 }
