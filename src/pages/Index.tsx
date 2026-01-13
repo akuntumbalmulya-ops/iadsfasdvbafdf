@@ -44,7 +44,7 @@ const Index = () => {
   };
 
   return (
-    <div className="relative bg-background min-h-screen">
+    <div className="relative min-h-screen" style={{ backgroundColor: 'hsl(0, 0%, 4%)' }}>
       {/* Global noise overlay */}
       <div className="noise-overlay" />
       
@@ -66,7 +66,10 @@ const Index = () => {
            * BACKGROUND IMAGE CONTAINER
            * ============================================
            * Edit cyberpunk-bg.jpeg to change the background
-           * Blur amount: blur-sm (adjust to blur-md, blur-lg for more blur)
+           * Blur amount: backdrop-blur-sm (adjust to blur-md, blur-lg for more blur)
+           * 
+           * NOTE: Background is applied DIRECTLY without additional overlays
+           * to ensure the custom image is fully visible
            */}
           <div 
             className="fixed inset-0 z-0"
@@ -77,8 +80,8 @@ const Index = () => {
               backgroundRepeat: 'no-repeat',
             }}
           >
-            {/* Blur overlay */}
-            <div className="absolute inset-0 backdrop-blur-sm bg-background/70" />
+            {/* Subtle blur overlay - minimal opacity to show background */}
+            <div className="absolute inset-0 backdrop-blur-[2px]" style={{ backgroundColor: 'hsla(0, 0%, 4%, 0.3)' }} />
           </div>
 
           {/* Content sections */}
@@ -89,7 +92,7 @@ const Index = () => {
             <MusicPlayer shouldPlay={showContent} />
 
             {/* Footer */}
-            <footer className="relative py-8 text-center border-t border-border/20 bg-background/50 backdrop-blur-sm">
+            <footer className="relative py-8 text-center border-t border-border/20" style={{ backgroundColor: 'hsla(0, 0%, 4%, 0.5)', backdropFilter: 'blur(4px)' }}>
               <p className="font-mono text-xs text-muted-foreground">
                 © 2026 gloistch. All rights reserved.
               </p>
