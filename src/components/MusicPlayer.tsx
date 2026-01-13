@@ -162,23 +162,35 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  // Circular visualizer component
-  const CircularVisualizer = ({ size = 40, className = "" }: { size?: number; className?: string }) => {
-    const bars = 16;
-    const radius = size / 2 - 4;
+  // Circular visualizer component - pulses OUTSIDE the circle
+  const CircularVisualizer = ({ buttonSize = 64 }: { buttonSize?: number }) => {
+    const bars = 20;
+    const visualizerSize = buttonSize + 60; // Larger than button to extend outside
+    const centerOffset = (visualizerSize - buttonSize) / 2;
+    const innerRadius = buttonSize / 2 + 4; // Start just outside the button
     
     return (
-      <div className={`absolute inset-0 flex items-center justify-center pointer-events-none ${className}`}>
-        <svg width={size} height={size} className="transform -rotate-90">
+      <div 
+        className="absolute pointer-events-none"
+        style={{
+          width: visualizerSize,
+          height: visualizerSize,
+          top: -centerOffset,
+          left: -centerOffset,
+        }}
+      >
+        <svg width={visualizerSize} height={visualizerSize} className="transform -rotate-90">
           {Array.from({ length: bars }).map((_, i) => {
             const angle = (i / bars) * Math.PI * 2;
             const dataIndex = Math.floor((i / bars) * audioData.length);
             const value = isPlaying ? audioData[dataIndex] || 0 : 0;
-            const barHeight = 4 + value * 12;
-            const x1 = size / 2 + Math.cos(angle) * (radius - 2);
-            const y1 = size / 2 + Math.sin(angle) * (radius - 2);
-            const x2 = size / 2 + Math.cos(angle) * (radius - 2 - barHeight);
-            const y2 = size / 2 + Math.sin(angle) * (radius - 2 - barHeight);
+            const barHeight = 3 + value * 20; // Bars extend outward
+            
+            // Start from outside the button circle, extend further out
+            const x1 = visualizerSize / 2 + Math.cos(angle) * innerRadius;
+            const y1 = visualizerSize / 2 + Math.sin(angle) * innerRadius;
+            const x2 = visualizerSize / 2 + Math.cos(angle) * (innerRadius + barHeight);
+            const y2 = visualizerSize / 2 + Math.sin(angle) * (innerRadius + barHeight);
             
             return (
               <line
@@ -188,11 +200,12 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
                 x2={x2}
                 y2={y2}
                 stroke="hsl(270, 80%, 60%)"
-                strokeWidth="2"
+                strokeWidth="3"
                 strokeLinecap="round"
                 style={{
-                  filter: 'drop-shadow(0 0 3px hsl(270, 80%, 60%))',
-                  transition: 'all 0.05s ease-out'
+                  filter: 'drop-shadow(0 0 4px hsl(270, 80%, 60%)) drop-shadow(0 0 8px hsl(270, 80%, 50%))',
+                  transition: 'all 0.05s ease-out',
+                  opacity: 0.3 + value * 0.7
                 }}
               />
             );
@@ -240,17 +253,22 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
         crossOrigin="anonymous"
       />
 
-      {/* Minimized View - Circle with neon glow and circular visualizer */}
+      {/* Minimized View - Circle with neon glow and circular visualizer OUTSIDE */}
       {isMinimized ? (
-        <button
-          onClick={() => setIsMinimized(false)}
-          className="neon-circle-purple bg-background/80 backdrop-blur-md hover:scale-110 transition-transform duration-200 relative flex items-center justify-center"
-          aria-label="Expand music player"
-          style={{ width: '64px', height: '64px' }}
-        >
-          <CircularVisualizer size={64} />
-          <Music className={`w-5 h-5 absolute ${isPlaying ? 'text-accent animate-pulse' : 'text-muted-foreground'}`} style={{ zIndex: 10 }} />
-        </button>
+        <div className="relative" style={{ width: '64px', height: '64px' }}>
+          {/* Visualizer extending outside the button */}
+          <CircularVisualizer buttonSize={64} />
+          
+          {/* The actual button */}
+          <button
+            onClick={() => setIsMinimized(false)}
+            className="neon-circle-purple bg-background/80 backdrop-blur-md hover:scale-110 transition-transform duration-200 relative flex items-center justify-center rounded-full"
+            aria-label="Expand music player"
+            style={{ width: '64px', height: '64px', zIndex: 5 }}
+          >
+            <Music className={`w-5 h-5 ${isPlaying ? 'text-accent animate-pulse' : 'text-muted-foreground'}`} />
+          </button>
+        </div>
       ) : (
         /* Full Player View */
         <div className="glass-card-gradient flex flex-col gap-2 p-3 sm:p-4 rounded-2xl min-w-[200px] sm:min-w-[280px] neon-border-purple">
