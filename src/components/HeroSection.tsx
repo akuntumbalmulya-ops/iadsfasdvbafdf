@@ -143,10 +143,6 @@ const HeroSection = () => {
           {titleText}
         </h1>
 
-        {/* Glitch Divider - Terminal/Signal style */}
-        <div className="font-mono text-sm sm:text-base opacity-40 mb-4 text-gray-300 glitch-divider">
-          ───── ░▒▓▒░ ─────
-        </div>
 
         {/* Subtitle / System Text */}
         <div className="font-mono text-xs sm:text-sm text-gray-400 leading-relaxed mb-8 opacity-0 animate-subtitle-fade">

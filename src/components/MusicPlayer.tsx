@@ -244,12 +244,12 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
       {isMinimized ? (
         <button
           onClick={() => setIsMinimized(false)}
-          className="neon-circle-purple p-3 bg-background/80 backdrop-blur-md hover:scale-110 transition-transform duration-200 relative"
+          className="neon-circle-purple bg-background/80 backdrop-blur-md hover:scale-110 transition-transform duration-200 relative flex items-center justify-center"
           aria-label="Expand music player"
-          style={{ width: '56px', height: '56px' }}
+          style={{ width: '64px', height: '64px' }}
         >
-          <CircularVisualizer size={56} />
-          <Music className={`w-5 h-5 relative z-10 ${isPlaying ? 'text-accent animate-pulse' : 'text-muted-foreground'}`} />
+          <CircularVisualizer size={64} />
+          <Music className={`w-5 h-5 absolute ${isPlaying ? 'text-accent animate-pulse' : 'text-muted-foreground'}`} style={{ zIndex: 10 }} />
         </button>
       ) : (
         /* Full Player View */

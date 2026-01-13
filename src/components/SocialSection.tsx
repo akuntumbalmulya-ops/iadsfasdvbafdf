@@ -271,10 +271,10 @@ const SocialSection = () => {
                 </span>
               </div>
               
-              <div className="transition-transform duration-150 ease-out">
+              <div className="transition-transform duration-150 ease-out flex items-center justify-center w-full">
                 {social.icon}
               </div>
-              <span className="text-xs sm:text-sm font-bold mt-2 text-white text-glow-red">{social.name}</span>
+              
             </a>
           ))}
         </div>

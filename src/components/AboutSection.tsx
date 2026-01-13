@@ -103,7 +103,7 @@ const AboutSection = () => {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
         }`}
       >
-        <div className="glass-card-gradient neon-border-purple p-6 sm:p-8 md:p-12 float rounded-3xl">
+        <div className="glass-card-gradient p-6 sm:p-8 md:p-12 float rounded-3xl" data-neon="purple">
           {/* Header with photo */}
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
             <h2 
