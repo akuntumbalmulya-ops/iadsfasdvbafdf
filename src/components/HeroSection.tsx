@@ -143,17 +143,15 @@ const HeroSection = () => {
           {titleText}
         </h1>
 
-        {/* Thin horizontal divider */}
-        <div className="w-48 h-px mx-auto mb-6 opacity-20 bg-gradient-to-r from-transparent via-foreground to-transparent" />
+        {/* Glitch Divider - Terminal/Signal style */}
+        <div className="font-mono text-sm sm:text-base opacity-40 mb-4 text-gray-300 glitch-divider">
+          ───── ░▒▓▒░ ─────
+        </div>
 
-        {/* Status bar - scanning animation - BIGGER & WHITE */}
-        <div className="relative w-80 h-2 mx-auto mb-6 bg-muted/30 rounded-full overflow-hidden">
-          <div 
-            className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white to-transparent rounded-full"
-            style={{
-              animation: 'scanBar 2s ease-in-out infinite',
-            }}
-          />
+        {/* Subtitle / System Text */}
+        <div className="font-mono text-xs sm:text-sm text-gray-400 leading-relaxed mb-8 opacity-0 animate-subtitle-fade">
+          <p className="mb-1">not a hero</p>
+          <p>just trying to survive the system</p>
         </div>
 
         {/* Terminal input - with WHITE neon embed */}
@@ -173,11 +171,48 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Add keyframe for scan bar animation */}
+      {/* Add keyframe animations */}
       <style>{`
-        @keyframes scanBar {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(300%); }
+        @keyframes subtitleFade {
+          0% {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-subtitle-fade {
+          animation: subtitleFade 0.8s ease-out 0.5s forwards;
+        }
+        
+        .glitch-divider {
+          animation: dividerGlitch 4s infinite;
+        }
+        
+        @keyframes dividerGlitch {
+          0%, 90%, 100% {
+            transform: translateX(0);
+            opacity: 0.4;
+          }
+          92% {
+            transform: translateX(-2px);
+            opacity: 0.3;
+          }
+          94% {
+            transform: translateX(1px);
+            opacity: 0.5;
+          }
+          96% {
+            transform: translateX(-1px);
+            opacity: 0.35;
+          }
+          98% {
+            transform: translateX(2px);
+            opacity: 0.45;
+          }
         }
       `}</style>
     </section>

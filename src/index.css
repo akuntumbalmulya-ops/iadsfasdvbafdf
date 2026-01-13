@@ -319,8 +319,9 @@
     min-height: 120px;
   }
 
-  .social-card-smooth::before,
-  .social-card-smooth::after {
+  /* Remove default ::before/::after for social-card-smooth when data-neon="purple" is used */
+  .social-card-smooth:not([data-neon="purple"])::before,
+  .social-card-smooth:not([data-neon="purple"])::after {
     content: '';
     @apply absolute top-0 bottom-0 w-[5px];
     background: linear-gradient(180deg, hsl(270 80% 75%) 0%, hsl(270 80% 60%) 50%, hsl(270 80% 75%) 100%);
@@ -335,11 +336,11 @@
     animation: neonPulse 2s ease-in-out infinite;
   }
 
-  .social-card-smooth::before {
+  .social-card-smooth:not([data-neon="purple"])::before {
     @apply left-0;
   }
 
-  .social-card-smooth::after {
+  .social-card-smooth:not([data-neon="purple"])::after {
     @apply right-0;
   }
 
@@ -352,8 +353,8 @@
       0 8px 32px hsl(0 0% 0% / 0.5);
   }
 
-  .social-card-smooth:hover::before,
-  .social-card-smooth:hover::after {
+  .social-card-smooth:not([data-neon="purple"]):hover::before,
+  .social-card-smooth:not([data-neon="purple"]):hover::after {
     box-shadow: 
       0 0 10px hsl(270 80% 60%),
       0 0 20px hsl(270 80% 60%),
@@ -687,6 +688,144 @@
   }
 }
 
+/* ========================================
+   PURPLE NEON FLICKER - Power Outage Effect
+   Only applies to elements with data-neon="purple"
+   ======================================== */
+
+/* Purple neon embed with flicker effect */
+[data-neon="purple"] {
+  position: relative;
+}
+
+[data-neon="purple"]::before,
+[data-neon="purple"]::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, hsl(270 80% 75%) 0%, hsl(270 80% 60%) 50%, hsl(270 80% 75%) 100%);
+  box-shadow: 
+    0 0 8px hsl(270 80% 60%),
+    0 0 15px hsl(270 80% 60%),
+    0 0 30px hsl(270 80% 60% / 0.9),
+    0 0 60px hsl(270 80% 60% / 0.7),
+    0 0 100px hsl(270 80% 60% / 0.5),
+    0 0 150px hsl(270 80% 60% / 0.3);
+  animation: purpleNeonFlicker 4s ease-in-out infinite;
+}
+
+[data-neon="purple"]::before {
+  left: 0;
+}
+
+[data-neon="purple"]::after {
+  right: 0;
+  animation-delay: 0.3s;
+}
+
+/* Power outage flicker animation - realistic neon tube effect */
+@keyframes purpleNeonFlicker {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 
+      0 0 8px hsl(270 80% 60%),
+      0 0 15px hsl(270 80% 60%),
+      0 0 30px hsl(270 80% 60% / 0.9),
+      0 0 60px hsl(270 80% 60% / 0.7),
+      0 0 100px hsl(270 80% 60% / 0.5);
+  }
+  /* Stable phase */
+  10% {
+    opacity: 1;
+  }
+  /* Quick flicker */
+  12% {
+    opacity: 0.4;
+    box-shadow: 
+      0 0 4px hsl(270 80% 40%),
+      0 0 8px hsl(270 80% 40% / 0.5);
+  }
+  14% {
+    opacity: 1;
+    box-shadow: 
+      0 0 8px hsl(270 80% 60%),
+      0 0 15px hsl(270 80% 60%),
+      0 0 30px hsl(270 80% 60% / 0.9);
+  }
+  /* Power drop */
+  30% {
+    opacity: 1;
+  }
+  32% {
+    opacity: 0.2;
+    box-shadow: 
+      0 0 2px hsl(270 80% 30%);
+  }
+  33% {
+    opacity: 0.6;
+    box-shadow: 
+      0 0 5px hsl(270 80% 50%),
+      0 0 10px hsl(270 80% 50% / 0.6);
+  }
+  35% {
+    opacity: 0.1;
+    box-shadow: none;
+  }
+  38% {
+    opacity: 0.8;
+    box-shadow: 
+      0 0 6px hsl(270 80% 55%),
+      0 0 12px hsl(270 80% 55% / 0.7);
+  }
+  40% {
+    opacity: 1;
+    box-shadow: 
+      0 0 8px hsl(270 80% 60%),
+      0 0 15px hsl(270 80% 60%),
+      0 0 30px hsl(270 80% 60% / 0.9),
+      0 0 60px hsl(270 80% 60% / 0.7);
+  }
+  /* Another quick flicker */
+  65% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0.5;
+    box-shadow: 
+      0 0 4px hsl(270 80% 45%),
+      0 0 8px hsl(270 80% 45% / 0.5);
+  }
+  68% {
+    opacity: 0.9;
+  }
+  70% {
+    opacity: 0.3;
+    box-shadow: 
+      0 0 3px hsl(270 80% 40%);
+  }
+  73% {
+    opacity: 1;
+    box-shadow: 
+      0 0 8px hsl(270 80% 60%),
+      0 0 15px hsl(270 80% 60%),
+      0 0 30px hsl(270 80% 60% / 0.9),
+      0 0 60px hsl(270 80% 60% / 0.7),
+      0 0 100px hsl(270 80% 60% / 0.5);
+  }
+  /* Stable for rest */
+  85% {
+    opacity: 1;
+  }
+  86% {
+    opacity: 0.7;
+  }
+  88% {
+    opacity: 1;
+  }
+}
 
 /* Scanline Effect */
 .scanline::before {
