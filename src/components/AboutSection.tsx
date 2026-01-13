@@ -134,15 +134,14 @@ const AboutSection = () => {
 
           <div className="grid grid-cols-3 gap-2 sm:gap-4 text-center">
             <div className="p-2 sm:p-3">
-              {/* Snake-like infinite symbol */}
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary text-glow-red">
-                <svg viewBox="0 0 100 50" className="w-12 h-6 sm:w-16 sm:h-8 mx-auto fill-current">
+              {/* Snake-like infinite symbol - GREEN & SPINNING */}
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold">
+                <svg viewBox="0 0 100 50" className="w-12 h-6 sm:w-16 sm:h-8 mx-auto spinning-logo">
                   <path d="M25 25c0-8 6-15 15-15s15 7 15 15-6 15-15 15c-3 0-6-1-8-2 M75 25c0 8-6 15-15 15s-15-7-15-15 6-15 15-15c3 0 6 1 8 2" 
-                    stroke="currentColor" 
+                    stroke="#22c55e" 
                     strokeWidth="4" 
                     fill="none"
                     strokeLinecap="round"
-                    style={{ animation: 'snakeMove 2s ease-in-out infinite' }}
                   />
                 </svg>
               </div>
@@ -164,7 +163,7 @@ const AboutSection = () => {
               <div className="text-[10px] sm:text-xs md:text-sm text-white font-bold mt-1">Sleep Not Found</div>
             </div>
             <div className="p-2 sm:p-3">
-              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-primary text-glow-red">1</div>
+              <div className="text-xl sm:text-2xl md:text-3xl font-bold text-white">1</div>
               <div className="text-[10px] sm:text-xs md:text-sm text-white font-bold mt-1">Territory</div>
             </div>
           </div>
@@ -182,7 +181,7 @@ const AboutSection = () => {
         </div>
       </div>
 
-      {/* Snake animation keyframe */}
+      {/* Snake animation keyframe + spinning */}
       <style>{`
         @keyframes snakeMove {
           0%, 100% { stroke-dashoffset: 0; }
@@ -198,6 +197,13 @@ const AboutSection = () => {
         }
         .glitch-404 {
           animation: glitch404 0.2s infinite;
+        }
+        @keyframes spinLogo {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        .spinning-logo {
+          animation: spinLogo 3s linear infinite;
         }
       `}</style>
     </section>

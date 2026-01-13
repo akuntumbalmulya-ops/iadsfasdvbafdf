@@ -6,11 +6,11 @@ import { Volume2, VolumeX, Play, Pause, SkipBack, SkipForward, Music, Minimize2 
  * ============================================
  * 
  * BACKGROUND MUSIC:
- * - File: public/assets/music/background.mp3
- * - Currently: teeth_you_-_re6ce
+ * - File: public/assets/music/i-really-want-to-stay.mp3
+ * - Currently: I Really Want To Stay At Your House - Cyberpunk
  * - Plays automatically after welcome page interaction
  * 
- * To change music: Replace background.mp3 file in public/assets/music/
+ * To change music: Replace i-really-want-to-stay.mp3 file in public/assets/music/
  * or update the src path in the audio element below.
  */
 
@@ -25,7 +25,12 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isMinimized, setIsMinimized] = useState(false);
+  const [audioData, setAudioData] = useState<number[]>(new Array(32).fill(0));
   const audioRef = useRef<HTMLAudioElement>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
+  const animationRef = useRef<number>(0);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -37,6 +42,7 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
     if (shouldPlay && audioRef.current && !isPlaying) {
       audioRef.current.play().then(() => {
         setIsPlaying(true);
+        initAudioContext();
       }).catch(() => {});
     }
   }, [shouldPlay]);
@@ -57,12 +63,66 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
     };
   }, []);
 
+  // Initialize Audio Context for visualizer
+  const initAudioContext = () => {
+    if (!audioRef.current || audioContextRef.current) return;
+
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const analyser = audioContext.createAnalyser();
+      analyser.fftSize = 64;
+      
+      const source = audioContext.createMediaElementSource(audioRef.current);
+      source.connect(analyser);
+      analyser.connect(audioContext.destination);
+      
+      audioContextRef.current = audioContext;
+      analyserRef.current = analyser;
+      sourceRef.current = source;
+      
+      visualize();
+    } catch (e) {
+      console.log('Audio context not available');
+    }
+  };
+
+  // Audio visualizer animation
+  const visualize = () => {
+    if (!analyserRef.current) return;
+    
+    const bufferLength = analyserRef.current.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
+    
+    const animate = () => {
+      if (!analyserRef.current) return;
+      
+      analyserRef.current.getByteFrequencyData(dataArray);
+      const normalized = Array.from(dataArray).map(val => val / 255);
+      setAudioData(normalized);
+      
+      animationRef.current = requestAnimationFrame(animate);
+    };
+    
+    animate();
+  };
+
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
   const togglePlay = () => {
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
         audioRef.current.play();
+        if (!audioContextRef.current) {
+          initAudioContext();
+        }
       }
       setIsPlaying(!isPlaying);
     }
@@ -102,23 +162,94 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  // Circular visualizer component
+  const CircularVisualizer = ({ size = 40, className = "" }: { size?: number; className?: string }) => {
+    const bars = 16;
+    const radius = size / 2 - 4;
+    
+    return (
+      <div className={`absolute inset-0 flex items-center justify-center pointer-events-none ${className}`}>
+        <svg width={size} height={size} className="transform -rotate-90">
+          {Array.from({ length: bars }).map((_, i) => {
+            const angle = (i / bars) * Math.PI * 2;
+            const dataIndex = Math.floor((i / bars) * audioData.length);
+            const value = isPlaying ? audioData[dataIndex] || 0 : 0;
+            const barHeight = 4 + value * 12;
+            const x1 = size / 2 + Math.cos(angle) * (radius - 2);
+            const y1 = size / 2 + Math.sin(angle) * (radius - 2);
+            const x2 = size / 2 + Math.cos(angle) * (radius - 2 - barHeight);
+            const y2 = size / 2 + Math.sin(angle) * (radius - 2 - barHeight);
+            
+            return (
+              <line
+                key={i}
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke="hsl(270, 80%, 60%)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                style={{
+                  filter: 'drop-shadow(0 0 3px hsl(270, 80%, 60%))',
+                  transition: 'all 0.05s ease-out'
+                }}
+              />
+            );
+          })}
+        </svg>
+      </div>
+    );
+  };
+
+  // Bar visualizer for full player
+  const BarVisualizer = () => {
+    const bars = 24;
+    
+    return (
+      <div className="flex items-end justify-center gap-[2px] h-8 mb-2">
+        {Array.from({ length: bars }).map((_, i) => {
+          const dataIndex = Math.floor((i / bars) * audioData.length);
+          const value = isPlaying ? audioData[dataIndex] || 0 : 0;
+          const height = 4 + value * 24;
+          
+          return (
+            <div
+              key={i}
+              className="w-[3px] rounded-t-sm"
+              style={{
+                height: `${height}px`,
+                background: 'linear-gradient(to top, hsl(270, 80%, 60%), hsl(270, 80%, 75%))',
+                boxShadow: '0 0 4px hsl(270, 80%, 60%)',
+                transition: 'height 0.05s ease-out'
+              }}
+            />
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <div className="fixed bottom-4 right-4 z-40">
       <audio 
         ref={audioRef} 
-        src="/assets/music/background.mp3" 
+        src="/assets/music/i-really-want-to-stay.mp3" 
         loop 
         preload="auto"
+        crossOrigin="anonymous"
       />
 
-      {/* Minimized View - Circle with neon glow surrounding it */}
+      {/* Minimized View - Circle with neon glow and circular visualizer */}
       {isMinimized ? (
         <button
           onClick={() => setIsMinimized(false)}
-          className="neon-circle-purple p-3 bg-background/80 backdrop-blur-md hover:scale-110 transition-transform duration-200"
+          className="neon-circle-purple p-3 bg-background/80 backdrop-blur-md hover:scale-110 transition-transform duration-200 relative"
           aria-label="Expand music player"
+          style={{ width: '56px', height: '56px' }}
         >
-          <Music className={`w-5 h-5 ${isPlaying ? 'text-accent animate-pulse' : 'text-muted-foreground'}`} />
+          <CircularVisualizer size={56} />
+          <Music className={`w-5 h-5 relative z-10 ${isPlaying ? 'text-accent animate-pulse' : 'text-muted-foreground'}`} />
         </button>
       ) : (
         /* Full Player View */
@@ -132,12 +263,15 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
             <Minimize2 className="w-3 h-3" />
           </button>
 
+          {/* Bar Visualizer */}
+          <BarVisualizer />
+
           {/* Track info */}
           <div className="text-center mb-1 pr-6">
             <p className="text-xs sm:text-sm font-mono text-muted-foreground truncate">
               Now Playing
             </p>
-            <p className="text-xs text-primary/70 font-mono">teeth_you_-_re6ce</p>
+            <p className="text-xs text-primary/70 font-mono">I Really Want To Stay At Your House</p>
           </div>
 
           {/* Progress bar */}
