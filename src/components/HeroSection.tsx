@@ -21,10 +21,17 @@ const IDENTITY_TEXTS = [
   "gameholic",
 ];
 
+const TITLE_TEXTS = [
+  "gloistch",
+  "ikbal",
+];
+
 const HeroSection = () => {
   const [phase, setPhase] = useState<AnimationPhase>('identity');
   const [identityIndex, setIdentityIndex] = useState(0);
+  const [titleIndex, setTitleIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
+  const [titleText, setTitleText] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
   const scrambleChars = "!@#$%^&*()_+-=[]{}|;':\"<>?";
@@ -45,6 +52,26 @@ const HeroSection = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  // Title animation (gloistch -> ikbal loop)
+  useEffect(() => {
+    const targetTitle = TITLE_TEXTS[titleIndex];
+    let progress = 0;
+
+    const interval = setInterval(() => {
+      if (progress <= targetTitle.length) {
+        setTitleText(scrambleText(targetTitle, progress));
+        progress++;
+      } else {
+        clearInterval(interval);
+        setTimeout(() => {
+          setTitleIndex(prev => (prev + 1) % TITLE_TEXTS.length);
+        }, 1500);
+      }
+    }, 40);
+
+    return () => clearInterval(interval);
+  }, [titleIndex, scrambleText]);
+
   // Identity phase animation
   useEffect(() => {
     if (phase !== 'identity') return;
@@ -63,12 +90,11 @@ const HeroSection = () => {
           if (identityIndex < IDENTITY_TEXTS.length - 1) {
             setIdentityIndex(prev => prev + 1);
           } else {
-            // Go to loading phase before warning
             setPhase('loading');
           }
-        }, 800);
+        }, 400);
       }
-    }, 60);
+    }, 40);
 
     return () => clearInterval(interval);
   }, [phase, identityIndex, scrambleText]);
@@ -79,7 +105,7 @@ const HeroSection = () => {
 
     const timer = setTimeout(() => {
       setPhase('warning');
-    }, 2000);
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, [phase]);
@@ -92,7 +118,7 @@ const HeroSection = () => {
       setPhase('identity');
       setIdentityIndex(0);
       setDisplayText("");
-    }, 3000);
+    }, 2500);
 
     return () => clearTimeout(timer);
   }, [phase]);
@@ -107,14 +133,6 @@ const HeroSection = () => {
         }}
       />
 
-      {/* Vignette effect */}
-      <div 
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 40%, hsl(0 0% 2% / 0.8) 100%)',
-        }}
-      />
-
       {/* STANDBY indicator - top right */}
       <div className="absolute top-6 right-6 flex items-center gap-2 font-mono text-xs text-muted-foreground/60">
         <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -122,24 +140,21 @@ const HeroSection = () => {
       </div>
 
       <div className={`relative z-10 text-center w-full max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        {/* Main title with subtle glitch */}
+        {/* Main title with subtle glitch - Technology font */}
         <h1 
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold mb-4 glitch-text"
-          data-text="gloistch"
-          style={{
-            textShadow: '0.02em 0 0 hsl(0 70% 50% / 0.4), -0.01em -0.02em 0 hsl(270 80% 60% / 0.3), 0.01em 0.02em 0 hsl(120 100% 40% / 0.2)',
-          }}
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold mb-4 glitch-subtle font-mono tracking-wider"
+          data-text={titleText}
         >
-          gloistch
+          {titleText}
         </h1>
 
         {/* Thin horizontal divider */}
         <div className="w-48 h-px mx-auto mb-6 opacity-20 bg-gradient-to-r from-transparent via-foreground to-transparent" />
 
-        {/* Status bar - scanning animation */}
-        <div className="relative w-64 h-1 mx-auto mb-6 bg-muted/30 rounded-full overflow-hidden">
+        {/* Status bar - scanning animation - BIGGER & WHITE */}
+        <div className="relative w-80 h-2 mx-auto mb-6 bg-muted/30 rounded-full overflow-hidden">
           <div 
-            className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-accent/50 to-transparent rounded-full"
+            className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white to-transparent rounded-full"
             style={{
               animation: 'scanBar 2s ease-in-out infinite',
             }}
@@ -148,7 +163,7 @@ const HeroSection = () => {
 
         {/* Terminal input */}
         <div className="font-mono text-sm text-muted-foreground/70 mb-8">
-          <span className="text-accent/60">gameh]=;_-</span>
+          <span className="text-primary/60">Searching fho david n lucy...</span>
           <span className="terminal-cursor" />
         </div>
 
@@ -163,7 +178,7 @@ const HeroSection = () => {
 
           {phase === 'loading' && (
             <div className="flex flex-col items-center gap-4">
-              <Loader2 className="w-12 h-12 text-accent animate-spin" />
+              <Loader2 className="w-16 h-16 text-white animate-spin" />
               <p className="font-mono text-sm text-muted-foreground animate-pulse">
                 SCANNING IDENTITY...
               </p>
@@ -171,7 +186,7 @@ const HeroSection = () => {
           )}
 
           {phase === 'warning' && (
-            <div className="warning-embed-enhanced w-full max-w-md mx-auto fade-in-up">
+            <div className="warning-embed-enhanced w-full max-w-md mx-auto fade-in-up rounded-2xl">
               {/* Warning Icon */}
               <div className="flex items-center justify-center gap-3 mb-4">
                 <svg className="w-8 h-8 sm:w-10 sm:h-10 text-primary animate-pulse" fill="currentColor" viewBox="0 0 24 24">
@@ -191,7 +206,7 @@ const HeroSection = () => {
                 <p className="text-muted-foreground">ERROR CODE: <span className="text-primary">0xGLO1STCH</span></p>
                 <p className="text-muted-foreground">STATUS: <span className="text-destructive">ACCESS LIMITED</span></p>
                 <div className="h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent my-3" />
-                <p className="text-xs mt-4 text-accent animate-pulse">
+                <p className="text-xs mt-4 text-primary animate-pulse">
                   [ATTEMPTING RECOVERY...]
                 </p>
               </div>

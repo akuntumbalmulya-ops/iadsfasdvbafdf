@@ -93,7 +93,7 @@ const SOCIAL_LINKS: SocialLink[] = [
 ];
 
 /**
- * Hacker animated text sequences
+ * Hacker animated text sequences - FASTER delay
  */
 const HACKER_TEXTS = [
   "r u the choosen one?",
@@ -138,7 +138,7 @@ const SocialSection = () => {
     return () => clearInterval(cursorInterval);
   }, []);
 
-  // Hacker typing effect
+  // Hacker typing effect - FASTER
   useEffect(() => {
     if (!isVisible) return;
 
@@ -163,17 +163,17 @@ const SocialSection = () => {
           setTimeout(() => {
             setDisplayedText(targetText.slice(0, charIndex + 1));
             charIndex++;
-            setTimeout(typeChar, 30 + Math.random() * 50);
-          }, 30);
+            setTimeout(typeChar, 20 + Math.random() * 30);
+          }, 20);
         } else {
           setDisplayedText(targetText.slice(0, charIndex + 1));
           charIndex++;
-          setTimeout(typeChar, 30 + Math.random() * 50);
+          setTimeout(typeChar, 20 + Math.random() * 30);
         }
       } else {
         setIsTyping(false);
         
-        // Trigger glitch effect before transitioning
+        // Trigger glitch effect before transitioning - FASTER
         setTimeout(() => {
           setGlitchActive(true);
           setTimeout(() => {
@@ -181,14 +181,14 @@ const SocialSection = () => {
             setDisplayedText('');
             setIsTyping(true);
             setCurrentTextIndex((prev) => (prev + 1) % HACKER_TEXTS.length);
-          }, 200);
-        }, 2000);
+          }, 150);
+        }, 800);
       }
     };
 
     const startDelay = setTimeout(() => {
       typeChar();
-    }, 300);
+    }, 200);
 
     return () => clearTimeout(startDelay);
   }, [currentTextIndex, isVisible]);
@@ -212,7 +212,7 @@ const SocialSection = () => {
           }`}
         >
           <h2 
-            className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-glow-red font-mono ${
+            className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-glow-red font-mono text-primary ${
               glitchActive ? 'glitch-text' : ''
             }`}
             data-text={displayedText}
@@ -238,7 +238,7 @@ const SocialSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => handleClick(social, e)}
-              className={`social-card-smooth group relative ${
+              className={`social-card-smooth group relative text-primary ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
               style={{ transitionDelay: isVisible ? `${index * 50}ms` : '0ms' }}
@@ -246,10 +246,10 @@ const SocialSection = () => {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {/* Display name tooltip on hover */}
-              <div className={`absolute -top-14 left-1/2 -translate-x-1/2 glass-card-gradient neon-border-yellow px-4 py-2 rounded-2xl transition-all duration-150 ease-out whitespace-nowrap z-20 ${
+              <div className={`absolute -top-14 left-1/2 -translate-x-1/2 glass-card-gradient neon-border-purple px-4 py-2 rounded-2xl transition-all duration-150 ease-out whitespace-nowrap z-20 ${
                 hoveredIndex === index ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-2 scale-95 pointer-events-none'
               }`}>
-                <span className="minecraft-text text-xs sm:text-sm text-muted-foreground">
+                <span className="minecraft-text text-xs sm:text-sm text-primary/70">
                   {social.displayName}
                 </span>
               </div>
@@ -269,7 +269,7 @@ const SocialSection = () => {
           }`}
         >
           <div className="inline-block glass-card-gradient px-4 sm:px-6 py-2 sm:py-3 rounded-2xl">
-            <p className="font-mono text-[10px] sm:text-xs md:text-sm text-muted-foreground">
+            <p className="font-mono text-[10px] sm:text-xs md:text-sm text-primary/70">
               <span className="text-primary">&gt;</span> connection.status: 
               <span className="text-terminal-green text-glow-green"> ONLINE</span>
               <span className="terminal-cursor" />
