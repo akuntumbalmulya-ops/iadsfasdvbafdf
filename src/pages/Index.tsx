@@ -44,7 +44,7 @@ const Index = () => {
   };
 
   return (
-    <div className="relative min-h-screen" style={{ backgroundColor: 'hsl(0, 0%, 4%)' }}>
+    <div className="relative min-h-screen">
       {/* Global noise overlay */}
       <div className="noise-overlay" />
       
@@ -66,9 +66,9 @@ const Index = () => {
            * BACKGROUND IMAGE CONTAINER
            * ============================================
            * Edit cyberpunk-bg.jpeg to change the background
-           * Blur amount: backdrop-blur-sm (adjust to blur-md, blur-lg for more blur)
+           * Blur amount: backdrop-blur-[3px] (adjust for more/less blur)
            * 
-           * NOTE: Background is applied DIRECTLY without additional overlays
+           * NOTE: Background is applied DIRECTLY without dark overlays
            * to ensure the custom image is fully visible
            */}
           <div 
@@ -80,8 +80,8 @@ const Index = () => {
               backgroundRepeat: 'no-repeat',
             }}
           >
-            {/* Subtle blur overlay - minimal opacity to show background */}
-            <div className="absolute inset-0 backdrop-blur-[2px]" style={{ backgroundColor: 'hsla(0, 0%, 4%, 0.3)' }} />
+            {/* Very subtle blur overlay only - NO dark background */}
+            <div className="absolute inset-0 backdrop-blur-[3px]" />
           </div>
 
           {/* Content sections */}
