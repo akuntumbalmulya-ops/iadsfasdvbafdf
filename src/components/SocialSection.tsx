@@ -251,6 +251,7 @@ const SocialSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => handleClick(social, e)}
+              data-neon="purple"
               className={`social-card-smooth group relative text-primary ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
@@ -259,9 +260,12 @@ const SocialSection = () => {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               {/* Display name tooltip on hover */}
-              <div className={`absolute -top-14 left-1/2 -translate-x-1/2 glass-card-gradient neon-border-purple px-4 py-2 rounded-2xl transition-all duration-150 ease-out whitespace-nowrap z-20 ${
-                hoveredIndex === index ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-2 scale-95 pointer-events-none'
-              }`}>
+              <div 
+                data-neon="purple"
+                className={`absolute -top-14 left-1/2 -translate-x-1/2 glass-card-gradient px-4 py-2 rounded-2xl transition-all duration-150 ease-out whitespace-nowrap z-20 ${
+                  hoveredIndex === index ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-2 scale-95 pointer-events-none'
+                }`}
+              >
                 <span className="minecraft-text text-xs sm:text-sm text-primary/70">
                   {social.displayName}
                 </span>
