@@ -26,51 +26,101 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
   const [duration, setDuration] = useState(0);
   const [isMinimized, setIsMinimized] = useState(false);
   const [audioData, setAudioData] = useState<number[]>(new Array(32).fill(0));
+  const [audioError, setAudioError] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
   const animationRef = useRef<number>(0);
+  const isSourceConnectedRef = useRef(false);
 
+  // Volume control
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;
     }
   }, [volume]);
 
+  // Auto-play when shouldPlay changes
   useEffect(() => {
     if (shouldPlay && audioRef.current && !isPlaying) {
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-        initAudioContext();
-      }).catch(() => {});
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setIsPlaying(true);
+          setAudioError(false);
+          initAudioContext();
+        }).catch((error) => {
+          console.log('Autoplay prevented:', error);
+          setAudioError(true);
+        });
+      }
     }
   }, [shouldPlay]);
 
+  // Time update and duration
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     const updateTime = () => setCurrentTime(audio.currentTime);
-    const updateDuration = () => setDuration(audio.duration);
+    const updateDuration = () => {
+      if (audio.duration && !isNaN(audio.duration)) {
+        setDuration(audio.duration);
+      }
+    };
+    const handleEnded = () => {
+      // Loop handled by audio element, but reset state if needed
+      setCurrentTime(0);
+    };
+    const handleError = () => {
+      setAudioError(true);
+      setIsPlaying(false);
+    };
+    const handleCanPlay = () => {
+      setAudioError(false);
+      updateDuration();
+    };
 
     audio.addEventListener('timeupdate', updateTime);
     audio.addEventListener('loadedmetadata', updateDuration);
+    audio.addEventListener('durationchange', updateDuration);
+    audio.addEventListener('ended', handleEnded);
+    audio.addEventListener('error', handleError);
+    audio.addEventListener('canplay', handleCanPlay);
 
     return () => {
       audio.removeEventListener('timeupdate', updateTime);
       audio.removeEventListener('loadedmetadata', updateDuration);
+      audio.removeEventListener('durationchange', updateDuration);
+      audio.removeEventListener('ended', handleEnded);
+      audio.removeEventListener('error', handleError);
+      audio.removeEventListener('canplay', handleCanPlay);
     };
   }, []);
 
   // Initialize Audio Context for visualizer
   const initAudioContext = () => {
-    if (!audioRef.current || audioContextRef.current) return;
+    if (!audioRef.current) return;
+    
+    // Prevent double connection
+    if (isSourceConnectedRef.current) {
+      // Just resume if already connected
+      if (audioContextRef.current?.state === 'suspended') {
+        audioContextRef.current.resume();
+      }
+      visualize();
+      return;
+    }
 
     try {
-      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContextClass) return;
+      
+      const audioContext = new AudioContextClass();
       const analyser = audioContext.createAnalyser();
       analyser.fftSize = 64;
+      analyser.smoothingTimeConstant = 0.8;
       
       const source = audioContext.createMediaElementSource(audioRef.current);
       source.connect(analyser);
@@ -79,10 +129,11 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
       audioContextRef.current = audioContext;
       analyserRef.current = analyser;
       sourceRef.current = source;
+      isSourceConnectedRef.current = true;
       
       visualize();
     } catch (e) {
-      console.log('Audio context not available');
+      console.log('Audio context not available:', e);
     }
   };
 
@@ -114,17 +165,30 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
     };
   }, []);
 
-  const togglePlay = () => {
-    if (audioRef.current) {
+  const togglePlay = async () => {
+    if (!audioRef.current) return;
+    
+    try {
       if (isPlaying) {
         audioRef.current.pause();
+        setIsPlaying(false);
       } else {
-        audioRef.current.play();
-        if (!audioContextRef.current) {
+        // Resume audio context if suspended (iOS/Safari requirement)
+        if (audioContextRef.current?.state === 'suspended') {
+          await audioContextRef.current.resume();
+        }
+        
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          await playPromise;
+          setIsPlaying(true);
+          setAudioError(false);
           initAudioContext();
         }
       }
-      setIsPlaying(!isPlaying);
+    } catch (error) {
+      console.log('Play error:', error);
+      setAudioError(true);
     }
   };
 
@@ -137,21 +201,29 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const time = parseFloat(e.target.value);
-    if (audioRef.current) {
-      audioRef.current.currentTime = time;
-      setCurrentTime(time);
+    if (audioRef.current && !isNaN(time) && isFinite(time)) {
+      try {
+        audioRef.current.currentTime = time;
+        setCurrentTime(time);
+      } catch (error) {
+        console.log('Seek error:', error);
+      }
     }
   };
 
   const skipBackward = () => {
     if (audioRef.current) {
-      audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 10);
+      const newTime = Math.max(0, audioRef.current.currentTime - 10);
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
     }
   };
 
   const skipForward = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = Math.min(duration, audioRef.current.currentTime + 10);
+    if (audioRef.current && duration > 0) {
+      const newTime = Math.min(duration, audioRef.current.currentTime + 10);
+      audioRef.current.currentTime = newTime;
+      setCurrentTime(newTime);
     }
   };
 

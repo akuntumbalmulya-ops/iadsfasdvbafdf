@@ -134,10 +134,19 @@ const HeroSection = () => {
       </div>
 
       <div className={`relative z-10 text-center w-full max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        {/* Main title with subtle glitch - Helvetica font */}
+        {/* Main title with subtle glitch - Helvetica font + Purple neon glow */}
         <h1 
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold mb-4 glitch-subtle tracking-wider"
-          style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold mb-4 glitch-subtle tracking-wider text-white"
+          style={{ 
+            fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+            textShadow: `
+              0 0 10px hsl(270 80% 60%),
+              0 0 20px hsl(270 80% 60%),
+              0 0 40px hsl(270 80% 60% / 0.8),
+              0 0 60px hsl(270 80% 60% / 0.6),
+              0 0 80px hsl(270 80% 60% / 0.4)
+            `
+          }}
           data-text={titleText}
         >
           {titleText}
