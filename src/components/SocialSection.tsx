@@ -235,7 +235,7 @@ const SocialSection = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 sm:gap-4 justify-items-center">
           {SOCIAL_LINKS.map((social, index) => (
             <a
               key={social.name}
@@ -244,12 +244,12 @@ const SocialSection = () => {
               rel="noopener noreferrer"
               onClick={(e) => handleClick(social, e)}
               data-neon="purple"
-              className={`social-card-smooth group flex items-center justify-center aspect-square ${
+              className={`social-card-compact group flex items-center justify-center transition-all duration-300 ${
                 isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
               }`}
               style={{ transitionDelay: isVisible ? `${index * 50}ms` : '0ms' }}
             >
-              <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12">
+              <div className="flex items-center justify-center w-6 h-6 sm:w-7 sm:h-7">
                 {social.icon}
               </div>
             </a>
