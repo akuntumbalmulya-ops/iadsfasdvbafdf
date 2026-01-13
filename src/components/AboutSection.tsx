@@ -38,11 +38,11 @@ const AboutSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="relative min-h-screen flex items-center justify-center py-12 sm:py-20 px-4 bg-gradient-dark"
+      className="relative min-h-screen flex items-center justify-center py-12 sm:py-20 px-4"
     >
-      {/* Background glow */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[600px] h-[300px] sm:h-[400px] bg-primary/30 rounded-full blur-[120px]" />
+      {/* Background glow - subtle */}
+      <div className="absolute inset-0 opacity-10 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[600px] h-[300px] sm:h-[400px] bg-primary/20 rounded-full blur-[150px]" />
       </div>
 
       <div 
@@ -50,7 +50,7 @@ const AboutSection = () => {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
         }`}
       >
-        <div className="glass-card-gradient neon-border-yellow p-6 sm:p-8 md:p-12 float rounded-3xl">
+        <div className="glass-card-gradient neon-border-purple p-6 sm:p-8 md:p-12 float rounded-3xl">
           {/* Header with photo */}
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-glow-red order-2 sm:order-1">

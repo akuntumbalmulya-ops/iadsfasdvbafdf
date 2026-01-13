@@ -111,18 +111,18 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
         preload="auto"
       />
 
-      {/* Minimized View */}
+      {/* Minimized View - Circle with neon glow surrounding it */}
       {isMinimized ? (
         <button
           onClick={() => setIsMinimized(false)}
-          className="glass-card-gradient p-3 rounded-full neon-border-yellow hover:scale-110 transition-transform duration-200"
+          className="neon-circle-purple p-3 bg-background/80 backdrop-blur-md hover:scale-110 transition-transform duration-200"
           aria-label="Expand music player"
         >
-          <Music className={`w-5 h-5 ${isPlaying ? 'text-primary animate-pulse' : 'text-muted-foreground'}`} />
+          <Music className={`w-5 h-5 ${isPlaying ? 'text-accent animate-pulse' : 'text-muted-foreground'}`} />
         </button>
       ) : (
         /* Full Player View */
-        <div className="glass-card-gradient flex flex-col gap-2 p-3 sm:p-4 rounded-2xl min-w-[200px] sm:min-w-[280px] neon-border-yellow">
+        <div className="glass-card-gradient flex flex-col gap-2 p-3 sm:p-4 rounded-2xl min-w-[200px] sm:min-w-[280px] neon-border-purple">
           {/* Minimize button */}
           <button
             onClick={() => setIsMinimized(true)}

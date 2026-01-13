@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Loader2 } from 'lucide-react';
 
 /**
  * ============================================
@@ -10,7 +11,7 @@ import { useState, useEffect, useCallback } from 'react';
  * Only decorative blur effects are applied here.
  */
 
-type AnimationPhase = 'identity' | 'warning';
+type AnimationPhase = 'identity' | 'loading' | 'warning';
 
 const IDENTITY_TEXTS = [
   "strangers",
@@ -62,7 +63,8 @@ const HeroSection = () => {
           if (identityIndex < IDENTITY_TEXTS.length - 1) {
             setIdentityIndex(prev => prev + 1);
           } else {
-            setPhase('warning');
+            // Go to loading phase before warning
+            setPhase('loading');
           }
         }, 800);
       }
@@ -70,6 +72,17 @@ const HeroSection = () => {
 
     return () => clearInterval(interval);
   }, [phase, identityIndex, scrambleText]);
+
+  // Loading phase - spinner before warning
+  useEffect(() => {
+    if (phase !== 'loading') return;
+
+    const timer = setTimeout(() => {
+      setPhase('warning');
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [phase]);
 
   // Warning phase - show then loop back to identity
   useEffect(() => {
@@ -85,21 +98,59 @@ const HeroSection = () => {
   }, [phase]);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center bg-gradient-dark overflow-hidden px-4">
-      {/* Background effects */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[80px]" />
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4">
+      {/* Grain overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Vignette effect */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse at center, transparent 40%, hsl(0 0% 2% / 0.8) 100%)',
+        }}
+      />
+
+      {/* STANDBY indicator - top right */}
+      <div className="absolute top-6 right-6 flex items-center gap-2 font-mono text-xs text-muted-foreground/60">
+        <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+        <span>STANDBY</span>
       </div>
 
       <div className={`relative z-10 text-center w-full max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        {/* Main title */}
+        {/* Main title with subtle glitch */}
         <h1 
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold mb-6 sm:mb-8 glitch-text text-glow-red float"
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold mb-4 glitch-text"
           data-text="gloistch"
+          style={{
+            textShadow: '0.02em 0 0 hsl(0 70% 50% / 0.4), -0.01em -0.02em 0 hsl(270 80% 60% / 0.3), 0.01em 0.02em 0 hsl(120 100% 40% / 0.2)',
+          }}
         >
           gloistch
         </h1>
+
+        {/* Thin horizontal divider */}
+        <div className="w-48 h-px mx-auto mb-6 opacity-20 bg-gradient-to-r from-transparent via-foreground to-transparent" />
+
+        {/* Status bar - scanning animation */}
+        <div className="relative w-64 h-1 mx-auto mb-6 bg-muted/30 rounded-full overflow-hidden">
+          <div 
+            className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-accent/50 to-transparent rounded-full"
+            style={{
+              animation: 'scanBar 2s ease-in-out infinite',
+            }}
+          />
+        </div>
+
+        {/* Terminal input */}
+        <div className="font-mono text-sm text-muted-foreground/70 mb-8">
+          <span className="text-accent/60">gameh]=;_-</span>
+          <span className="terminal-cursor" />
+        </div>
 
         {/* Animated subtitle area - fixed height to prevent layout shift */}
         <div className="h-[200px] sm:h-[180px] md:h-[200px] flex items-start justify-center pt-4">
@@ -107,6 +158,15 @@ const HeroSection = () => {
             <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-mono text-foreground">
               {displayText}
               <span className="terminal-cursor" />
+            </div>
+          )}
+
+          {phase === 'loading' && (
+            <div className="flex flex-col items-center gap-4">
+              <Loader2 className="w-12 h-12 text-accent animate-spin" />
+              <p className="font-mono text-sm text-muted-foreground animate-pulse">
+                SCANNING IDENTITY...
+              </p>
             </div>
           )}
 
@@ -131,7 +191,7 @@ const HeroSection = () => {
                 <p className="text-muted-foreground">ERROR CODE: <span className="text-primary">0xGLO1STCH</span></p>
                 <p className="text-muted-foreground">STATUS: <span className="text-destructive">ACCESS LIMITED</span></p>
                 <div className="h-px bg-gradient-to-r from-transparent via-primary/60 to-transparent my-3" />
-                <p className="text-xs mt-4 text-accent text-glow-yellow animate-pulse">
+                <p className="text-xs mt-4 text-accent animate-pulse">
                   [ATTEMPTING RECOVERY...]
                 </p>
               </div>
@@ -139,6 +199,14 @@ const HeroSection = () => {
           )}
         </div>
       </div>
+
+      {/* Add keyframe for scan bar animation */}
+      <style>{`
+        @keyframes scanBar {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(300%); }
+        }
+      `}</style>
     </section>
   );
 };

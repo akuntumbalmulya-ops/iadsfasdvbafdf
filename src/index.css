@@ -25,7 +25,7 @@
     --muted: 0 0% 15%;
     --muted-foreground: 0 0% 55%;
 
-    --accent: 50 100% 50%;
+    --accent: 270 80% 60%;
     --accent-foreground: 0 0% 4%;
 
     --destructive: 0 84% 40%;
@@ -43,8 +43,8 @@
     --cyber-gray: 0 0% 15%;
     --cyber-red: 0 70% 35%;
     --cyber-red-glow: 0 70% 45%;
-    --cyber-yellow: 50 100% 50%;
-    --cyber-yellow-glow: 50 100% 60%;
+    --cyber-purple: 270 80% 60%;
+    --cyber-purple-glow: 270 80% 70%;
     --cyber-white: 0 0% 85%;
     --cyber-white-dim: 0 0% 55%;
     --terminal-green: 120 100% 40%;
@@ -55,7 +55,7 @@
     --glass-blur: 20px;
 
     /* Shadows & Glows */
-    --neon-yellow-glow: 0 0 20px hsl(50 100% 50% / 0.6), 0 0 40px hsl(50 100% 50% / 0.3);
+    --neon-purple-glow: 0 0 20px hsl(270 80% 60% / 0.6), 0 0 40px hsl(270 80% 60% / 0.3);
     --neon-red-glow: 0 0 30px hsl(0 70% 35% / 0.4);
     --shadow-dark: 0 10px 40px hsl(0 0% 0% / 0.5);
   }
@@ -115,8 +115,8 @@
   .glass-card::after {
     content: '';
     @apply absolute top-0 bottom-0 w-[2px];
-    background: hsl(var(--cyber-yellow));
-    box-shadow: var(--neon-yellow-glow);
+    background: hsl(var(--cyber-purple));
+    box-shadow: var(--neon-purple-glow);
   }
 
   .glass-card::before {
@@ -141,14 +141,14 @@
   .glass-card-gradient::after {
     content: '';
     @apply absolute top-0 bottom-0 w-[5px];
-    background: linear-gradient(180deg, hsl(50 100% 70%) 0%, hsl(50 100% 50%) 50%, hsl(50 100% 70%) 100%);
+    background: linear-gradient(180deg, hsl(270 80% 75%) 0%, hsl(270 80% 60%) 50%, hsl(270 80% 75%) 100%);
     box-shadow: 
-      0 0 8px hsl(50 100% 50%),
-      0 0 15px hsl(50 100% 50%),
-      0 0 30px hsl(50 100% 50% / 0.9),
-      0 0 60px hsl(50 100% 50% / 0.7),
-      0 0 100px hsl(50 100% 50% / 0.5),
-      0 0 150px hsl(50 100% 50% / 0.3);
+      0 0 8px hsl(270 80% 60%),
+      0 0 15px hsl(270 80% 60%),
+      0 0 30px hsl(270 80% 60% / 0.9),
+      0 0 60px hsl(270 80% 60% / 0.7),
+      0 0 100px hsl(270 80% 60% / 0.5),
+      0 0 150px hsl(270 80% 60% / 0.3);
     animation: neonPulse 2s ease-in-out infinite;
   }
 
@@ -165,27 +165,41 @@
     position: relative;
   }
 
-  .neon-border-yellow::before,
-  .neon-border-yellow::after {
+  .neon-border-purple::before,
+  .neon-border-purple::after {
     content: '';
     @apply absolute top-0 bottom-0 w-[5px];
-    background: linear-gradient(180deg, hsl(50 100% 70%) 0%, hsl(50 100% 50%) 50%, hsl(50 100% 70%) 100%);
+    background: linear-gradient(180deg, hsl(270 80% 75%) 0%, hsl(270 80% 60%) 50%, hsl(270 80% 75%) 100%);
     box-shadow: 
-      0 0 8px hsl(50 100% 50%),
-      0 0 15px hsl(50 100% 50%),
-      0 0 30px hsl(50 100% 50% / 0.9),
-      0 0 60px hsl(50 100% 50% / 0.7),
-      0 0 100px hsl(50 100% 50% / 0.5),
-      0 0 150px hsl(50 100% 50% / 0.3);
+      0 0 8px hsl(270 80% 60%),
+      0 0 15px hsl(270 80% 60%),
+      0 0 30px hsl(270 80% 60% / 0.9),
+      0 0 60px hsl(270 80% 60% / 0.7),
+      0 0 100px hsl(270 80% 60% / 0.5),
+      0 0 150px hsl(270 80% 60% / 0.3);
     animation: neonPulse 2s ease-in-out infinite;
   }
 
-  .neon-border-yellow::before {
+  .neon-border-purple::before {
     @apply left-0;
   }
 
-  .neon-border-yellow::after {
+  .neon-border-purple::after {
     @apply right-0;
+  }
+
+  /* Neon circle style for minimized music player */
+  .neon-circle-purple {
+    position: relative;
+    border-radius: 9999px;
+    box-shadow: 
+      0 0 8px hsl(270 80% 60%),
+      0 0 15px hsl(270 80% 60%),
+      0 0 30px hsl(270 80% 60% / 0.9),
+      0 0 60px hsl(270 80% 60% / 0.7),
+      inset 0 0 10px hsl(270 80% 60% / 0.3);
+    border: 3px solid hsl(270 80% 60%);
+    animation: neonPulse 2s ease-in-out infinite;
   }
   .noise-overlay {
     @apply fixed inset-0 pointer-events-none z-50;
@@ -257,14 +271,14 @@
   .social-card-smooth::after {
     content: '';
     @apply absolute top-0 bottom-0 w-[5px];
-    background: linear-gradient(180deg, hsl(50 100% 70%) 0%, hsl(50 100% 50%) 50%, hsl(50 100% 70%) 100%);
+    background: linear-gradient(180deg, hsl(270 80% 75%) 0%, hsl(270 80% 60%) 50%, hsl(270 80% 75%) 100%);
     box-shadow: 
-      0 0 8px hsl(50 100% 50%),
-      0 0 15px hsl(50 100% 50%),
-      0 0 30px hsl(50 100% 50% / 0.9),
-      0 0 60px hsl(50 100% 50% / 0.7),
-      0 0 100px hsl(50 100% 50% / 0.5),
-      0 0 150px hsl(50 100% 50% / 0.3);
+      0 0 8px hsl(270 80% 60%),
+      0 0 15px hsl(270 80% 60%),
+      0 0 30px hsl(270 80% 60% / 0.9),
+      0 0 60px hsl(270 80% 60% / 0.7),
+      0 0 100px hsl(270 80% 60% / 0.5),
+      0 0 150px hsl(270 80% 60% / 0.3);
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     animation: neonPulse 2s ease-in-out infinite;
   }
@@ -288,11 +302,11 @@
   .social-card-smooth:hover::before,
   .social-card-smooth:hover::after {
     box-shadow: 
-      0 0 10px hsl(50 100% 50%),
-      0 0 20px hsl(50 100% 50%),
-      0 0 40px hsl(50 100% 50%),
-      0 0 80px hsl(50 100% 50% / 0.8),
-      0 0 120px hsl(50 100% 50% / 0.6);
+      0 0 10px hsl(270 80% 60%),
+      0 0 20px hsl(270 80% 60%),
+      0 0 40px hsl(270 80% 60%),
+      0 0 80px hsl(270 80% 60% / 0.8),
+      0 0 120px hsl(270 80% 60% / 0.6);
   }
 
   /* Social Card Enhanced (legacy) */
@@ -310,8 +324,8 @@
   .social-card-enhanced::after {
     content: '';
     @apply absolute top-0 bottom-0 w-[2px];
-    background: hsl(var(--cyber-yellow));
-    box-shadow: var(--neon-yellow-glow);
+    background: hsl(var(--cyber-purple));
+    box-shadow: var(--neon-purple-glow);
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
@@ -331,7 +345,7 @@
 
   .social-card-enhanced:hover::before,
   .social-card-enhanced:hover::after {
-    box-shadow: 0 0 30px hsl(50 100% 50% / 0.8), 0 0 60px hsl(50 100% 50% / 0.5);
+    box-shadow: 0 0 30px hsl(270 80% 60% / 0.8), 0 0 60px hsl(270 80% 60% / 0.5);
   }
 
   /* Social Card (legacy) */
@@ -348,7 +362,7 @@
 
   .social-card:hover::before,
   .social-card:hover::after {
-    box-shadow: 0 0 30px hsl(50 100% 50% / 0.8), 0 0 60px hsl(50 100% 50% / 0.5);
+    box-shadow: 0 0 30px hsl(270 80% 60% / 0.8), 0 0 60px hsl(270 80% 60% / 0.5);
   }
 
   /* Floating Animation */
@@ -386,8 +400,8 @@
   .warning-embed-enhanced::after {
     content: '';
     @apply absolute top-0 bottom-0 w-[3px];
-    background: hsl(var(--cyber-yellow));
-    box-shadow: 0 0 20px hsl(50 100% 50% / 0.8), 0 0 40px hsl(50 100% 50% / 0.5);
+    background: hsl(var(--cyber-purple));
+    box-shadow: 0 0 20px hsl(270 80% 60% / 0.8), 0 0 40px hsl(270 80% 60% / 0.5);
     animation: neonFlicker 1.5s ease-in-out infinite;
   }
 
