@@ -52,7 +52,7 @@ const HeroSection = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Title animation (gloistch -> ikbal loop)
+// Title animation (gloistch -> ikbal loop) - SLOWER with hacker glitch
   useEffect(() => {
     const targetTitle = TITLE_TEXTS[titleIndex];
     let progress = 0;
@@ -65,14 +65,14 @@ const HeroSection = () => {
         clearInterval(interval);
         setTimeout(() => {
           setTitleIndex(prev => (prev + 1) % TITLE_TEXTS.length);
-        }, 1500);
+        }, 2500);
       }
-    }, 40);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [titleIndex, scrambleText]);
 
-  // Identity phase animation
+// Identity phase animation - SLOWER with hacker effect
   useEffect(() => {
     if (phase !== 'identity') return;
 
@@ -92,9 +92,9 @@ const HeroSection = () => {
           } else {
             setPhase('loading');
           }
-        }, 400);
+        }, 600);
       }
-    }, 40);
+    }, 80);
 
     return () => clearInterval(interval);
   }, [phase, identityIndex, scrambleText]);
@@ -162,10 +162,12 @@ const HeroSection = () => {
           />
         </div>
 
-        {/* Terminal input */}
-        <div className="font-mono text-sm text-muted-foreground/70 mb-8">
-          <span className="text-primary/60">Searching fho david n lucy...</span>
-          <span className="terminal-cursor" />
+        {/* Terminal input - with embed */}
+        <div className="glass-card-gradient neon-border-purple px-6 py-4 rounded-2xl inline-block mb-8">
+          <div className="font-mono text-sm">
+            <span className="text-white">Searching fho david n lucy...</span>
+            <span className="terminal-cursor" />
+          </div>
         </div>
 
         {/* Animated subtitle area - fixed height to prevent layout shift */}
@@ -187,7 +189,7 @@ const HeroSection = () => {
           )}
 
           {phase === 'warning' && (
-            <div className="warning-embed-enhanced w-full max-w-md mx-auto fade-in-up rounded-2xl">
+            <div className="warning-embed-enhanced w-full max-w-md mx-auto fade-in-up rounded-3xl">
               {/* Warning Icon */}
               <div className="flex items-center justify-center gap-3 mb-4">
                 <svg className="w-8 h-8 sm:w-10 sm:h-10 text-primary animate-pulse" fill="currentColor" viewBox="0 0 24 24">
