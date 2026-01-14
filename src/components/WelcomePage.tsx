@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import welcomeBg from '@/assets/welcome-bg.jpeg';
 
 interface WelcomePageProps {
@@ -17,6 +17,8 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
   const [isScrambling, setIsScrambling] = useState(false);
   const [speed, setSpeed] = useState(60);
   const [flickerOpacity, setFlickerOpacity] = useState(1);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const scrambleChars = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~0123456789";
 
@@ -51,7 +53,7 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
           // Wait then move to next text
           setTimeout(() => {
             setCurrentTextIndex((prev) => (prev + 1) % TEXTS.length);
-            setSpeed((prev) => Math.max(prev * 0.9, 30)); // Speed up each loop
+            setSpeed((prev) => Math.max(prev * 0.9, 30));
           }, 2000);
         }
       }, speed);
@@ -77,6 +79,27 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
     return () => clearInterval(flickerInterval);
   }, []);
 
+  // 3D Tilt effect for glowing frame
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!wrapperRef.current || !frameRef.current) return;
+    
+    const rect = wrapperRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * 8;
+    const rotateY = ((x - centerX) / centerX) * 8;
+    
+    frameRef.current.style.transform = `perspective(500px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
+  };
+
+  const handleMouseLeave = () => {
+    if (frameRef.current) {
+      frameRef.current.style.transform = 'perspective(500px) rotateX(0) rotateY(0)';
+    }
+  };
+
   const handleClick = () => {
     onEnter();
   };
@@ -87,13 +110,21 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       onClick={handleClick}
       style={{ opacity: flickerOpacity }}
     >
-      {/* Background Image - David & Lucy on the Moon - NO DARK OVERLAY */}
+      {/* Background Image - David & Lucy on the Moon */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
           backgroundImage: `url(${welcomeBg})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+        }}
+      />
+
+      {/* Dark overlay for text visibility */}
+      <div 
+        className="absolute inset-0 pointer-events-none"
+        style={{ 
+          backgroundColor: 'rgba(0, 0, 0, 0.45)',
         }}
       />
       
@@ -103,11 +134,26 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       {/* Scanlines */}
       <div className="scanline" />
 
-      {/* Main content - WHITE TEXT + BLUE NEON EMBED */}
-      <div className="relative z-10 text-center px-4">
-        <div className="glass-card-gradient neon-border-blue px-6 py-6 sm:px-10 sm:py-8 rounded-2xl inline-block">
+      {/* Main content - WHITE TEXT + BLUE NEON EMBED with 3D Tilt Frame */}
+      <div 
+        className="relative z-10 text-center px-4"
+        ref={wrapperRef}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* Glowing frame with 3D tilt */}
+        <div 
+          ref={frameRef}
+          className="absolute inset-0 rounded-2xl pointer-events-none glowing-frame-blue"
+          style={{
+            transition: 'transform 0.15s ease-out',
+            willChange: 'transform',
+          }}
+        />
+        
+        <div className="glass-card-welcome neon-border-blue px-6 py-6 sm:px-10 sm:py-8 rounded-2xl inline-block relative">
           <h1 
-            className={`text-xl sm:text-3xl md:text-4xl font-bold tracking-wider text-white ${isScrambling ? 'glitch-text' : ''}`}
+            className={`text-xl sm:text-3xl md:text-4xl font-bold tracking-wider text-white ${isScrambling ? 'glitch-text-clean' : ''}`}
             data-text={displayText}
             style={{
               fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
@@ -122,11 +168,12 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
         </div>
 
         <p 
-          className="mt-8 text-base sm:text-lg font-bold text-white welcome-glitch-text"
+          className="mt-8 text-base sm:text-lg font-black text-white welcome-glitch-text tracking-widest uppercase"
           style={{ 
             fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
             textShadow: '0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5), 0 0 30px rgba(100,180,255,0.4)',
-            animation: 'welcomeGlitch 3s ease-in-out infinite'
+            animation: 'welcomeGlitchBold 2s ease-in-out infinite',
+            letterSpacing: '0.15em',
           }}
         >
           [ CLICK ANYWHERE TO ENTER ]
@@ -134,25 +181,75 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       </div>
 
       <style>{`
-        @keyframes welcomeGlitch {
-          0%, 90%, 100% { 
+        @keyframes welcomeGlitchBold {
+          0%, 85%, 100% { 
             opacity: 1;
-            transform: translate(0);
+            transform: translate(0) skew(0);
           }
-          92% { 
-            opacity: 0.8;
-            transform: translate(-2px, 1px);
-            text-shadow: 0 0 10px rgba(255,50,50,0.8), 0 0 20px rgba(255,50,50,0.5);
+          88% { 
+            opacity: 0.9;
+            transform: translate(-3px, 2px) skew(-1deg);
+            text-shadow: 
+              -3px 0 hsl(0 100% 60%), 
+              3px 0 hsl(200 100% 60%),
+              0 0 15px rgba(255,255,255,0.9);
+          }
+          91% { 
+            opacity: 1;
+            transform: translate(3px, -2px) skew(1deg);
+            text-shadow: 
+              3px 0 hsl(0 100% 60%), 
+              -3px 0 hsl(200 100% 60%),
+              0 0 20px rgba(255,255,255,0.9);
           }
           94% { 
-            opacity: 1;
-            transform: translate(2px, -1px);
-            text-shadow: 0 0 10px rgba(50,100,255,0.8), 0 0 20px rgba(50,100,255,0.5);
+            opacity: 0.85;
+            transform: translate(-2px, -1px) skew(-0.5deg);
+            text-shadow: 
+              -2px 0 hsl(0 100% 60%), 
+              2px 0 hsl(200 100% 60%),
+              0 0 15px rgba(255,255,255,0.9);
           }
-          96% { 
-            opacity: 0.9;
-            transform: translate(-1px, -1px);
-          }
+        }
+        
+        .glowing-frame-blue {
+          box-shadow: 
+            0 0 15px 2px hsl(200 100% 60% / 0.6),
+            0 0 30px 5px hsl(200 100% 60% / 0.4),
+            0 0 60px 10px hsl(200 100% 60% / 0.2),
+            inset 0 0 20px hsl(200 100% 60% / 0.1);
+          border: 2px solid hsl(200 100% 65% / 0.5);
+        }
+        
+        .glass-card-welcome {
+          background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.15) 0%, 
+            rgba(200, 220, 255, 0.1) 50%, 
+            rgba(255, 255, 255, 0.05) 100%
+          );
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          box-shadow: 
+            inset 0 0 30px rgba(255, 255, 255, 0.1),
+            0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glitch-text-clean {
+          position: relative;
+          display: inline-block;
+          text-shadow: 
+            0.05em 0 0 hsl(200 100% 60%),
+            -0.025em -0.05em 0 hsl(180 100% 50%);
+          animation: glitchClean 500ms infinite;
+        }
+        
+        @keyframes glitchClean {
+          0%, 100% { transform: translate(0); }
+          20% { transform: translate(-1px, 1px); }
+          40% { transform: translate(1px, -1px); }
+          60% { transform: translate(-1px, -1px); }
+          80% { transform: translate(1px, 1px); }
         }
       `}</style>
 

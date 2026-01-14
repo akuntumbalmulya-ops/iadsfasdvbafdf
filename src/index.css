@@ -11,30 +11,7 @@
    Clean, vivid, futuristic background animations
    ============================================ */
 
-/* Subtle background glitch effect - very gentle */
-.bg-glitch-overlay {
-  pointer-events: none;
-  animation: bgGlitch 10s infinite;
-}
-
-@keyframes bgGlitch {
-  0%, 96%, 100% {
-    transform: translateX(0);
-    filter: none;
-  }
-  97% {
-    transform: translateX(-1px);
-    filter: hue-rotate(3deg);
-  }
-  98% {
-    transform: translateX(1px);
-    filter: hue-rotate(-3deg);
-  }
-  99% {
-    transform: translateX(-0.5px);
-    filter: hue-rotate(2deg);
-  }
-}
+/* Background glitch effect removed - cleaner look */
 
 /* Moving scanlines - very subtle */
 .scanline-animated {
