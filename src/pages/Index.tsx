@@ -19,7 +19,7 @@ import AmbientOverlay from '@/components/AmbientOverlay';
  * To change background: Replace the cyberpunk-bg.jpeg file
  * or update the import and backgroundImage style below.
  */
-import cyberpunkBg from '@/assets/cyberpunk-bg.jpeg';
+import cyberpunkBg from '@/assets/cyberpunk-city-bg.jpeg';
 
 const Index = () => {
   const [hasEntered, setHasEntered] = useState(false);

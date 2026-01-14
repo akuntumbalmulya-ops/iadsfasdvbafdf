@@ -98,24 +98,17 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       {/* Scanlines */}
       <div className="scanline" />
 
-      {/* Main content - Embed like search status with blue neon */}
+      {/* Main content - Embed like search status with blue neon + shimmer */}
       <div className="relative z-10 text-center px-4">
-        <div 
-          className="px-4 py-3 sm:px-6 sm:py-4 rounded-full inline-block"
-          style={{
-            background: 'rgba(0, 0, 0, 0.6)',
-            border: '2px solid hsl(200 100% 50%)',
-            boxShadow: '0 0 10px hsl(200 100% 50% / 0.5), 0 0 20px hsl(200 100% 50% / 0.3), inset 0 0 10px hsl(200 100% 50% / 0.1)',
-          }}
-        >
+        <div className="glass-card-gradient neon-border-blue-shimmer px-6 py-5 sm:px-10 sm:py-6 rounded-2xl inline-block">
           <h1 
-            className={`text-sm sm:text-lg md:text-xl font-bold tracking-wider text-white ${isScrambling ? 'glitch-text-clean' : ''}`}
+            className={`text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-white ${isScrambling ? 'glitch-text-clean' : ''}`}
             data-text={displayText}
             style={{
               fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
               textShadow: isScrambling 
                 ? '0.05em 0 0 hsl(200 100% 60%), -0.025em -0.05em 0 hsl(180 100% 50%)'
-                : '0 0 8px rgba(100,180,255,0.5)',
+                : '0 0 10px hsl(200 100% 60%), 0 0 20px hsl(200 100% 50% / 0.5), 0 0 40px hsl(200 100% 40% / 0.3)',
             }}
           >
             {displayText}
@@ -124,7 +117,7 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
         </div>
 
         <p 
-          className="mt-6 text-xs sm:text-sm font-black text-white welcome-glitch-text tracking-widest uppercase"
+          className="mt-8 text-sm sm:text-base font-black text-white welcome-glitch-text tracking-widest uppercase"
           style={{ 
             fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
             textShadow: '0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5), 0 0 30px rgba(100,180,255,0.4)',
