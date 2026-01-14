@@ -210,6 +210,7 @@ const SocialSection = () => {
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center py-12 sm:py-20 px-4"
     >
+      {/* No vignette - clean background */}
       <div className="relative z-10 max-w-4xl mx-auto w-full">
         {/* Hacker Animated Title with WHITE neon Embed */}
         <div 

@@ -8,7 +8,7 @@ interface WelcomePageProps {
 const TEXTS = [
   { text: "welcome to my territory", scary: false },
   { text: "/gloistch/home", scary: false },
-  { text: "r you?", scary: true },
+  { text: "where r you?", scary: true, scaryPart: "r you?" },
 ];
 
 const WelcomePage = ({ onEnter }: WelcomePageProps) => {
@@ -109,26 +109,42 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       {/* Main content */}
       <div className="relative z-10 text-center px-4">
         <div className="relative">
-          <h1 
-            className={`text-2xl sm:text-4xl md:text-5xl font-bold tracking-wider ${
-              TEXTS[currentTextIndex]?.scary 
-                ? 'text-red-500 scary-text' 
-                : 'text-foreground'
-            } ${isScrambling ? 'glitch-text' : ''}`}
-            data-text={displayText}
-            style={{
-              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-              textShadow: TEXTS[currentTextIndex]?.scary 
-                ? '0 0 20px hsl(0 70% 50%), 0 0 40px hsl(0 70% 40%), 0 0 60px hsl(0 50% 30%)'
-                : isScrambling 
+          {TEXTS[currentTextIndex]?.scary && TEXTS[currentTextIndex]?.scaryPart ? (
+            <h1 
+              className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-wider"
+              style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
+            >
+              <span className={`text-foreground ${isScrambling ? 'glitch-text' : ''}`}>
+                {displayText.substring(0, displayText.length - TEXTS[currentTextIndex].scaryPart.length).replace(TEXTS[currentTextIndex].scaryPart, '')}
+              </span>
+              <span 
+                className="text-red-500 scary-text"
+                style={{
+                  textShadow: '0 0 20px hsl(0 70% 50%), 0 0 40px hsl(0 70% 40%), 0 0 60px hsl(0 50% 30%)',
+                  animation: 'scaryShake 0.1s ease-in-out infinite'
+                }}
+              >
+                {displayText.includes(TEXTS[currentTextIndex].scaryPart.charAt(0)) 
+                  ? displayText.slice(displayText.indexOf(TEXTS[currentTextIndex].scaryPart.charAt(0)))
+                  : ''}
+              </span>
+              <span className="terminal-cursor" />
+            </h1>
+          ) : (
+            <h1 
+              className={`text-2xl sm:text-4xl md:text-5xl font-bold tracking-wider text-foreground ${isScrambling ? 'glitch-text' : ''}`}
+              data-text={displayText}
+              style={{
+                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+                textShadow: isScrambling 
                   ? '0.05em 0 0 hsl(var(--cyber-red)), -0.025em -0.05em 0 hsl(var(--cyber-yellow))'
-                  : 'none',
-              animation: TEXTS[currentTextIndex]?.scary ? 'scaryShake 0.1s ease-in-out infinite' : 'none'
-            }}
-          >
-            {displayText}
-            <span className="terminal-cursor" />
-          </h1>
+                  : 'none'
+              }}
+            >
+              {displayText}
+              <span className="terminal-cursor" />
+            </h1>
+          )}
         </div>
 
         <p className="mt-8 text-sm text-muted-foreground animate-pulse" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>

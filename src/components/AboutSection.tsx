@@ -93,10 +93,7 @@ const AboutSection = () => {
       ref={sectionRef}
       className="relative min-h-screen flex items-center justify-center py-12 sm:py-20 px-4"
     >
-      {/* Background glow - subtle */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[600px] h-[300px] sm:h-[400px] bg-primary/20 rounded-full blur-[150px]" />
-      </div>
+      {/* Background glow removed - no vignette */}
 
       <div 
         className={`relative z-10 max-w-2xl mx-auto w-full transition-all duration-700 ease-out ${
