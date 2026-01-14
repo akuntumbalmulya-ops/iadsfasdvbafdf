@@ -175,26 +175,18 @@ const HeroSection = () => {
         </div>
 
 
-        {/* Subtitle / System Text */}
-        <div className="font-mono text-xs sm:text-sm text-gray-400 leading-relaxed mb-8 opacity-0 animate-subtitle-fade">
-          <p className="mb-1">not a hero</p>
-          <p>just trying to survive the system</p>
-        </div>
-
-        {/* Terminal input - with WHITE neon embed */}
-        <div className="glass-card-gradient neon-border-white px-6 py-4 rounded-2xl inline-block mb-8">
-          <div className="font-mono text-sm">
-            {showLoader ? (
-              <Loader2 className="w-5 h-5 text-white animate-spin inline-block" />
-            ) : (
-              <>
-                <span className={`${currentSearch.isRed ? 'text-red-500 font-bold' : 'text-white'}`}>
-                  {searchDisplayText}
-                </span>
-                <span className="terminal-cursor" />
-              </>
-            )}
-          </div>
+        {/* Terminal input - integrated with title style */}
+        <div className="font-mono text-sm mt-4">
+          {showLoader ? (
+            <Loader2 className="w-5 h-5 text-white animate-spin inline-block" />
+          ) : (
+            <>
+              <span className={`${currentSearch.isRed ? 'text-red-500 font-bold' : 'text-white'}`}>
+                {searchDisplayText}
+              </span>
+              <span className="terminal-cursor" />
+            </>
+          )}
         </div>
       </div>
 

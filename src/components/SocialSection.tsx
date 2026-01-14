@@ -209,26 +209,29 @@ const SocialSection = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
-          <div className="glass-card-gradient neon-border-white px-6 py-4 rounded-2xl inline-block">
-            <h2 
-              className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold font-mono text-white ${
-                glitchActive ? 'glitch-text' : ''
+          <h2 
+            className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white ${
+              glitchActive ? 'glitch-text' : ''
+            }`}
+            data-text={displayedText}
+            style={{
+              fontFamily: "'Cyberpunk', 'Orbitron', sans-serif",
+              animation: glitchActive ? 'flicker 0.1s infinite' : 'none',
+              textShadow: `
+                0 0 5px hsl(0 0% 100%),
+                0 0 15px hsl(0 0% 95%),
+                0 0 30px hsl(0 0% 90% / 0.8)
+              `
+            }}
+          >
+            {displayedText}
+            <span 
+              className={`inline-block w-[0.5em] h-[1em] ml-1 align-middle bg-white ${
+                showCursor ? 'opacity-100' : 'opacity-0'
               }`}
-              data-text={displayedText}
-              style={{
-                animation: glitchActive ? 'flicker 0.1s infinite' : 'none',
-                textShadow: '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)'
-              }}
-            >
-              {displayedText}
-              <span 
-                className={`inline-block w-[0.5em] h-[1em] ml-1 align-middle bg-white ${
-                  showCursor ? 'opacity-100' : 'opacity-0'
-                }`}
-                style={{ transition: 'opacity 0.1s' }}
-              />
-            </h2>
-          </div>
+              style={{ transition: 'opacity 0.1s' }}
+            />
+          </h2>
         </div>
 
         {/* Desktop: Horizontal Cards with Red Glassmorphism + Purple Neon + Power Outage Effect */}

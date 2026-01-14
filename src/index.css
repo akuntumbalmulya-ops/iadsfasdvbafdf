@@ -224,19 +224,19 @@
   .glass-card-gradient::before,
   .glass-card-gradient::after {
     content: '';
-    @apply absolute w-[8px];
-    top: -8px;
-    bottom: -8px;
-    background: linear-gradient(180deg, hsl(270 80% 80%) 0%, hsl(270 80% 65%) 50%, hsl(270 80% 80%) 100%);
+    @apply absolute w-[10px];
+    top: -10px;
+    bottom: -10px;
+    background: linear-gradient(180deg, hsl(270 100% 90%) 0%, hsl(270 100% 75%) 50%, hsl(270 100% 90%) 100%);
     box-shadow: 
-      0 0 20px hsl(270 80% 65%),
-      0 0 40px hsl(270 80% 60%),
-      0 0 80px hsl(270 80% 55% / 0.95),
-      0 0 120px hsl(270 80% 50% / 0.8),
-      0 0 180px hsl(270 80% 45% / 0.6),
-      0 0 250px hsl(270 80% 40% / 0.4),
-      0 0 350px hsl(270 80% 35% / 0.25);
-    animation: neonPulse 2s ease-in-out infinite;
+      0 0 30px hsl(270 100% 80%),
+      0 0 60px hsl(270 100% 75%),
+      0 0 100px hsl(270 100% 70%),
+      0 0 150px hsl(270 100% 65% / 0.95),
+      0 0 220px hsl(270 100% 60% / 0.8),
+      0 0 300px hsl(270 100% 55% / 0.6),
+      0 0 400px hsl(270 100% 50% / 0.4);
+    animation: neonPulseBright 2s ease-in-out infinite;
   }
 
   .glass-card-gradient::before {
@@ -463,52 +463,52 @@
     will-change: transform;
   }
 
-  /* Purple neon edge - left - ULTRA THICK & WIDER SPREAD OUTSIDE */
+  /* Purple neon edge - left - ULTRA BRIGHT & WIDER SPREAD */
   .social-card-red::before {
     content: '';
     position: absolute;
-    left: -8px;
-    top: -8%;
-    bottom: -8%;
-    width: 8px;
-    border-radius: 6px;
+    left: -10px;
+    top: -10%;
+    bottom: -10%;
+    width: 10px;
+    border-radius: 8px;
     background: linear-gradient(180deg, 
-      hsl(270 80% 80%) 0%, 
-      hsl(270 80% 65%) 50%,
-      hsl(270 80% 80%) 100%
+      hsl(270 100% 95%) 0%, 
+      hsl(270 100% 80%) 50%,
+      hsl(270 100% 95%) 100%
     );
     box-shadow: 
-      0 0 20px hsl(270 80% 65%),
-      0 0 40px hsl(270 80% 60%),
-      0 0 80px hsl(270 80% 55% / 0.95),
-      0 0 120px hsl(270 80% 50% / 0.8),
-      0 0 180px hsl(270 80% 45% / 0.6),
-      0 0 250px hsl(270 80% 40% / 0.4),
-      0 0 350px hsl(270 80% 35% / 0.25);
+      0 0 30px hsl(270 100% 80%),
+      0 0 60px hsl(270 100% 75%),
+      0 0 100px hsl(270 100% 70%),
+      0 0 150px hsl(270 100% 65% / 0.95),
+      0 0 220px hsl(270 100% 60% / 0.8),
+      0 0 300px hsl(270 100% 55% / 0.6),
+      0 0 400px hsl(270 100% 50% / 0.4);
   }
 
-  /* Purple neon edge - right - ULTRA THICK & WIDER SPREAD OUTSIDE */
+  /* Purple neon edge - right - ULTRA BRIGHT & WIDER SPREAD */
   .social-card-red::after {
     content: '';
     position: absolute;
-    right: -8px;
-    top: -8%;
-    bottom: -8%;
-    width: 8px;
-    border-radius: 6px;
+    right: -10px;
+    top: -10%;
+    bottom: -10%;
+    width: 10px;
+    border-radius: 8px;
     background: linear-gradient(180deg, 
-      hsl(270 80% 80%) 0%, 
-      hsl(270 80% 65%) 50%,
-      hsl(270 80% 80%) 100%
+      hsl(270 100% 95%) 0%, 
+      hsl(270 100% 80%) 50%,
+      hsl(270 100% 95%) 100%
     );
     box-shadow: 
-      0 0 20px hsl(270 80% 65%),
-      0 0 40px hsl(270 80% 60%),
-      0 0 80px hsl(270 80% 55% / 0.95),
-      0 0 120px hsl(270 80% 50% / 0.8),
-      0 0 180px hsl(270 80% 45% / 0.6),
-      0 0 250px hsl(270 80% 40% / 0.4),
-      0 0 350px hsl(270 80% 35% / 0.25);
+      0 0 30px hsl(270 100% 80%),
+      0 0 60px hsl(270 100% 75%),
+      0 0 100px hsl(270 100% 70%),
+      0 0 150px hsl(270 100% 65% / 0.95),
+      0 0 220px hsl(270 100% 60% / 0.8),
+      0 0 300px hsl(270 100% 55% / 0.6),
+      0 0 400px hsl(270 100% 50% / 0.4);
   }
 
   /* Different power outage timing for each card */
@@ -611,45 +611,45 @@
   .social-card-red-mobile::before {
     content: '';
     position: absolute;
-    left: -6px;
-    top: -6%;
-    bottom: -6%;
-    width: 6px;
-    border-radius: 5px;
+    left: -8px;
+    top: -8%;
+    bottom: -8%;
+    width: 8px;
+    border-radius: 6px;
     background: linear-gradient(180deg, 
-      hsl(270 80% 80%) 0%, 
-      hsl(270 80% 65%) 50%,
-      hsl(270 80% 80%) 100%
+      hsl(270 100% 95%) 0%, 
+      hsl(270 100% 80%) 50%,
+      hsl(270 100% 95%) 100%
     );
     box-shadow: 
-      0 0 15px hsl(270 80% 65%),
-      0 0 30px hsl(270 80% 60%),
-      0 0 60px hsl(270 80% 55% / 0.9),
-      0 0 100px hsl(270 80% 50% / 0.75),
-      0 0 150px hsl(270 80% 45% / 0.55),
-      0 0 200px hsl(270 80% 40% / 0.35);
+      0 0 25px hsl(270 100% 80%),
+      0 0 50px hsl(270 100% 75%),
+      0 0 80px hsl(270 100% 70%),
+      0 0 120px hsl(270 100% 65% / 0.9),
+      0 0 180px hsl(270 100% 60% / 0.7),
+      0 0 250px hsl(270 100% 55% / 0.5);
   }
 
   .social-card-red-mobile::after {
     content: '';
     position: absolute;
-    right: -6px;
-    top: -6%;
-    bottom: -6%;
-    width: 6px;
-    border-radius: 5px;
+    right: -8px;
+    top: -8%;
+    bottom: -8%;
+    width: 8px;
+    border-radius: 6px;
     background: linear-gradient(180deg, 
-      hsl(270 80% 80%) 0%, 
-      hsl(270 80% 65%) 50%,
-      hsl(270 80% 80%) 100%
+      hsl(270 100% 95%) 0%, 
+      hsl(270 100% 80%) 50%,
+      hsl(270 100% 95%) 100%
     );
     box-shadow: 
-      0 0 15px hsl(270 80% 65%),
-      0 0 30px hsl(270 80% 60%),
-      0 0 60px hsl(270 80% 55% / 0.9),
-      0 0 100px hsl(270 80% 50% / 0.75),
-      0 0 150px hsl(270 80% 45% / 0.55),
-      0 0 200px hsl(270 80% 40% / 0.35);
+      0 0 25px hsl(270 100% 80%),
+      0 0 50px hsl(270 100% 75%),
+      0 0 80px hsl(270 100% 70%),
+      0 0 120px hsl(270 100% 65% / 0.9),
+      0 0 180px hsl(270 100% 60% / 0.7),
+      0 0 250px hsl(270 100% 55% / 0.5);
   }
 
   /* Different animations for mobile cards */
@@ -1030,7 +1030,7 @@
   56% { opacity: 1; }
 }
 
-/* Neon pulse animation for ultra strong glow */
+/* Neon pulse animation for ultra strong glow - BRIGHTER */
 @keyframes neonPulse {
   0%, 100% { 
     opacity: 1;
@@ -1039,6 +1039,44 @@
   50% { 
     opacity: 0.9;
     filter: brightness(1.1);
+  }
+}
+
+/* Neon pulse animation - ULTRA BRIGHT for purple */
+@keyframes neonPulseBright {
+  0%, 100% { 
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% { 
+    opacity: 0.95;
+    filter: brightness(1.3);
+  }
+}
+
+/* Text shimmer effect - light sweep from left to right */
+.text-shimmer {
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    hsl(0 0% 60%) 0%,
+    hsl(0 0% 100%) 25%,
+    hsl(0 0% 60%) 50%,
+    hsl(0 0% 60%) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: textShimmer 4s ease-in-out infinite;
+}
+
+@keyframes textShimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
   }
 }
 
@@ -1115,7 +1153,7 @@
    Only applies to elements with data-neon="purple"
    ======================================== */
 
-/* Purple neon embed with flicker effect - WIDER SPREAD OUTSIDE */
+/* Purple neon embed with flicker effect - ULTRA BRIGHT SPREAD */
 [data-neon="purple"] {
   position: relative;
 }
@@ -1124,44 +1162,43 @@
 [data-neon="purple"]::after {
   content: '';
   position: absolute;
-  top: -10px;
-  bottom: -10px;
-  width: 5px;
-  border-radius: 3px;
-  background: linear-gradient(180deg, hsl(270 80% 75%) 0%, hsl(270 80% 60%) 50%, hsl(270 80% 75%) 100%);
+  top: -12px;
+  bottom: -12px;
+  width: 8px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, hsl(270 100% 90%) 0%, hsl(270 100% 75%) 50%, hsl(270 100% 90%) 100%);
   box-shadow: 
-    0 0 15px hsl(270 80% 60%),
-    0 0 30px hsl(270 80% 60%),
-    0 0 60px hsl(270 80% 55% / 0.9),
-    0 0 100px hsl(270 80% 50% / 0.8),
-    0 0 150px hsl(270 80% 45% / 0.6),
-    0 0 200px hsl(270 80% 40% / 0.4),
-    0 0 280px hsl(270 80% 35% / 0.2);
-  animation: purpleNeonFlicker 4s ease-in-out infinite;
+    0 0 25px hsl(270 100% 80%),
+    0 0 50px hsl(270 100% 75%),
+    0 0 80px hsl(270 100% 70%),
+    0 0 120px hsl(270 100% 65% / 0.95),
+    0 0 180px hsl(270 100% 60% / 0.8),
+    0 0 250px hsl(270 100% 55% / 0.6),
+    0 0 350px hsl(270 100% 50% / 0.4);
+  animation: purpleNeonFlickerBright 4s ease-in-out infinite;
 }
 
 [data-neon="purple"]::before {
-  left: -5px;
+  left: -8px;
 }
 
 [data-neon="purple"]::after {
-  right: -5px;
+  right: -8px;
   animation-delay: 0.3s;
 }
 
-/* Power outage flicker animation - WIDER SPREAD, GRAY when dim */
-@keyframes purpleNeonFlicker {
+/* Power outage flicker animation - ULTRA BRIGHT, GRAY when dim */
+@keyframes purpleNeonFlickerBright {
   0%, 100% {
     opacity: 1;
-    background: linear-gradient(180deg, hsl(270 80% 75%) 0%, hsl(270 80% 60%) 50%, hsl(270 80% 75%) 100%);
+    background: linear-gradient(180deg, hsl(270 100% 90%) 0%, hsl(270 100% 75%) 50%, hsl(270 100% 90%) 100%);
     box-shadow: 
-      0 0 15px hsl(270 80% 60%),
-      0 0 30px hsl(270 80% 60%),
-      0 0 60px hsl(270 80% 55% / 0.9),
-      0 0 100px hsl(270 80% 50% / 0.8),
-      0 0 150px hsl(270 80% 45% / 0.6),
-      0 0 200px hsl(270 80% 40% / 0.4),
-      0 0 280px hsl(270 80% 35% / 0.2);
+      0 0 25px hsl(270 100% 80%),
+      0 0 50px hsl(270 100% 75%),
+      0 0 80px hsl(270 100% 70%),
+      0 0 120px hsl(270 100% 65% / 0.95),
+      0 0 180px hsl(270 100% 60% / 0.8),
+      0 0 250px hsl(270 100% 55% / 0.6);
   }
   /* Stable phase */
   10% {
@@ -1177,12 +1214,12 @@
   }
   14% {
     opacity: 1;
-    background: linear-gradient(180deg, hsl(270 80% 75%) 0%, hsl(270 80% 60%) 50%, hsl(270 80% 75%) 100%);
+    background: linear-gradient(180deg, hsl(270 100% 90%) 0%, hsl(270 100% 75%) 50%, hsl(270 100% 90%) 100%);
     box-shadow: 
-      0 0 15px hsl(270 80% 60%),
-      0 0 30px hsl(270 80% 60%),
-      0 0 60px hsl(270 80% 55% / 0.9),
-      0 0 100px hsl(270 80% 50% / 0.8);
+      0 0 25px hsl(270 100% 80%),
+      0 0 50px hsl(270 100% 75%),
+      0 0 80px hsl(270 100% 70%),
+      0 0 120px hsl(270 100% 65% / 0.95);
   }
   /* Power drop - turns gray */
   30% {
@@ -1194,35 +1231,20 @@
     box-shadow: 
       0 0 3px hsl(0 0% 35%);
   }
-  33% {
-    opacity: 0.6;
-    background: linear-gradient(180deg, hsl(270 40% 50%) 0%, hsl(270 40% 40%) 50%, hsl(270 40% 50%) 100%);
-    box-shadow: 
-      0 0 8px hsl(270 50% 45%),
-      0 0 15px hsl(270 50% 40% / 0.6);
-  }
   35% {
     opacity: 0.2;
     background: linear-gradient(180deg, hsl(0 0% 40%) 0%, hsl(0 0% 30%) 50%, hsl(0 0% 40%) 100%);
     box-shadow: none;
   }
-  38% {
-    opacity: 0.8;
-    background: linear-gradient(180deg, hsl(270 60% 55%) 0%, hsl(270 60% 45%) 50%, hsl(270 60% 55%) 100%);
-    box-shadow: 
-      0 0 10px hsl(270 70% 55%),
-      0 0 20px hsl(270 70% 50% / 0.7),
-      0 0 40px hsl(270 70% 45% / 0.5);
-  }
   40% {
     opacity: 1;
-    background: linear-gradient(180deg, hsl(270 80% 75%) 0%, hsl(270 80% 60%) 50%, hsl(270 80% 75%) 100%);
+    background: linear-gradient(180deg, hsl(270 100% 90%) 0%, hsl(270 100% 75%) 50%, hsl(270 100% 90%) 100%);
     box-shadow: 
-      0 0 15px hsl(270 80% 60%),
-      0 0 30px hsl(270 80% 60%),
-      0 0 60px hsl(270 80% 55% / 0.9),
-      0 0 100px hsl(270 80% 50% / 0.8),
-      0 0 150px hsl(270 80% 45% / 0.6);
+      0 0 25px hsl(270 100% 80%),
+      0 0 50px hsl(270 100% 75%),
+      0 0 80px hsl(270 100% 70%),
+      0 0 120px hsl(270 100% 65% / 0.95),
+      0 0 180px hsl(270 100% 60% / 0.8);
   }
   /* Another quick flicker - turns gray */
   65% {
@@ -1232,12 +1254,7 @@
     opacity: 0.5;
     background: linear-gradient(180deg, hsl(0 0% 50%) 0%, hsl(0 0% 40%) 50%, hsl(0 0% 50%) 100%);
     box-shadow: 
-      0 0 5px hsl(0 0% 40%),
-      0 0 10px hsl(0 0% 35% / 0.5);
-  }
-  68% {
-    opacity: 0.9;
-    background: linear-gradient(180deg, hsl(270 70% 65%) 0%, hsl(270 70% 55%) 50%, hsl(270 70% 65%) 100%);
+      0 0 5px hsl(0 0% 40%);
   }
   70% {
     opacity: 0.3;
@@ -1247,28 +1264,18 @@
   }
   73% {
     opacity: 1;
-    background: linear-gradient(180deg, hsl(270 80% 75%) 0%, hsl(270 80% 60%) 50%, hsl(270 80% 75%) 100%);
+    background: linear-gradient(180deg, hsl(270 100% 90%) 0%, hsl(270 100% 75%) 50%, hsl(270 100% 90%) 100%);
     box-shadow: 
-      0 0 15px hsl(270 80% 60%),
-      0 0 30px hsl(270 80% 60%),
-      0 0 60px hsl(270 80% 55% / 0.9),
-      0 0 100px hsl(270 80% 50% / 0.8),
-      0 0 150px hsl(270 80% 45% / 0.6),
-      0 0 200px hsl(270 80% 40% / 0.4);
-  }
-  /* Stable for rest */
-  85% {
-    opacity: 1;
-  }
-  86% {
-    opacity: 0.7;
-    background: linear-gradient(180deg, hsl(270 60% 55%) 0%, hsl(270 60% 45%) 50%, hsl(270 60% 55%) 100%);
-  }
-  88% {
-    opacity: 1;
-    background: linear-gradient(180deg, hsl(270 80% 75%) 0%, hsl(270 80% 60%) 50%, hsl(270 80% 75%) 100%);
+      0 0 25px hsl(270 100% 80%),
+      0 0 50px hsl(270 100% 75%),
+      0 0 80px hsl(270 100% 70%),
+      0 0 120px hsl(270 100% 65% / 0.95),
+      0 0 180px hsl(270 100% 60% / 0.8),
+      0 0 250px hsl(270 100% 55% / 0.6);
   }
 }
+
+
 
 /* ========================================
    Individual Neon Flicker Animations
