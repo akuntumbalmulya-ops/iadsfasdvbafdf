@@ -134,25 +134,45 @@ const HeroSection = () => {
       </div>
 
       <div className={`relative z-10 text-center w-full max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        {/* Main title with subtle glitch - Helvetica font + Purple neon glow (STABLE - NO FLICKER) */}
-        <h1 
-          className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold mb-4 glitch-subtle tracking-wider text-white"
-          style={{ 
-            fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-            textShadow: `
-              0 0 5px hsl(270 100% 75%),
-              0 0 15px hsl(270 100% 70%),
-              0 0 30px hsl(270 90% 65%),
-              0 0 50px hsl(270 85% 60% / 0.9),
-              0 0 80px hsl(270 80% 55% / 0.7),
-              0 0 120px hsl(270 75% 50% / 0.5),
-              0 0 200px hsl(270 70% 50% / 0.3)
-            `
-          }}
-          data-text={titleText}
-        >
-          {titleText}
-        </h1>
+        {/* Main title with Cyberpunk HUD Frame */}
+        <div className="hud-frame-container relative inline-block px-8 py-6 sm:px-12 sm:py-8 mb-4">
+          {/* HUD Corner indicators */}
+          <div className="hud-corner hud-corner-tl" />
+          <div className="hud-corner hud-corner-tr" />
+          <div className="hud-corner hud-corner-bl" />
+          <div className="hud-corner hud-corner-br" />
+          
+          {/* HUD Edge lines */}
+          <div className="hud-edge hud-edge-top" />
+          <div className="hud-edge hud-edge-bottom" />
+          <div className="hud-edge hud-edge-left" />
+          <div className="hud-edge hud-edge-right" />
+          
+          {/* Hologram glass effect overlay */}
+          <div className="hud-glass-overlay" />
+          
+          {/* Glitch scan line */}
+          <div className="hud-glitch-line" />
+          
+          <h1 
+            className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold glitch-subtle tracking-wider text-white relative z-10"
+            style={{ 
+              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+              textShadow: `
+                0 0 5px hsl(270 100% 75%),
+                0 0 15px hsl(270 100% 70%),
+                0 0 30px hsl(270 90% 65%),
+                0 0 50px hsl(270 85% 60% / 0.9),
+                0 0 80px hsl(270 80% 55% / 0.7),
+                0 0 120px hsl(270 75% 50% / 0.5),
+                0 0 200px hsl(270 70% 50% / 0.3)
+              `
+            }}
+            data-text={titleText}
+          >
+            {titleText}
+          </h1>
+        </div>
 
 
         {/* Subtitle / System Text */}
