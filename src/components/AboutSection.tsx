@@ -100,17 +100,20 @@ const AboutSection = () => {
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
         }`}
       >
-        <div className="glass-card-gradient p-6 sm:p-8 md:p-12 float rounded-3xl" data-neon="purple">
+        <div className="glass-card-embed p-6 sm:p-8 md:p-12 rounded-3xl" data-neon="purple">
           {/* Header with photo */}
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
             <h2 
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-glow-red order-2 sm:order-1"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold order-2 sm:order-1"
               style={{ 
                 fontFamily: "'Cyberpunk', 'Orbitron', sans-serif",
                 textShadow: `
-                  0 0 5px hsl(0 70% 60%),
-                  0 0 15px hsl(0 70% 55%),
-                  0 0 30px hsl(0 65% 50% / 0.8)
+                  0 0 5px hsl(270 100% 75%),
+                  0 0 15px hsl(270 100% 70%),
+                  0 0 30px hsl(270 90% 65%),
+                  0 0 50px hsl(270 85% 60% / 0.9),
+                  0 0 80px hsl(270 80% 55% / 0.7),
+                  0 0 120px hsl(270 75% 50% / 0.5)
                 `
               }}
               data-text={displayedTitle}

@@ -134,28 +134,10 @@ const HeroSection = () => {
       </div>
 
       <div className={`relative z-10 text-center w-full max-w-4xl mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        {/* Main title with Cyberpunk HUD Frame */}
-        <div className="hud-frame-container relative inline-block px-8 py-6 sm:px-12 sm:py-8 mb-4">
-          {/* HUD Corner indicators */}
-          <div className="hud-corner hud-corner-tl" />
-          <div className="hud-corner hud-corner-tr" />
-          <div className="hud-corner hud-corner-bl" />
-          <div className="hud-corner hud-corner-br" />
-          
-          {/* HUD Edge lines */}
-          <div className="hud-edge hud-edge-top" />
-          <div className="hud-edge hud-edge-bottom" />
-          <div className="hud-edge hud-edge-left" />
-          <div className="hud-edge hud-edge-right" />
-          
-          {/* Hologram glass effect overlay */}
-          <div className="hud-glass-overlay" />
-          
-          {/* Glitch scan line */}
-          <div className="hud-glitch-line" />
-          
+      {/* Main title embed - glass effect, rounded, static container */}
+        <div className="glass-card-embed px-8 py-6 sm:px-12 sm:py-8 rounded-2xl inline-block" data-neon="purple">
           <h1 
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold glitch-subtle tracking-wider text-white relative z-10"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-wider text-white relative z-10"
             style={{ 
               fontFamily: "'Cyberpunk', 'Orbitron', sans-serif",
               textShadow: `
@@ -172,21 +154,27 @@ const HeroSection = () => {
           >
             {titleText}
           </h1>
-        </div>
 
-
-        {/* Terminal input - integrated with title style */}
-        <div className="font-mono text-sm mt-4">
-          {showLoader ? (
-            <Loader2 className="w-5 h-5 text-white animate-spin inline-block" />
-          ) : (
-            <>
-              <span className={`${currentSearch.isRed ? 'text-red-500 font-bold' : 'text-white'}`}>
-                {searchDisplayText}
-              </span>
-              <span className="terminal-cursor" />
-            </>
-          )}
+          {/* Search text - inside same embed */}
+          <div className="font-mono text-sm mt-4">
+            {showLoader ? (
+              <Loader2 className="w-5 h-5 text-white animate-spin inline-block" />
+            ) : (
+              <>
+                <span 
+                  className={`${currentSearch.isRed ? 'text-red-500 font-bold' : 'text-white'}`}
+                  style={{
+                    textShadow: currentSearch.isRed 
+                      ? `0 0 10px hsl(0 100% 60%), 0 0 20px hsl(0 100% 55%), 0 0 40px hsl(0 90% 50% / 0.8), 0 0 80px hsl(0 85% 50% / 0.5)`
+                      : 'none'
+                  }}
+                >
+                  {searchDisplayText}
+                </span>
+                <span className="terminal-cursor" />
+              </>
+            )}
+          </div>
         </div>
       </div>
 

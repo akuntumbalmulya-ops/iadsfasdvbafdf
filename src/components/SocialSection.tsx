@@ -203,35 +203,40 @@ const SocialSection = () => {
     >
       {/* No vignette - clean background */}
       <div className="relative z-10 max-w-4xl mx-auto w-full">
-        {/* Hacker Animated Title with WHITE neon Embed */}
+        {/* Hacker Animated Title with purple neon embed - same as landing page */}
         <div 
           className={`mb-8 sm:mb-12 text-center transition-all duration-1000 ${
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
           }`}
         >
-          <h2 
-            className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white ${
-              glitchActive ? 'glitch-text' : ''
-            }`}
-            data-text={displayedText}
-            style={{
-              fontFamily: "'Cyberpunk', 'Orbitron', sans-serif",
-              animation: glitchActive ? 'flicker 0.1s infinite' : 'none',
-              textShadow: `
-                0 0 5px hsl(0 0% 100%),
-                0 0 15px hsl(0 0% 95%),
-                0 0 30px hsl(0 0% 90% / 0.8)
-              `
-            }}
-          >
-            {displayedText}
-            <span 
-              className={`inline-block w-[0.5em] h-[1em] ml-1 align-middle bg-white ${
-                showCursor ? 'opacity-100' : 'opacity-0'
+          <div className="glass-card-embed px-6 py-5 sm:px-10 sm:py-6 rounded-2xl inline-block" data-neon="purple">
+            <h2 
+              className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white ${
+                glitchActive ? 'glitch-text' : ''
               }`}
-              style={{ transition: 'opacity 0.1s' }}
-            />
-          </h2>
+              data-text={displayedText}
+              style={{
+                fontFamily: "'Cyberpunk', 'Orbitron', sans-serif",
+                animation: glitchActive ? 'flicker 0.1s infinite' : 'none',
+                textShadow: `
+                  0 0 5px hsl(270 100% 75%),
+                  0 0 15px hsl(270 100% 70%),
+                  0 0 30px hsl(270 90% 65%),
+                  0 0 50px hsl(270 85% 60% / 0.9),
+                  0 0 80px hsl(270 80% 55% / 0.7),
+                  0 0 120px hsl(270 75% 50% / 0.5)
+                `
+              }}
+            >
+              {displayedText}
+              <span 
+                className={`inline-block w-[0.5em] h-[1em] ml-1 align-middle bg-white ${
+                  showCursor ? 'opacity-100' : 'opacity-0'
+                }`}
+                style={{ transition: 'opacity 0.1s' }}
+              />
+            </h2>
+          </div>
         </div>
 
         {/* Desktop: Horizontal Cards with Red Glassmorphism + Purple Neon + Power Outage Effect */}
