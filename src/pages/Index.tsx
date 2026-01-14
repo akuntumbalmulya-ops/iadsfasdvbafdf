@@ -5,7 +5,6 @@ import AboutSection from '@/components/AboutSection';
 import SocialSection from '@/components/SocialSection';
 import MusicPlayer from '@/components/MusicPlayer';
 import AmbientOverlay from '@/components/AmbientOverlay';
-import CharacterOverlay from '@/components/CharacterOverlay';
 
 /**
  * ============================================
@@ -81,8 +80,6 @@ const Index = () => {
             <div className="absolute inset-0 noise-animated" />
           </div>
 
-          {/* Character Overlay with idle animation */}
-          <CharacterOverlay />
 
           {/* Ambient Overlay */}
           <AmbientOverlay />
