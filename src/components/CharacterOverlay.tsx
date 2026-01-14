@@ -4,6 +4,7 @@ import cyberpunkCharacters from '@/assets/cyberpunk-characters.png';
 /**
  * Cyberpunk Character Overlay
  * Displays anime-style characters with subtle idle animations
+ * Optimized for both desktop and mobile viewing
  */
 const CharacterOverlay = () => {
   const [glitchActive, setGlitchActive] = useState(false);
@@ -25,15 +26,29 @@ const CharacterOverlay = () => {
       className="fixed inset-0 z-5 pointer-events-none overflow-hidden"
       style={{ zIndex: 5 }}
     >
-      {/* Character image with idle animation */}
+      {/* Desktop Character image with idle animation */}
       <div 
-        className={`absolute inset-0 transition-all duration-300 ${glitchActive ? 'character-glitch' : ''}`}
+        className={`hidden sm:block absolute inset-0 transition-all duration-300 ${glitchActive ? 'character-glitch' : ''}`}
         style={{
           backgroundImage: `url(${cyberpunkCharacters})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center bottom',
           backgroundRepeat: 'no-repeat',
           opacity: 0.65,
+          animation: 'characterFloat 6s ease-in-out infinite, neonPulseCharacter 4s ease-in-out infinite',
+          mixBlendMode: 'screen',
+        }}
+      />
+
+      {/* Mobile Character image - smaller and positioned to fit screen */}
+      <div 
+        className={`sm:hidden absolute inset-0 transition-all duration-300 ${glitchActive ? 'character-glitch' : ''}`}
+        style={{
+          backgroundImage: `url(${cyberpunkCharacters})`,
+          backgroundSize: '150%',
+          backgroundPosition: 'center 80%',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.5,
           animation: 'characterFloat 6s ease-in-out infinite, neonPulseCharacter 4s ease-in-out infinite',
           mixBlendMode: 'screen',
         }}

@@ -1,21 +1,21 @@
 import { useState, useEffect, useCallback } from 'react';
-import davidLucyBg from '@/assets/david-lucy-bg.jpeg';
+import welcomeBg from '@/assets/welcome-bg.jpeg';
 
 interface WelcomePageProps {
   onEnter: () => void;
 }
 
 const TEXTS = [
-  { text: "welcome to my territory", scary: false },
-  { text: "/gloistch/home", scary: false },
-  { text: "where r you?", scary: true, scaryPart: "r you?" },
+  { text: "Welcome to my territory", scary: false },
+  { text: "Guess this might be the safest place for you", scary: false },
+  { text: "I hope you enjoy", scary: true },
 ];
 
 const WelcomePage = ({ onEnter }: WelcomePageProps) => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isScrambling, setIsScrambling] = useState(false);
-  const [speed, setSpeed] = useState(100);
+  const [speed, setSpeed] = useState(60);
   const [flickerOpacity, setFlickerOpacity] = useState(1);
 
   const scrambleChars = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~0123456789";
@@ -51,8 +51,8 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
           // Wait then move to next text
           setTimeout(() => {
             setCurrentTextIndex((prev) => (prev + 1) % TEXTS.length);
-            setSpeed((prev) => Math.max(prev * 0.8, 30)); // Speed up each loop
-          }, 1500);
+            setSpeed((prev) => Math.max(prev * 0.9, 30)); // Speed up each loop
+          }, 2000);
         }
       }, speed);
     };
@@ -81,24 +81,26 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
     onEnter();
   };
 
+  const isScary = TEXTS[currentTextIndex]?.scary;
+
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center cursor-pointer overflow-hidden"
       onClick={handleClick}
       style={{ opacity: flickerOpacity }}
     >
-      {/* Background Image - David & Lucy */}
+      {/* Background Image - David & Lucy on the Moon */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: `url(${davidLucyBg})`,
+          backgroundImage: `url(${welcomeBg})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center 30%',
+          backgroundPosition: 'center',
         }}
       />
       
-      {/* Dark overlay - slightly darker for better text visibility */}
-      <div className="absolute inset-0 bg-black/50" />
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/40" />
       
       {/* Noise overlay */}
       <div className="noise-overlay" />
@@ -109,42 +111,26 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       {/* Main content */}
       <div className="relative z-10 text-center px-4">
         <div className="relative">
-          {TEXTS[currentTextIndex]?.scary && TEXTS[currentTextIndex]?.scaryPart ? (
-            <h1 
-              className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-wider"
-              style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}
-            >
-              <span className={`text-foreground ${isScrambling ? 'glitch-text' : ''}`}>
-                {displayText.substring(0, displayText.length - TEXTS[currentTextIndex].scaryPart.length).replace(TEXTS[currentTextIndex].scaryPart, '')}
-              </span>
-              <span 
-                className="text-red-500 scary-text"
-                style={{
-                  textShadow: '0 0 20px hsl(0 70% 50%), 0 0 40px hsl(0 70% 40%), 0 0 60px hsl(0 50% 30%)',
-                  animation: 'scaryShake 0.1s ease-in-out infinite'
-                }}
-              >
-                {displayText.includes(TEXTS[currentTextIndex].scaryPart.charAt(0)) 
-                  ? displayText.slice(displayText.indexOf(TEXTS[currentTextIndex].scaryPart.charAt(0)))
-                  : ''}
-              </span>
-              <span className="terminal-cursor" />
-            </h1>
-          ) : (
-            <h1 
-              className={`text-2xl sm:text-4xl md:text-5xl font-bold tracking-wider text-foreground ${isScrambling ? 'glitch-text' : ''}`}
-              data-text={displayText}
-              style={{
-                fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-                textShadow: isScrambling 
+          <h1 
+            className={`text-2xl sm:text-4xl md:text-5xl font-bold tracking-wider ${
+              isScary 
+                ? 'text-red-500 scary-text' 
+                : `text-foreground ${isScrambling ? 'glitch-text' : ''}`
+            }`}
+            data-text={displayText}
+            style={{
+              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+              textShadow: isScary 
+                ? '0 0 20px hsl(0 70% 50%), 0 0 40px hsl(0 70% 40%), 0 0 60px hsl(0 50% 30%)'
+                : isScrambling 
                   ? '0.05em 0 0 hsl(var(--cyber-red)), -0.025em -0.05em 0 hsl(var(--cyber-yellow))'
-                  : 'none'
-              }}
-            >
-              {displayText}
-              <span className="terminal-cursor" />
-            </h1>
-          )}
+                  : 'none',
+              animation: isScary ? 'scaryShake 0.1s ease-in-out infinite' : 'none'
+            }}
+          >
+            {displayText}
+            <span className="terminal-cursor" />
+          </h1>
         </div>
 
         <p className="mt-8 text-sm text-muted-foreground animate-pulse" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
@@ -155,10 +141,10 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       <style>{`
         @keyframes scaryShake {
           0%, 100% { transform: translate(0); }
-          20% { transform: translate(-2px, 1px); }
-          40% { transform: translate(2px, -1px); }
-          60% { transform: translate(-1px, -2px); }
-          80% { transform: translate(1px, 2px); }
+          20% { transform: translate(-3px, 2px); }
+          40% { transform: translate(3px, -2px); }
+          60% { transform: translate(-2px, -3px); }
+          80% { transform: translate(2px, 3px); }
         }
         .scary-text {
           animation: scaryShake 0.1s ease-in-out infinite;

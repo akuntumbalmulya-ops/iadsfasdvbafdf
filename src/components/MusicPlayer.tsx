@@ -325,35 +325,55 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
         crossOrigin="anonymous"
       />
 
-      {/* Minimized View - Circle with neon glow and circular visualizer OUTSIDE */}
-      {isMinimized ? (
-        <div className="relative" style={{ width: '64px', height: '64px' }}>
-          {/* Visualizer extending outside the button */}
-          <CircularVisualizer buttonSize={64} />
-          
-          {/* The actual button */}
-          <button
-            onClick={() => setIsMinimized(false)}
-            className="neon-circle-purple bg-background/80 backdrop-blur-md hover:scale-110 transition-transform duration-200 relative flex items-center justify-center rounded-full"
-            aria-label="Expand music player"
-            style={{ width: '64px', height: '64px', zIndex: 5 }}
+      {/* Player Container with smooth transitions */}
+      <div 
+        className="transition-all duration-500 ease-in-out"
+        style={{
+          transform: isMinimized ? 'scale(1)' : 'scale(1)',
+          opacity: 1,
+        }}
+      >
+        {/* Minimized View - Circle with neon glow and circular visualizer OUTSIDE */}
+        {isMinimized ? (
+          <div 
+            className="relative transition-all duration-500 ease-in-out"
+            style={{ 
+              width: '64px', 
+              height: '64px',
+              animation: 'fadeInScale 0.4s ease-out'
+            }}
           >
-            <Music className={`w-5 h-5 ${isPlaying ? 'text-accent animate-pulse' : 'text-muted-foreground'}`} />
-          </button>
-        </div>
-      ) : (
-        /* Full Player View */
-        <div className="glass-card-gradient flex flex-col gap-2 p-3 sm:p-4 rounded-2xl min-w-[200px] sm:min-w-[280px] neon-border-purple">
-          {/* Minimize button */}
-          <button
-            onClick={() => setIsMinimized(true)}
-            className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-primary/20 hover:bg-primary/40 transition-colors"
-            aria-label="Minimize player"
+            {/* Visualizer extending outside the button */}
+            <CircularVisualizer buttonSize={64} />
+            
+            {/* The actual button */}
+            <button
+              onClick={() => setIsMinimized(false)}
+              className="neon-circle-purple bg-background/80 backdrop-blur-md hover:scale-110 transition-all duration-300 ease-out relative flex items-center justify-center rounded-full"
+              aria-label="Expand music player"
+              style={{ width: '64px', height: '64px', zIndex: 5 }}
+            >
+              <Music className={`w-5 h-5 transition-all duration-300 ${isPlaying ? 'text-accent animate-pulse' : 'text-muted-foreground'}`} />
+            </button>
+          </div>
+        ) : (
+          /* Full Player View */
+          <div 
+            className="glass-card-gradient flex flex-col gap-2 p-3 sm:p-4 rounded-2xl min-w-[200px] sm:min-w-[280px] neon-border-purple transition-all duration-500 ease-in-out"
+            style={{
+              animation: 'fadeInScale 0.4s ease-out'
+            }}
           >
-            <Minimize2 className="w-3 h-3" />
-          </button>
+            {/* Minimize button */}
+            <button
+              onClick={() => setIsMinimized(true)}
+              className="absolute top-2 right-2 w-6 h-6 flex items-center justify-center rounded-full bg-primary/20 hover:bg-primary/40 transition-all duration-300 hover:scale-110"
+              aria-label="Minimize player"
+            >
+              <Minimize2 className="w-3 h-3 transition-transform duration-300" />
+            </button>
 
-          {/* Bar Visualizer */}
+            {/* Bar Visualizer */}
           <BarVisualizer />
 
           {/* Track info */}
@@ -445,10 +465,24 @@ const MusicPlayer = ({ shouldPlay = false }: MusicPlayerProps) => {
               <span className="text-[10px] text-muted-foreground font-mono">
                 {isPlaying ? 'ON' : 'OFF'}
               </span>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
+
+      <style>{`
+        @keyframes fadeInScale {
+          0% {
+            opacity: 0;
+            transform: scale(0.8);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      `}</style>
     </div>
   );
 };
