@@ -155,9 +155,9 @@ const HeroSection = () => {
           <div className="hud-glitch-line" />
           
           <h1 
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-9xl font-bold glitch-subtle tracking-wider text-white relative z-10"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold glitch-subtle tracking-wider text-white relative z-10"
             style={{ 
-              fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+              fontFamily: "'Cyberpunk', 'Orbitron', sans-serif",
               textShadow: `
                 0 0 5px hsl(270 100% 75%),
                 0 0 15px hsl(270 100% 70%),
