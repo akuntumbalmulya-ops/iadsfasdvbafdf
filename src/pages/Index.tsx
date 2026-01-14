@@ -81,8 +81,8 @@ const Index = () => {
               backgroundRepeat: 'no-repeat',
             }}
           >
-            {/* Dark overlay for better embed visibility + subtle blur */}
-            <div className="absolute inset-0 bg-black/40 backdrop-blur-[3px]" />
+            {/* Subtle blur only - NO dark overlay */}
+            <div className="absolute inset-0 backdrop-blur-[2px]" />
           </div>
 
           {/* Character Overlay with idle animation */}
@@ -98,12 +98,12 @@ const Index = () => {
             <SocialSection />
             <MusicPlayer shouldPlay={showContent} />
 
-            {/* Footer */}
-            <footer className="relative py-8 text-center border-t border-border/20" style={{ backgroundColor: 'hsla(0, 0%, 4%, 0.5)', backdropFilter: 'blur(4px)' }}>
-              <p className="font-mono text-xs text-muted-foreground">
+            {/* Footer - NO dark overlay */}
+            <footer className="relative py-8 text-center border-t border-border/20 backdrop-blur-sm">
+              <p className="font-mono text-xs text-white drop-shadow-lg">
                 © 2026 gloistch. All rights reserved.
               </p>
-              <p className="font-mono text-xs text-muted-foreground/50 mt-2">
+              <p className="font-mono text-xs text-white/70 mt-2 drop-shadow-lg">
                 &lt;/end_transmission&gt;
               </p>
             </footer>
