@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import welcomeBg from '@/assets/welcome-bg.jpeg';
 
 interface WelcomePageProps {
@@ -17,8 +17,6 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
   const [isScrambling, setIsScrambling] = useState(false);
   const [speed, setSpeed] = useState(60);
   const [flickerOpacity, setFlickerOpacity] = useState(1);
-  const frameRef = useRef<HTMLDivElement>(null);
-  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const scrambleChars = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~0123456789";
 
@@ -79,27 +77,6 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
     return () => clearInterval(flickerInterval);
   }, []);
 
-  // 3D Tilt effect for glowing frame
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!wrapperRef.current || !frameRef.current) return;
-    
-    const rect = wrapperRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * 8;
-    const rotateY = ((x - centerX) / centerX) * 8;
-    
-    frameRef.current.style.transform = `perspective(500px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
-  };
-
-  const handleMouseLeave = () => {
-    if (frameRef.current) {
-      frameRef.current.style.transform = 'perspective(500px) rotateX(0) rotateY(0)';
-    }
-  };
-
   const handleClick = () => {
     onEnter();
   };
@@ -134,24 +111,9 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       {/* Scanlines */}
       <div className="scanline" />
 
-      {/* Main content - WHITE TEXT + BLUE NEON EMBED with 3D Tilt Frame */}
-      <div 
-        className="relative z-10 text-center px-4"
-        ref={wrapperRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
-      >
-        {/* Glowing frame with 3D tilt */}
-        <div 
-          ref={frameRef}
-          className="absolute inset-0 rounded-2xl pointer-events-none glowing-frame-blue"
-          style={{
-            transition: 'transform 0.15s ease-out',
-            willChange: 'transform',
-          }}
-        />
-        
-        <div className="glass-card-welcome neon-border-blue px-6 py-6 sm:px-10 sm:py-8 rounded-2xl inline-block relative">
+      {/* Main content - Simple embed like the search status */}
+      <div className="relative z-10 text-center px-4">
+        <div className="glass-card-welcome neon-border-blue px-6 py-6 sm:px-10 sm:py-8 rounded-2xl inline-block">
           <h1 
             className={`text-xl sm:text-3xl md:text-4xl font-bold tracking-wider text-white ${isScrambling ? 'glitch-text-clean' : ''}`}
             data-text={displayText}
@@ -210,15 +172,6 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
               2px 0 hsl(200 100% 60%),
               0 0 15px rgba(255,255,255,0.9);
           }
-        }
-        
-        .glowing-frame-blue {
-          box-shadow: 
-            0 0 15px 2px hsl(200 100% 60% / 0.6),
-            0 0 30px 5px hsl(200 100% 60% / 0.4),
-            0 0 60px 10px hsl(200 100% 60% / 0.2),
-            inset 0 0 20px hsl(200 100% 60% / 0.1);
-          border: 2px solid hsl(200 100% 65% / 0.5);
         }
         
         .glass-card-welcome {
