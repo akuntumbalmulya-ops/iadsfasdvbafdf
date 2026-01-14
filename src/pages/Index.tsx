@@ -72,17 +72,25 @@ const Index = () => {
            * 
            * NOTE: Background is darkened slightly for better embed visibility
            */}
+          {/* Animated Background with parallax effect */}
           <div 
-            className="fixed inset-0 z-0"
+            className="fixed inset-0 z-0 bg-parallax"
             style={{
               backgroundImage: `url(${cyberpunkBg})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
+              backgroundAttachment: 'fixed',
             }}
           >
-            {/* Subtle blur only - NO dark overlay */}
-            <div className="absolute inset-0 backdrop-blur-[2px]" />
+            {/* Subtle glitch animation overlay */}
+            <div className="absolute inset-0 bg-glitch-overlay" />
+            
+            {/* Moving scanlines */}
+            <div className="absolute inset-0 scanline-animated" />
+            
+            {/* Dynamic noise texture */}
+            <div className="absolute inset-0 noise-animated" />
           </div>
 
           {/* Character Overlay with idle animation */}
@@ -98,12 +106,12 @@ const Index = () => {
             <SocialSection />
             <MusicPlayer shouldPlay={showContent} />
 
-            {/* Footer - NO dark overlay */}
-            <footer className="relative py-8 text-center border-t border-border/20 backdrop-blur-sm">
-              <p className="font-mono text-xs text-white drop-shadow-lg">
+            {/* Footer - Clean with glow effects */}
+            <footer className="relative py-8 text-center border-t border-[hsl(200_80%_60%_/_0.3)] backdrop-blur-sm">
+              <p className="font-mono text-xs text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
                 © 2026 gloistch. All rights reserved.
               </p>
-              <p className="font-mono text-xs text-white/70 mt-2 drop-shadow-lg">
+              <p className="font-mono text-xs text-white/80 mt-2 drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">
                 &lt;/end_transmission&gt;
               </p>
             </footer>
