@@ -16,7 +16,6 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
   const [displayText, setDisplayText] = useState("");
   const [isScrambling, setIsScrambling] = useState(false);
   const [speed, setSpeed] = useState(60);
-  const [flickerOpacity, setFlickerOpacity] = useState(1);
 
   const scrambleChars = "!@#$%^&*()_+-=[]{}|;':\",./<>?`~0123456789";
 
@@ -65,17 +64,6 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
     };
   }, [currentTextIndex, speed, scrambleText]);
 
-  // Flicker effect
-  useEffect(() => {
-    const flickerInterval = setInterval(() => {
-      if (Math.random() > 0.95) {
-        setFlickerOpacity(0.3 + Math.random() * 0.7);
-        setTimeout(() => setFlickerOpacity(1), 50 + Math.random() * 100);
-      }
-    }, 100);
-
-    return () => clearInterval(flickerInterval);
-  }, []);
 
   const handleClick = () => {
     onEnter();
@@ -85,7 +73,6 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center cursor-pointer overflow-hidden"
       onClick={handleClick}
-      style={{ opacity: flickerOpacity }}
     >
       {/* Background Image - David & Lucy on the Moon */}
       <div 
@@ -111,17 +98,24 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       {/* Scanlines */}
       <div className="scanline" />
 
-      {/* Main content - Simple embed like the search status */}
+      {/* Main content - Embed like search status with blue neon */}
       <div className="relative z-10 text-center px-4">
-        <div className="glass-card-welcome neon-border-blue px-6 py-6 sm:px-10 sm:py-8 rounded-2xl inline-block">
+        <div 
+          className="px-4 py-3 sm:px-6 sm:py-4 rounded-full inline-block"
+          style={{
+            background: 'rgba(0, 0, 0, 0.6)',
+            border: '2px solid hsl(200 100% 50%)',
+            boxShadow: '0 0 10px hsl(200 100% 50% / 0.5), 0 0 20px hsl(200 100% 50% / 0.3), inset 0 0 10px hsl(200 100% 50% / 0.1)',
+          }}
+        >
           <h1 
-            className={`text-xl sm:text-3xl md:text-4xl font-bold tracking-wider text-white ${isScrambling ? 'glitch-text-clean' : ''}`}
+            className={`text-sm sm:text-lg md:text-xl font-bold tracking-wider text-white ${isScrambling ? 'glitch-text-clean' : ''}`}
             data-text={displayText}
             style={{
               fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
               textShadow: isScrambling 
                 ? '0.05em 0 0 hsl(200 100% 60%), -0.025em -0.05em 0 hsl(180 100% 50%)'
-                : '0 0 10px rgba(100,180,255,0.5), 0 0 20px rgba(100,180,255,0.3)',
+                : '0 0 8px rgba(100,180,255,0.5)',
             }}
           >
             {displayText}
@@ -130,7 +124,7 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
         </div>
 
         <p 
-          className="mt-8 text-base sm:text-lg font-black text-white welcome-glitch-text tracking-widest uppercase"
+          className="mt-6 text-xs sm:text-sm font-black text-white welcome-glitch-text tracking-widest uppercase"
           style={{ 
             fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
             textShadow: '0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5), 0 0 30px rgba(100,180,255,0.4)',
@@ -172,20 +166,6 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
               2px 0 hsl(200 100% 60%),
               0 0 15px rgba(255,255,255,0.9);
           }
-        }
-        
-        .glass-card-welcome {
-          background: linear-gradient(135deg, 
-            rgba(255, 255, 255, 0.15) 0%, 
-            rgba(200, 220, 255, 0.1) 50%, 
-            rgba(255, 255, 255, 0.05) 100%
-          );
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          box-shadow: 
-            inset 0 0 30px rgba(255, 255, 255, 0.1),
-            0 8px 32px rgba(0, 0, 0, 0.3);
         }
         
         .glitch-text-clean {
