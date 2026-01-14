@@ -98,9 +98,9 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       {/* Scanlines */}
       <div className="scanline" />
 
-      {/* Main content - Embed like search status with blue neon + shimmer */}
+      {/* Main content - Glass embed with blue neon + shimmer */}
       <div className="relative z-10 text-center px-4">
-        <div className="glass-card-gradient neon-border-blue-shimmer px-6 py-5 sm:px-10 sm:py-6 rounded-2xl inline-block">
+        <div className="glass-card-embed neon-border-blue-shimmer px-6 py-5 sm:px-10 sm:py-6 rounded-2xl inline-block">
           <h1 
             className={`text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-white ${isScrambling ? 'glitch-text-clean' : ''}`}
             data-text={displayText}
@@ -117,15 +117,13 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
         </div>
 
         <p 
-          className="mt-8 text-sm sm:text-base font-black text-white welcome-glitch-text tracking-widest uppercase"
+          className="mt-8 text-xs sm:text-sm text-white/80 tracking-widest"
           style={{ 
             fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-            textShadow: '0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5), 0 0 30px rgba(100,180,255,0.4)',
-            animation: 'welcomeGlitchBold 2s ease-in-out infinite',
-            letterSpacing: '0.15em',
+            textShadow: '0 0 8px rgba(255,255,255,0.5)',
           }}
         >
-          [ CLICK ANYWHERE TO ENTER ]
+          [ click anywhere to enter ]
         </p>
       </div>
 
