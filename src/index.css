@@ -241,6 +241,33 @@
     @apply right-0;
   }
 
+  /* BLUE neon border utility - for Welcome Page */
+  .neon-border-blue {
+    position: relative;
+  }
+
+  .neon-border-blue::before,
+  .neon-border-blue::after {
+    content: '';
+    @apply absolute top-0 bottom-0 w-[5px];
+    background: linear-gradient(180deg, hsl(200 100% 70%) 0%, hsl(200 100% 55%) 50%, hsl(200 100% 70%) 100%);
+    box-shadow: 
+      0 0 8px hsl(200 100% 60%),
+      0 0 15px hsl(200 100% 60%),
+      0 0 30px hsl(200 100% 60% / 0.9),
+      0 0 60px hsl(200 100% 60% / 0.7),
+      0 0 100px hsl(200 100% 60% / 0.5);
+    animation: neonPulseBlue 2s ease-in-out infinite;
+  }
+
+  .neon-border-blue::before {
+    @apply left-0;
+  }
+
+  .neon-border-blue::after {
+    @apply right-0;
+  }
+
   .noise-overlay {
     @apply fixed inset-0 pointer-events-none z-50;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
@@ -905,6 +932,18 @@
   50% { 
     opacity: 0.9;
     filter: brightness(1.2);
+  }
+}
+
+/* Neon pulse animation for BLUE glow */
+@keyframes neonPulseBlue {
+  0%, 100% { 
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% { 
+    opacity: 0.85;
+    filter: brightness(1.15);
   }
 }
 

@@ -26,6 +26,15 @@ const CharacterOverlay = () => {
       className="fixed inset-0 z-5 pointer-events-none"
       style={{ zIndex: 5 }}
     >
+      {/* GLOBAL CONSISTENT DARK LAYER - Subtle cinematic depth */}
+      <div 
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(20, 10, 30, 0.3) 100%)',
+          pointerEvents: 'none',
+        }}
+      />
+
       {/* Desktop Character image - FULL BODY visible */}
       <div 
         className={`hidden sm:block absolute inset-0 transition-all duration-300 ${glitchActive ? 'character-glitch' : ''}`}
@@ -34,7 +43,7 @@ const CharacterOverlay = () => {
           backgroundSize: 'contain',
           backgroundPosition: 'center bottom',
           backgroundRepeat: 'no-repeat',
-          opacity: 0.7,
+          opacity: 0.75,
           animation: 'characterFloat 6s ease-in-out infinite, neonPulseCharacter 4s ease-in-out infinite',
           mixBlendMode: 'screen',
         }}
@@ -48,7 +57,7 @@ const CharacterOverlay = () => {
           backgroundSize: 'contain',
           backgroundPosition: 'center bottom',
           backgroundRepeat: 'no-repeat',
-          opacity: 0.55,
+          opacity: 0.6,
           animation: 'characterFloat 6s ease-in-out infinite, neonPulseCharacter 4s ease-in-out infinite',
           mixBlendMode: 'screen',
         }}
