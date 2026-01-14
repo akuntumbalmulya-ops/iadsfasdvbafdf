@@ -1507,53 +1507,53 @@
   animation: hologramBreathing 4s ease-in-out infinite;
 }
 
-/* Clean hologram image - silhouette-based glow ONLY, no rectangular artifacts */
+/* Clean hologram image - BLUE HOLOGRAM STYLE like Growtopia mannequin */
+/* No neon glow, no rainbow - only clean blue/cyan monochrome projection */
 .hologram-image {
   width: auto;
   height: 100%;
   object-fit: contain;
-  opacity: 0.75;
-  /* Silhouette-following glow using drop-shadow (not box-shadow) */
+  opacity: 0.6;
+  /* Clean blue hologram - flat lighting, no bloom */
   filter: 
-    drop-shadow(0 0 8px hsl(270 80% 65% / 0.8))
-    drop-shadow(0 0 20px hsl(270 80% 60% / 0.6))
-    drop-shadow(0 0 40px hsl(200 100% 60% / 0.5))
-    drop-shadow(0 0 60px hsl(180 100% 55% / 0.4))
-    drop-shadow(0 0 80px hsl(270 80% 50% / 0.3))
-    saturate(1.3)
-    brightness(1.15)
-    contrast(1.05);
-  animation: hologramShimmer 3s ease-in-out infinite;
+    brightness(1.3)
+    contrast(0.85)
+    saturate(0)
+    sepia(0.3)
+    hue-rotate(180deg)
+    drop-shadow(0 0 3px hsl(200 100% 60% / 0.4))
+    drop-shadow(0 0 8px hsl(195 100% 55% / 0.3));
+  animation: blueHologramPulse 4s ease-in-out infinite;
   /* Ensure no rectangular clipping */
   border: none !important;
   outline: none !important;
   background: transparent !important;
 }
 
-/* Scanline overlay */
+/* Scanline overlay - subtle blue tint */
 .hologram-scanlines {
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
     0deg,
     transparent,
-    transparent 2px,
-    hsl(200 100% 70% / 0.03) 2px,
-    hsl(200 100% 70% / 0.03) 4px
+    transparent 3px,
+    hsl(200 100% 70% / 0.015) 3px,
+    hsl(200 100% 70% / 0.015) 6px
   );
   pointer-events: none;
-  animation: hologramScanlineMove 8s linear infinite;
+  animation: hologramScanlineMove 10s linear infinite;
 }
 
-/* Digital noise overlay */
+/* Digital noise overlay - very subtle */
 .hologram-noise {
   position: absolute;
   inset: 0;
-  opacity: 0.15;
+  opacity: 0.08;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   mix-blend-mode: overlay;
   pointer-events: none;
-  animation: hologramNoiseShift 0.5s steps(5) infinite;
+  animation: hologramNoiseShift 0.8s steps(4) infinite;
 }
 
 /* Glow outline - REMOVED rectangular background, pure ambient only */
@@ -1586,43 +1586,29 @@
   }
 }
 
-/* Shimmer effect */
-@keyframes hologramShimmer {
+/* Blue hologram pulse - clean, minimal, Growtopia mannequin style */
+@keyframes blueHologramPulse {
   0%, 100% {
-    opacity: 0.65;
+    opacity: 0.55;
     filter: 
-      drop-shadow(0 0 20px hsl(270 80% 60% / 0.6))
-      drop-shadow(0 0 40px hsl(200 100% 60% / 0.4))
-      drop-shadow(0 0 60px hsl(270 80% 50% / 0.3))
-      saturate(1.2)
-      brightness(1.1);
-  }
-  25% {
-    opacity: 0.75;
-    filter: 
-      drop-shadow(0 0 25px hsl(270 80% 65% / 0.7))
-      drop-shadow(0 0 50px hsl(200 100% 65% / 0.5))
-      drop-shadow(0 0 70px hsl(180 100% 55% / 0.4))
-      saturate(1.3)
-      brightness(1.15);
+      brightness(1.3)
+      contrast(0.85)
+      saturate(0)
+      sepia(0.3)
+      hue-rotate(180deg)
+      drop-shadow(0 0 3px hsl(200 100% 60% / 0.35))
+      drop-shadow(0 0 6px hsl(195 100% 55% / 0.25));
   }
   50% {
-    opacity: 0.7;
+    opacity: 0.65;
     filter: 
-      drop-shadow(0 0 30px hsl(200 100% 60% / 0.6))
-      drop-shadow(0 0 60px hsl(270 80% 60% / 0.5))
-      drop-shadow(0 0 80px hsl(270 80% 50% / 0.35))
-      saturate(1.25)
-      brightness(1.2);
-  }
-  75% {
-    opacity: 0.68;
-    filter: 
-      drop-shadow(0 0 22px hsl(270 80% 60% / 0.55))
-      drop-shadow(0 0 45px hsl(180 100% 60% / 0.45))
-      drop-shadow(0 0 65px hsl(200 100% 55% / 0.35))
-      saturate(1.2)
-      brightness(1.12);
+      brightness(1.4)
+      contrast(0.9)
+      saturate(0)
+      sepia(0.35)
+      hue-rotate(180deg)
+      drop-shadow(0 0 4px hsl(200 100% 65% / 0.45))
+      drop-shadow(0 0 10px hsl(195 100% 60% / 0.35));
   }
 }
 
@@ -1656,7 +1642,7 @@
   }
 }
 
-/* Occasional glitch effect */
+/* Occasional glitch effect - subtle blue only */
 .hologram-wrapper::after {
   content: '';
   position: absolute;
@@ -1664,34 +1650,30 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    hsl(200 100% 70% / 0.1) 45%,
-    hsl(270 80% 60% / 0.15) 50%,
-    hsl(200 100% 70% / 0.1) 55%,
+    hsl(200 100% 70% / 0.08) 45%,
+    hsl(195 100% 65% / 0.12) 50%,
+    hsl(200 100% 70% / 0.08) 55%,
     transparent 100%
   );
   opacity: 0;
-  animation: hologramGlitch 8s ease-in-out infinite;
+  animation: hologramGlitch 12s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes hologramGlitch {
-  0%, 92%, 100% {
+  0%, 94%, 100% {
     opacity: 0;
     transform: translateX(0) skewX(0);
   }
-  93% {
-    opacity: 0.8;
-    transform: translateX(-5px) skewX(-2deg);
-  }
-  94% {
-    opacity: 0.4;
-    transform: translateX(5px) skewX(2deg);
-  }
   95% {
-    opacity: 0.6;
+    opacity: 0.5;
     transform: translateX(-3px) skewX(-1deg);
   }
   96% {
+    opacity: 0.3;
+    transform: translateX(3px) skewX(1deg);
+  }
+  97% {
     opacity: 0;
     transform: translateX(0) skewX(0);
   }
@@ -1741,22 +1723,24 @@
   }
 
   .hologram-image {
-    opacity: 0.6;
+    opacity: 0.5;
     filter: 
-      drop-shadow(0 0 10px hsl(270 80% 60% / 0.6))
-      drop-shadow(0 0 25px hsl(200 100% 60% / 0.4))
-      drop-shadow(0 0 40px hsl(180 100% 55% / 0.3))
-      saturate(1.2)
-      brightness(1.1);
+      brightness(1.25)
+      contrast(0.85)
+      saturate(0)
+      sepia(0.3)
+      hue-rotate(180deg)
+      drop-shadow(0 0 2px hsl(200 100% 60% / 0.3))
+      drop-shadow(0 0 5px hsl(195 100% 55% / 0.2));
   }
 
   .hologram-noise {
-    opacity: 0.08;
+    opacity: 0.05;
   }
 
   /* Reduce glitch frequency on mobile */
   .hologram-wrapper::after {
-    animation-duration: 15s;
+    animation-duration: 20s;
   }
 }
 
@@ -1775,12 +1759,14 @@
   }
 
   .hologram-image {
-    opacity: 0.55;
+    opacity: 0.45;
     filter: 
-      drop-shadow(0 0 8px hsl(270 80% 60% / 0.5))
-      drop-shadow(0 0 20px hsl(200 100% 60% / 0.35))
-      saturate(1.15)
-      brightness(1.08);
+      brightness(1.2)
+      contrast(0.85)
+      saturate(0)
+      sepia(0.25)
+      hue-rotate(180deg)
+      drop-shadow(0 0 2px hsl(200 100% 60% / 0.25));
   }
 }
 

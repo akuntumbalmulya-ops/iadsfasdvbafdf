@@ -82,8 +82,8 @@ const Index = () => {
           </div>
 
 
-          {/* Dark overlay for better text contrast */}
-          <div className="fixed inset-0 z-[1] bg-black/45 pointer-events-none" />
+          {/* Light overlay for subtle depth - no heavy darkening */}
+          <div className="fixed inset-0 z-[1] bg-black/15 pointer-events-none" />
 
           {/* Character Holograms */}
           <CharacterHolograms />
