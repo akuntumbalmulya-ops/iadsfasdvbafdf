@@ -103,17 +103,17 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
       {/* Scanlines */}
       <div className="scanline" />
 
-      {/* Main content - WHITE NEON EMBED like Hero Section */}
+      {/* Main content - WHITE TEXT + BLUE NEON EMBED */}
       <div className="relative z-10 text-center px-4">
-        <div className="glass-card-gradient neon-border-white px-6 py-6 sm:px-10 sm:py-8 rounded-2xl inline-block">
+        <div className="glass-card-gradient neon-border-blue px-6 py-6 sm:px-10 sm:py-8 rounded-2xl inline-block">
           <h1 
             className={`text-xl sm:text-3xl md:text-4xl font-bold tracking-wider text-white ${isScrambling ? 'glitch-text' : ''}`}
             data-text={displayText}
             style={{
               fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
               textShadow: isScrambling 
-                ? '0.05em 0 0 hsl(var(--cyber-red)), -0.025em -0.05em 0 hsl(180 100% 50%)'
-                : '0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3)',
+                ? '0.05em 0 0 hsl(200 100% 60%), -0.025em -0.05em 0 hsl(180 100% 50%)'
+                : '0 0 10px rgba(100,180,255,0.5), 0 0 20px rgba(100,180,255,0.3)',
             }}
           >
             {displayText}
@@ -121,10 +121,40 @@ const WelcomePage = ({ onEnter }: WelcomePageProps) => {
           </h1>
         </div>
 
-        <p className="mt-8 text-sm text-muted-foreground animate-pulse" style={{ fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
-          [ click anywhere to enter ]
+        <p 
+          className="mt-8 text-base sm:text-lg font-bold text-white welcome-glitch-text"
+          style={{ 
+            fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+            textShadow: '0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5), 0 0 30px rgba(100,180,255,0.4)',
+            animation: 'welcomeGlitch 3s ease-in-out infinite'
+          }}
+        >
+          [ CLICK ANYWHERE TO ENTER ]
         </p>
       </div>
+
+      <style>{`
+        @keyframes welcomeGlitch {
+          0%, 90%, 100% { 
+            opacity: 1;
+            transform: translate(0);
+          }
+          92% { 
+            opacity: 0.8;
+            transform: translate(-2px, 1px);
+            text-shadow: 0 0 10px rgba(255,50,50,0.8), 0 0 20px rgba(255,50,50,0.5);
+          }
+          94% { 
+            opacity: 1;
+            transform: translate(2px, -1px);
+            text-shadow: 0 0 10px rgba(50,100,255,0.8), 0 0 20px rgba(50,100,255,0.5);
+          }
+          96% { 
+            opacity: 0.9;
+            transform: translate(-1px, -1px);
+          }
+        }
+      `}</style>
 
       {/* Only bottom right terminal decoration */}
       <div className="absolute bottom-4 right-4 text-xs text-muted-foreground font-mono opacity-50">
