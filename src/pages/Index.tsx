@@ -6,6 +6,7 @@ import SocialSection from '@/components/SocialSection';
 import MusicPlayer from '@/components/MusicPlayer';
 import AmbientOverlay from '@/components/AmbientOverlay';
 import CharacterHolograms from '@/components/CharacterHolograms';
+import CyberCables from '@/components/CyberCables';
 
 /**
  * ============================================
@@ -90,6 +91,9 @@ const Index = () => {
 
           {/* Ambient Overlay */}
           <AmbientOverlay />
+
+          {/* Cyber Cables decoration */}
+          <CyberCables />
 
           {/* Content sections */}
           <div className="relative z-10">
