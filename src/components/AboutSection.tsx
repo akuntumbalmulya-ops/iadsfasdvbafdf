@@ -104,7 +104,15 @@ const AboutSection = () => {
           {/* Header with photo */}
           <div className="flex flex-col sm:flex-row items-center justify-between mb-6">
             <h2 
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-glow-red order-2 sm:order-1 font-mono"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-glow-red order-2 sm:order-1"
+              style={{ 
+                fontFamily: "'Cyberpunk', 'Orbitron', sans-serif",
+                textShadow: `
+                  0 0 5px hsl(0 70% 60%),
+                  0 0 15px hsl(0 70% 55%),
+                  0 0 30px hsl(0 65% 50% / 0.8)
+                `
+              }}
               data-text={displayedTitle}
             >
               {displayedTitle}
@@ -125,7 +133,7 @@ const AboutSection = () => {
             A digital stranger navigating code, games, and chaos.
           </p>
           
-          <p className="text-sm sm:text-base text-gray-400 leading-relaxed mb-6 sm:mb-8">
+          <p className="text-sm sm:text-base text-gray-400 leading-relaxed mb-6 sm:mb-8 text-shimmer">
             Just someone trying to become a better version of myself than yesterday. I spend most of my time enjoying games, movies, and music things that help me relax, escape, and stay inspired. I like exploring stories, worlds, and ideas, and I'm always learning at my own pace. Oh, and yeah, I'm into girls with a goth look.
           </p>
 
