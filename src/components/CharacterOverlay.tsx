@@ -3,9 +3,8 @@ import cyberpunkCharacters from '@/assets/cyberpunk-characters.png';
 
 /**
  * Cyberpunk Character Overlay
- * Displays anime-style characters with subtle idle animations
- * Optimized for both desktop and mobile viewing
- * NO DARK OVERLAYS - pure character display
+ * Displays anime-style characters as holograms with subtle idle animations
+ * NO DARK OVERLAYS - pure hologram effect following background
  */
 const CharacterOverlay = () => {
   const [glitchActive, setGlitchActive] = useState(false);
@@ -27,7 +26,7 @@ const CharacterOverlay = () => {
       className="fixed inset-0 z-5 pointer-events-none"
       style={{ zIndex: 5 }}
     >
-      {/* Desktop Character image - FULL BODY visible */}
+      {/* Desktop Character image - HOLOGRAM EFFECT */}
       <div 
         className={`hidden sm:block absolute inset-0 transition-all duration-300 ${glitchActive ? 'character-glitch' : ''}`}
         style={{
@@ -35,23 +34,25 @@ const CharacterOverlay = () => {
           backgroundSize: 'contain',
           backgroundPosition: 'center bottom',
           backgroundRepeat: 'no-repeat',
-          opacity: 0.85,
-          animation: 'characterFloat 6s ease-in-out infinite, neonPulseCharacter 4s ease-in-out infinite',
+          opacity: 0.9,
+          animation: 'characterFloat 6s ease-in-out infinite, hologramPulse 4s ease-in-out infinite',
           mixBlendMode: 'screen',
+          filter: 'drop-shadow(0 0 20px rgba(100, 200, 255, 0.4)) drop-shadow(0 0 40px rgba(150, 100, 255, 0.3))',
         }}
       />
 
-      {/* Mobile Character image - BIGGER SIZE for visibility */}
+      {/* Mobile Character image - BIGGER SIZE + HOLOGRAM */}
       <div 
         className={`sm:hidden absolute inset-0 transition-all duration-300 ${glitchActive ? 'character-glitch' : ''}`}
         style={{
           backgroundImage: `url(${cyberpunkCharacters})`,
-          backgroundSize: '180%',
+          backgroundSize: '200%',
           backgroundPosition: 'center 85%',
           backgroundRepeat: 'no-repeat',
-          opacity: 0.75,
-          animation: 'characterFloat 6s ease-in-out infinite, neonPulseCharacter 4s ease-in-out infinite',
+          opacity: 0.85,
+          animation: 'characterFloat 6s ease-in-out infinite, hologramPulse 4s ease-in-out infinite',
           mixBlendMode: 'screen',
+          filter: 'drop-shadow(0 0 15px rgba(100, 200, 255, 0.4)) drop-shadow(0 0 30px rgba(150, 100, 255, 0.3))',
         }}
       />
 
@@ -61,9 +62,15 @@ const CharacterOverlay = () => {
           50% { transform: translateY(-8px); }
         }
         
-        @keyframes neonPulseCharacter {
-          0%, 100% { filter: brightness(1) contrast(1); }
-          50% { filter: brightness(1.08) contrast(1.02); }
+        @keyframes hologramPulse {
+          0%, 100% { 
+            filter: drop-shadow(0 0 20px rgba(100, 200, 255, 0.4)) drop-shadow(0 0 40px rgba(150, 100, 255, 0.3));
+            opacity: 0.9;
+          }
+          50% { 
+            filter: drop-shadow(0 0 30px rgba(100, 200, 255, 0.6)) drop-shadow(0 0 50px rgba(150, 100, 255, 0.4));
+            opacity: 0.95;
+          }
         }
         
         .character-glitch {
@@ -71,11 +78,11 @@ const CharacterOverlay = () => {
         }
         
         @keyframes characterGlitch {
-          0% { transform: translate(0); filter: hue-rotate(0deg); }
-          25% { transform: translate(-2px, 1px); filter: hue-rotate(10deg); }
-          50% { transform: translate(2px, -1px); filter: hue-rotate(-10deg); }
-          75% { transform: translate(-1px, -1px); filter: hue-rotate(5deg); }
-          100% { transform: translate(0); filter: hue-rotate(0deg); }
+          0% { transform: translate(0); filter: hue-rotate(0deg) drop-shadow(0 0 20px rgba(100, 200, 255, 0.4)); }
+          25% { transform: translate(-3px, 1px); filter: hue-rotate(10deg) drop-shadow(0 0 25px rgba(255, 100, 100, 0.5)); }
+          50% { transform: translate(3px, -1px); filter: hue-rotate(-10deg) drop-shadow(0 0 25px rgba(100, 255, 100, 0.5)); }
+          75% { transform: translate(-1px, -1px); filter: hue-rotate(5deg) drop-shadow(0 0 25px rgba(100, 100, 255, 0.5)); }
+          100% { transform: translate(0); filter: hue-rotate(0deg) drop-shadow(0 0 20px rgba(100, 200, 255, 0.4)); }
         }
       `}</style>
     </div>

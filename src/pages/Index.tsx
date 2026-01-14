@@ -47,15 +47,6 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen">
-      {/* Global fullscreen dark overlay - behind all content */}
-      <div 
-        className="fixed inset-0 pointer-events-none"
-        style={{ 
-          backgroundColor: 'rgba(0, 0, 0, 0.35)',
-          zIndex: 1,
-        }}
-      />
-      
       {/* Global noise overlay */}
       <div className="noise-overlay" />
       
