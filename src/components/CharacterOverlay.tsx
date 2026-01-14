@@ -23,32 +23,32 @@ const CharacterOverlay = () => {
 
   return (
     <div 
-      className="fixed inset-0 z-5 pointer-events-none overflow-hidden"
+      className="fixed inset-0 z-5 pointer-events-none"
       style={{ zIndex: 5 }}
     >
-      {/* Desktop Character image with idle animation */}
+      {/* Desktop Character image - FULL BODY visible */}
       <div 
         className={`hidden sm:block absolute inset-0 transition-all duration-300 ${glitchActive ? 'character-glitch' : ''}`}
         style={{
           backgroundImage: `url(${cyberpunkCharacters})`,
-          backgroundSize: 'cover',
+          backgroundSize: 'contain',
           backgroundPosition: 'center bottom',
           backgroundRepeat: 'no-repeat',
-          opacity: 0.65,
+          opacity: 0.7,
           animation: 'characterFloat 6s ease-in-out infinite, neonPulseCharacter 4s ease-in-out infinite',
           mixBlendMode: 'screen',
         }}
       />
 
-      {/* Mobile Character image - smaller and positioned to fit screen */}
+      {/* Mobile Character image - FULL BODY visible, scaled down */}
       <div 
         className={`sm:hidden absolute inset-0 transition-all duration-300 ${glitchActive ? 'character-glitch' : ''}`}
         style={{
           backgroundImage: `url(${cyberpunkCharacters})`,
-          backgroundSize: '150%',
-          backgroundPosition: 'center 80%',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center bottom',
           backgroundRepeat: 'no-repeat',
-          opacity: 0.5,
+          opacity: 0.55,
           animation: 'characterFloat 6s ease-in-out infinite, neonPulseCharacter 4s ease-in-out infinite',
           mixBlendMode: 'screen',
         }}
@@ -58,7 +58,7 @@ const CharacterOverlay = () => {
       <div 
         className="absolute inset-0"
         style={{
-          background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px)',
+          background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px)',
           pointerEvents: 'none',
         }}
       />
