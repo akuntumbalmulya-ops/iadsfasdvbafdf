@@ -5,6 +5,7 @@ import cyberpunkCharacters from '@/assets/cyberpunk-characters.png';
  * Cyberpunk Character Overlay
  * Displays anime-style characters with subtle idle animations
  * Optimized for both desktop and mobile viewing
+ * NO DARK OVERLAYS - pure character display
  */
 const CharacterOverlay = () => {
   const [glitchActive, setGlitchActive] = useState(false);
@@ -26,15 +27,6 @@ const CharacterOverlay = () => {
       className="fixed inset-0 z-5 pointer-events-none"
       style={{ zIndex: 5 }}
     >
-      {/* GLOBAL CONSISTENT DARK LAYER - Subtle cinematic depth */}
-      <div 
-        className="absolute inset-0"
-        style={{
-          background: 'radial-gradient(ellipse at center, transparent 30%, rgba(20, 10, 30, 0.3) 100%)',
-          pointerEvents: 'none',
-        }}
-      />
-
       {/* Desktop Character image - FULL BODY visible */}
       <div 
         className={`hidden sm:block absolute inset-0 transition-all duration-300 ${glitchActive ? 'character-glitch' : ''}`}
@@ -43,32 +35,23 @@ const CharacterOverlay = () => {
           backgroundSize: 'contain',
           backgroundPosition: 'center bottom',
           backgroundRepeat: 'no-repeat',
-          opacity: 0.75,
+          opacity: 0.85,
           animation: 'characterFloat 6s ease-in-out infinite, neonPulseCharacter 4s ease-in-out infinite',
           mixBlendMode: 'screen',
         }}
       />
 
-      {/* Mobile Character image - FULL BODY visible, scaled down */}
+      {/* Mobile Character image - BIGGER SIZE for visibility */}
       <div 
         className={`sm:hidden absolute inset-0 transition-all duration-300 ${glitchActive ? 'character-glitch' : ''}`}
         style={{
           backgroundImage: `url(${cyberpunkCharacters})`,
-          backgroundSize: 'contain',
-          backgroundPosition: 'center bottom',
+          backgroundSize: '180%',
+          backgroundPosition: 'center 85%',
           backgroundRepeat: 'no-repeat',
-          opacity: 0.6,
+          opacity: 0.75,
           animation: 'characterFloat 6s ease-in-out infinite, neonPulseCharacter 4s ease-in-out infinite',
           mixBlendMode: 'screen',
-        }}
-      />
-
-      {/* Subtle scanline overlay for characters */}
-      <div 
-        className="absolute inset-0"
-        style={{
-          background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.02) 2px, rgba(0,0,0,0.02) 4px)',
-          pointerEvents: 'none',
         }}
       />
 
@@ -80,7 +63,7 @@ const CharacterOverlay = () => {
         
         @keyframes neonPulseCharacter {
           0%, 100% { filter: brightness(1) contrast(1); }
-          50% { filter: brightness(1.05) contrast(1.02); }
+          50% { filter: brightness(1.08) contrast(1.02); }
         }
         
         .character-glitch {

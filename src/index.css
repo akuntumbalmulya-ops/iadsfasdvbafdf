@@ -6,6 +6,92 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   ANIMATED BACKGROUND EFFECTS - NO DARK OVERLAYS
+   Clean, vivid, futuristic background animations
+   ============================================ */
+
+/* Subtle background glitch effect - very gentle */
+.bg-glitch-overlay {
+  pointer-events: none;
+  animation: bgGlitch 10s infinite;
+}
+
+@keyframes bgGlitch {
+  0%, 96%, 100% {
+    transform: translateX(0);
+    filter: none;
+  }
+  97% {
+    transform: translateX(-1px);
+    filter: hue-rotate(3deg);
+  }
+  98% {
+    transform: translateX(1px);
+    filter: hue-rotate(-3deg);
+  }
+  99% {
+    transform: translateX(-0.5px);
+    filter: hue-rotate(2deg);
+  }
+}
+
+/* Moving scanlines - very subtle */
+.scanline-animated {
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(255, 255, 255, 0.008) 3px,
+    rgba(255, 255, 255, 0.008) 6px
+  );
+  animation: scanlineMove 12s linear infinite;
+}
+
+@keyframes scanlineMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 100vh;
+  }
+}
+
+/* Dynamic noise texture - extremely subtle */
+.noise-animated {
+  pointer-events: none;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  animation: noiseShift 0.8s steps(4) infinite;
+}
+
+@keyframes noiseShift {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-0.5px, 0.5px); }
+  50% { transform: translate(0.5px, -0.5px); }
+  75% { transform: translate(-0.5px, -0.5px); }
+}
+
+/* Parallax background enhancement */
+.bg-parallax {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Mobile: lighter animation effects */
+@media (max-width: 640px) {
+  .bg-glitch-overlay {
+    animation-duration: 15s;
+  }
+  .scanline-animated {
+    opacity: 0.5;
+  }
+  .noise-animated {
+    opacity: 0.01;
+  }
+}
+
 @layer base {
   :root {
     /* Y2K Dark Theme - ALL RED */
