@@ -47,6 +47,15 @@ const Index = () => {
 
   return (
     <div className="relative min-h-screen">
+      {/* Global fullscreen dark overlay - behind all content */}
+      <div 
+        className="fixed inset-0 pointer-events-none"
+        style={{ 
+          backgroundColor: 'rgba(0, 0, 0, 0.35)',
+          zIndex: 1,
+        }}
+      />
+      
       {/* Global noise overlay */}
       <div className="noise-overlay" />
       
@@ -63,15 +72,6 @@ const Index = () => {
       {/* Main Content with Cyberpunk Background */}
       {hasEntered && (
         <div className={`relative transition-opacity duration-1000 ${showContent ? 'opacity-100' : 'opacity-0'}`}>
-          {/* 
-           * ============================================
-           * BACKGROUND IMAGE CONTAINER
-           * ============================================
-           * Edit cyberpunk-bg.jpeg to change the background
-           * Blur amount: backdrop-blur-[3px] (adjust for more/less blur)
-           * 
-           * NOTE: Background is darkened slightly for better embed visibility
-           */}
           {/* Animated Background with parallax effect */}
           <div 
             className="fixed inset-0 z-0 bg-parallax"
@@ -83,9 +83,6 @@ const Index = () => {
               backgroundAttachment: 'fixed',
             }}
           >
-            {/* Subtle glitch animation overlay */}
-            <div className="absolute inset-0 bg-glitch-overlay" />
-            
             {/* Moving scanlines */}
             <div className="absolute inset-0 scanline-animated" />
             
